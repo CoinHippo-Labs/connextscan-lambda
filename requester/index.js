@@ -10,9 +10,6 @@ exports.handler = async (event, context, callback) => {
   const _ = require('lodash');
   const moment = require('moment');
 
-  // number list
-  const numbersList = numbers => (numbers && numbers.split(',').map(number => Number(number))) || [];
-
   /************************************************
    * Internal API information for requesting data
    * You can setup these environment variables below on the AWS Lambda function's configuration.
@@ -33,11 +30,6 @@ exports.handler = async (event, context, callback) => {
     const apiName = event.queryStringParameters.api_name.trim().toLowerCase();
     // remove api_name parameter before setup query string parameters
     delete event.queryStringParameters.api_name;
-
-    // normalize cache parameter
-    const cache = event.queryStringParameters.cache && event.queryStringParameters.cache.trim().toLowerCase() === 'true' ? true : false;
-    // remove cache parameter before setup query string parameters
-    delete event.queryStringParameters.cache;
 
     // initial requester object
     const requester = axios.create({ baseURL: env[apiName].api_host });
@@ -68,8 +60,6 @@ exports.handler = async (event, context, callback) => {
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
         break;
-      case 'data':
-        res = { data: data[event.queryStringParameters.name] };
       default: // do nothing
     }
 
