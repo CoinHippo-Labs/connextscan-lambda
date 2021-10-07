@@ -42,6 +42,13 @@ exports.handler = async (event, context, callback) => {
     subgraph_mbase: {
       api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
     },
+    coingecko: {
+      api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
+    },
+    covalent: {
+      api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
+      api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
+    },
   };
 
   // response data variable
@@ -79,11 +86,33 @@ exports.handler = async (event, context, callback) => {
         path = path || '';
         // setup query string parameters
         params = { ...event.queryStringParameters };
-
         // send request
         res = await requester.post(path, { ...params })
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
+        break;
+      case 'coingecko':
+        // normalize path parameter
+        path = path || '';
+        // setup query string parameters
+        params = { ...event.queryStringParameters };
+
+        // send request
+        res = await requester.get(path, { params })
+          // set response data from error handled by exception
+          .catch(error => { return { data: { error } }; });
+        break;
+      case 'covalent':
+        // normalize path parameter
+        path = path || '';
+        path = `${path}${!path.endsWith('/') ? '/' : ''}`;
+        // setup query string parameters including API key
+        params = { key: env[apiName].api_key, ...event.queryStringParameters };
+
+        // send request
+        res = await requester.get(path, { params })
+          // set response data from error handled by exception
+          .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
         break;
       default: // do nothing
     }
