@@ -186,7 +186,7 @@ exports.handler = async (event, context, callback) => {
                       type: 'cryptocurrency',
                       balance: balance.balance,
                       quote_rate: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 : null,
-                      quote: (['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals) : null,
+                      quote: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals)) : null,
                     };
                   }),
                 };
