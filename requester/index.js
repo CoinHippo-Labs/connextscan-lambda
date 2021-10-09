@@ -49,6 +49,9 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
       api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
     },
+    blockscout: {
+      api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
+    },
   };
 
   // response data variable
@@ -113,6 +116,86 @@ exports.handler = async (event, context, callback) => {
         res = await requester.get(path, { params })
           // set response data from error handled by exception
           .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+        if (res.data && res.data.error) {
+          if (path?.startsWith('/pricing/historical_by_addresses_v2/')) {
+            const chain_id = Number(path.split('/').filter(_path => _path)[2]);
+
+            if (chain_id === 100) {
+              const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
+
+              const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
+
+              const data = [];
+
+              for (let i = 0; i < contract_addresses.length; i++) {
+                const contract_address = contract_addresses[i];
+
+                path = '/xdai/mainnet/api';
+                params = { module: 'token', action: 'getToken', contractaddress: contract_address };
+
+                // send request
+                res = await blockscouter.get(path, { params })
+                  // set response data from error handled by exception
+                  .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                if (res?.data?.result) {
+                  const contract_data = res.data.result;
+
+                  data.push({
+                    contract_decimals: Number(contract_data.decimals),
+                    contract_name: contract_data.name,
+                    contract_ticker_symbol: contract_data.symbol,
+                    contract_address: contract_data.contractAddress,
+                    supports_erc: ['ERC-20'].includes(contract_data.type) ? ['erc20'] : [],
+                    prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
+                  });
+                }
+              }
+
+              res.data = { data };
+            }
+          }
+          else if (path?.endsWith('/balances_v2/')) {
+            const chain_id = Number(path.split('/').filter(_path => _path)[0]);
+
+            if (chain_id === 100) {
+              const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
+
+              const address = path.split('/').filter(_path => _path)[2];
+
+              let data;
+
+              path = '/xdai/mainnet/api';
+              params = { module: 'account', action: 'tokenlist', address };
+
+              // send request
+              res = await blockscouter.get(path, { params })
+                // set response data from error handled by exception
+                .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+              if (res?.data?.result) {
+                data = {
+                  items: res.data.result.map(balance => {
+                    return {
+                      contract_decimals: Number(balance.decimals),
+                      contract_name: balance.name,
+                      contract_ticker_symbol: balance.symbol,
+                      contract_address: balance.contractAddress,
+                      supports_erc: ['ERC-20'].includes(balance.type) ? ['erc20'] : [],
+                      type: 'cryptocurrency',
+                      balance: balance.balance,
+                      quote_rate: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 : null,
+                      quote: (['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals)) : null,
+                    };
+                  }),
+                };
+              }
+
+              res.data = { data };
+            }
+          }
+        }
         break;
       default: // do nothing
     }
