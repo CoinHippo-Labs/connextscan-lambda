@@ -153,6 +153,9 @@ exports.handler = async (event, context, callback) => {
                 }
                 else if (contract_address === '0x0000000000000000000000000000000000000000') {
                   data.push({
+                    contract_decimals: 18,
+                    contract_name: 'xDai',
+                    contract_ticker_symbol: 'XDAI',
                     contract_address,
                     prices: [{ price: 1 }],
                   });
