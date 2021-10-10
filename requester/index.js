@@ -151,6 +151,12 @@ exports.handler = async (event, context, callback) => {
                     prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
                   });
                 }
+                else if (contract_address === '0x0000000000000000000000000000000000000000') {
+                  data.push({
+                    contract_address: contract_data.contractAddress,
+                    prices: [{ price: 1 }],
+                  });
+                }
               }
 
               res.data = { data };
