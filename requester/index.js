@@ -153,7 +153,7 @@ exports.handler = async (event, context, callback) => {
                 }
                 else if (contract_address === '0x0000000000000000000000000000000000000000') {
                   data.push({
-                    contract_address: contract_data.contractAddress,
+                    contract_address,
                     prices: [{ price: 1 }],
                   });
                 }
