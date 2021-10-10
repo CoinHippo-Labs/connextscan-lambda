@@ -117,22 +117,89 @@ exports.handler = async (event, context, callback) => {
           // set response data from error handled by exception
           .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
 
-        if (res.data && res.data.error) {
+        if (res.data) {
           if (path?.startsWith('/pricing/historical_by_addresses_v2/')) {
             const chain_id = Number(path.split('/').filter(_path => _path)[2]);
+            const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
 
             if (chain_id === 100) {
-              const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
+              if (res.data.error) {
+                const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
 
-              const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
+                const data = [];
 
-              const data = [];
+                for (let i = 0; i < contract_addresses.length; i++) {
+                  const contract_address = contract_addresses[i];
 
-              for (let i = 0; i < contract_addresses.length; i++) {
-                const contract_address = contract_addresses[i];
+                  path = '/xdai/mainnet/api';
+                  params = { module: 'token', action: 'getToken', contractaddress: contract_address };
+
+                  // send request
+                  res = await blockscouter.get(path, { params })
+                    // set response data from error handled by exception
+                    .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                  if (res?.data?.result) {
+                    const contract_data = res.data.result;
+
+                    data.push({
+                      contract_decimals: Number(contract_data.decimals),
+                      contract_name: contract_data.name,
+                      contract_ticker_symbol: contract_data.symbol,
+                      contract_address: contract_data.contractAddress,
+                      supports_erc: ['ERC-20'].includes(contract_data.type) ? ['erc20'] : [],
+                      prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
+                    });
+                  }
+                  else if (contract_address === '0x0000000000000000000000000000000000000000') {
+                    data.push({
+                      contract_decimals: 18,
+                      contract_name: 'xDai',
+                      contract_ticker_symbol: 'XDAI',
+                      contract_address,
+                      prices: [{ price: 1 }],
+                    });
+                  }
+                }
+
+                res.data = { data };
+              }
+            }
+            else if (chain_id === 42161) {
+              if (res.data.data) {
+                const data = res.data.data;
+
+                for (let i = 0; i < contract_addresses.length; i++) {
+                  const contract_address = contract_addresses[i];
+
+                  if (['0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'].includes(contract_address)) {
+                    const index = data.findIndex(contract => contract.contract_address === contract_address);
+    
+                    if (index > -1) {
+                      data[index] = {
+                        ...data[index],
+                        prices: [{ price: 1 }],
+                      };
+                    }
+                  }
+                }
+
+                res.data = { data };
+              }
+            }
+          }
+          else if (path?.endsWith('/balances_v2/')) {
+            const chain_id = Number(path.split('/').filter(_path => _path)[0]);
+            const address = path.split('/').filter(_path => _path)[2];
+
+            if (chain_id === 100) {
+              if (res.data.error) {
+                const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
+
+                let data;
 
                 path = '/xdai/mainnet/api';
-                params = { module: 'token', action: 'getToken', contractaddress: contract_address };
+                params = { module: 'account', action: 'tokenlist', address };
 
                 // send request
                 res = await blockscouter.get(path, { params })
@@ -140,68 +207,25 @@ exports.handler = async (event, context, callback) => {
                   .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
 
                 if (res?.data?.result) {
-                  const contract_data = res.data.result;
-
-                  data.push({
-                    contract_decimals: Number(contract_data.decimals),
-                    contract_name: contract_data.name,
-                    contract_ticker_symbol: contract_data.symbol,
-                    contract_address: contract_data.contractAddress,
-                    supports_erc: ['ERC-20'].includes(contract_data.type) ? ['erc20'] : [],
-                    prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
-                  });
+                  data = {
+                    items: res.data.result.map(balance => {
+                      return {
+                        contract_decimals: Number(balance.decimals),
+                        contract_name: balance.name,
+                        contract_ticker_symbol: balance.symbol,
+                        contract_address: balance.contractAddress,
+                        supports_erc: ['ERC-20'].includes(balance.type) ? ['erc20'] : [],
+                        type: 'cryptocurrency',
+                        balance: balance.balance,
+                        quote_rate: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 : null,
+                        quote: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals)) : null,
+                      };
+                    }),
+                  };
                 }
-                else if (contract_address === '0x0000000000000000000000000000000000000000') {
-                  data.push({
-                    contract_decimals: 18,
-                    contract_name: 'xDai',
-                    contract_ticker_symbol: 'XDAI',
-                    contract_address,
-                    prices: [{ price: 1 }],
-                  });
-                }
+
+                res.data = { data };
               }
-
-              res.data = { data };
-            }
-          }
-          else if (path?.endsWith('/balances_v2/')) {
-            const chain_id = Number(path.split('/').filter(_path => _path)[0]);
-
-            if (chain_id === 100) {
-              const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
-
-              const address = path.split('/').filter(_path => _path)[2];
-
-              let data;
-
-              path = '/xdai/mainnet/api';
-              params = { module: 'account', action: 'tokenlist', address };
-
-              // send request
-              res = await blockscouter.get(path, { params })
-                // set response data from error handled by exception
-                .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
-
-              if (res?.data?.result) {
-                data = {
-                  items: res.data.result.map(balance => {
-                    return {
-                      contract_decimals: Number(balance.decimals),
-                      contract_name: balance.name,
-                      contract_ticker_symbol: balance.symbol,
-                      contract_address: balance.contractAddress,
-                      supports_erc: ['ERC-20'].includes(balance.type) ? ['erc20'] : [],
-                      type: 'cryptocurrency',
-                      balance: balance.balance,
-                      quote_rate: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 : null,
-                      quote: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals)) : null,
-                    };
-                  }),
-                };
-              }
-
-              res.data = { data };
             }
           }
         }
