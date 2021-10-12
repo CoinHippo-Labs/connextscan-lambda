@@ -1,0 +1,9 @@
+{
+  "name": "dynamodb",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.843.0",
+    "moment": "^2.29.1"
+  }
+}

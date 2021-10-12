@@ -49,6 +49,10 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
       api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
     },
+    cache_contracts: {
+      api_host: process.env.DYNAMODB_API_HOST || '{YOUR_DYNAMODB_API_HOST}',
+      table_name: process.env.DYNAMODB_CACHE_CONTRACTS_TABLE_NAME || '{YOUR_DYNAMODB_CACHE_CONTRACTS_TABLE_NAME}',
+    },
     blockscout: {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
     },
@@ -82,6 +86,9 @@ exports.handler = async (event, context, callback) => {
     // initial params parameter
     let params = null;
 
+    // initial current time
+    const time = moment();
+
     // seperate each api
     switch (apiName && apiName.startsWith('subgraph_') ? _.head(apiName.split('_')) : apiName) {
       case 'subgraph':
@@ -112,10 +119,38 @@ exports.handler = async (event, context, callback) => {
         // setup query string parameters including API key
         params = { key: env[apiName].api_key, ...event.queryStringParameters };
 
-        // send request
-        res = await requester.get(path, { params })
-          // set response data from error handled by exception
-          .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+        let resCache = null;
+        let cacheId = null;
+        let setCache = null;
+
+        if (path?.startsWith('/pricing/historical_by_addresses_v2/')) {
+          // initial cacher object
+          const cacher = axios.create({ baseURL: env.cache_contracts.api_host });
+
+          // get cache
+          const getCache = async id => await cacher.get('', { params: { table_name: env.cache_contracts.table_name, method: 'get', ID: id } })
+            .catch(error => { return { data: null }; });
+
+          // set cache
+          setCache = async data => await cacher.post('', { table_name: env.cache_contracts.table_name, method: 'put', ...data })
+            .catch(error => { return { data: null }; });
+
+          cacheId = _.last(path.split('/').filter(_path => _path));
+
+          // get cache
+          resCache = await getCache(cacheId);
+
+          if (resCache?.data?.data?.Json && resCache.data.data.Expired > time.valueOf()) {
+            res = { data: JSON.parse(resCache.data.data.Json) };
+          }
+        }
+
+        if (!res) {
+          // send request
+          res = await requester.get(path, { params })
+            // set response data from error handled by exception
+            .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+        }
 
         if (res.data) {
           if (path?.startsWith('/pricing/historical_by_addresses_v2/')) {
@@ -228,6 +263,11 @@ exports.handler = async (event, context, callback) => {
               }
             }
           }
+        }
+
+        if (cacheId && res?.data?.data && setCache) {
+          // set cache
+          await setCache({ ID: cacheId, Expired: moment(time).add(4, 'hours').valueOf(), Json: JSON.stringify(res.data) });
         }
         break;
       default: // do nothing
