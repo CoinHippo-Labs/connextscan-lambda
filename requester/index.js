@@ -213,7 +213,7 @@ exports.handler = async (event, context, callback) => {
                     if (index > -1) {
                       data[index] = {
                         ...data[index],
-                        prices: [{ price: 1 }],
+                        prices: data[index]?.prices || [{ price: 1 }],
                       };
                     }
                   }
@@ -260,6 +260,27 @@ exports.handler = async (event, context, callback) => {
                 }
 
                 res.data = { data };
+              }
+            }
+            else if (chain_id === 42161) {
+              if (res.data.data?.items) {
+                const data = res.data.data.items;
+
+                for (let i = 0; i < data.length; i++) {
+                  const balance = data[i];
+
+                  if (balance?.contract_address) {
+                    if (['0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'].includes(balance.contract_address)) {
+                      data[i] = {
+                        ...balance,
+                        quote_rate: balance.quote_rate || 1,
+                        quote: balance.quote ||(1 * Number(balance.balance) / Math.pow(10, Number(balance.contract_decimals))),
+                      };
+                    }
+                  }
+                }
+
+                res.data = { data: { items: data } };
               }
             }
           }
