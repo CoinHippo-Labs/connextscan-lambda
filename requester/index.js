@@ -131,10 +131,6 @@ exports.handler = async (event, context, callback) => {
           const getCache = async id => await cacher.get('', { params: { table_name: env.cache_contracts.table_name, method: 'get', ID: id } })
             .catch(error => { return { data: null }; });
 
-          // set cache
-          setCache = async data => await cacher.post('', { table_name: env.cache_contracts.table_name, method: 'put', ...data })
-            .catch(error => { return { data: null }; });
-
           cacheId = _.last(path.split('/').filter(_path => _path));
 
           // get cache
@@ -142,6 +138,11 @@ exports.handler = async (event, context, callback) => {
 
           if (resCache?.data?.data?.Json && resCache.data.data.Expired > time.valueOf()) {
             res = { data: JSON.parse(resCache.data.data.Json) };
+          }
+          else {
+            // set cache
+            setCache = async data => await cacher.post('', { table_name: env.cache_contracts.table_name, method: 'put', ...data })
+              .catch(error => { return { data: null }; });
           }
         }
 
