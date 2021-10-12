@@ -214,7 +214,7 @@ exports.handler = async (event, context, callback) => {
                     if (index > -1) {
                       data[index] = {
                         ...data[index],
-                        prices: data[index]?.prices || [{ price: 1 }],
+                        prices: data[index]?.prices?.[0]?.price ? data[index].prices : [{ price: 1 }],
                       };
                     }
                   }
