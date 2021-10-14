@@ -7,6 +7,7 @@ exports.handler = async (event, context, callback) => {
   const axios = require('axios');
 
   // import modules
+  const { contracts } = require('./data');
   const _ = require('lodash');
   const moment = require('moment');
 
@@ -57,6 +58,9 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
     },
   };
+
+  // get logo
+  const getLogoFromContract = contract_address => contract_address ? contracts?.find(contract => contract.addresses.findIndex(address => address.contract_address === contract_address) > -1)?.logo_url : null;
 
   // response data variable
   let response = null;
@@ -223,6 +227,15 @@ exports.handler = async (event, context, callback) => {
                 res.data = { data };
               }
             }
+
+            if (res?.data?.data) {
+              res.data.data = res.data.data.map(contract => {
+                return {
+                  ...contract,
+                  logo_url: _.uniq(_.concat(contract?.logo_url, getLogoFromContract(contract?.contract_address)).filter(url => url)),
+                };
+              });
+            }
           }
           else if (path?.endsWith('/balances_v2/')) {
             const chain_id = Number(path.split('/').filter(_path => _path)[0]);
@@ -283,6 +296,15 @@ exports.handler = async (event, context, callback) => {
 
                 res.data = { data: { items: data } };
               }
+            }
+
+            if (res?.data?.data?.items) {
+              res.data.data.items = res.data.data.items.map(balance => {
+                return {
+                  ...balance,
+                  logo_url: _.uniq(_.concat(balance?.logo_url, getLogoFromContract(balance?.contract_address)).filter(url => url)),
+                };
+              });
             }
           }
         }
