@@ -48,7 +48,7 @@ exports.handler = async (event, context, callback) => {
     return res?.data?.data;
   };
 
-  let contracts = [];
+  const contracts = {};
 
   const versions = ['v0', ''];
 
@@ -102,19 +102,19 @@ exports.handler = async (event, context, callback) => {
             let record = data[k];
 
             if (record?.id && record.assetId) {
-              let contract = contracts.find(_contract => _contract.contract_address === record.assetId);
+              let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
                 const _contracts = await getContracts(chain.chain_id, record.assetId);
 
                 if (_contracts) {
-                  contracts = _.uniqBy(_.concat(_contracts, contracts), 'contract_address');
+                  contracts[chain.id] = _.uniqBy(_.concat(_contracts || [], contracts[chain.id] || []), 'contract_address');
 
-                  contract = contracts.find(_contract => _contract.contract_address === record.assetId);
+                  contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
                 }
               }
 
-              record = { ...record, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (record.volume * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
+              record = { ...record, id: `${chain.id}-${record.id}`, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (record.volume * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
 
               // send request
               await opensearcher.post('', { ...record, index: 'day_metrics', method: 'update', id: record.id })

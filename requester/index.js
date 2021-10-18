@@ -146,7 +146,9 @@ exports.handler = async (event, context, callback) => {
           const getCache = async id => await cacher.get('', { params: { table_name: env.cache_contracts.table_name, method: 'get', ID: id } })
             .catch(error => { return { data: null }; });
 
-          cacheId = _.last(path.split('/').filter(_path => _path));
+          const chain_id = Number(path.split('/').filter(_path => _path)[2]);
+
+          cacheId = `${chain_id}-${_.last(path.split('/').filter(_path => _path))}`;
 
           // get cache
           resCache = await getCache(cacheId);
