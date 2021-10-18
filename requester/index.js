@@ -21,12 +21,15 @@ exports.handler = async (event, context, callback) => {
     },
     subgraph_bsc: {
       api_host: process.env.SUBGRAPH_BSC_API_HOST || '{YOUR_SUBGRAPH_BSC_API_HOST}',
+      api_host_v0: process.env.SUBGRAPH_BSC_API_HOST_V0 || '{YOUR_SUBGRAPH_BSC_API_HOST_V0}',
     },
     subgraph_matic: {
       api_host: process.env.SUBGRAPH_MATIC_API_HOST || '{YOUR_SUBGRAPH_MATIC_API_HOST}',
+      api_host_v0: process.env.SUBGRAPH_MATIC_API_HOST_V0 || '{YOUR_SUBGRAPH_MATIC_API_HOST_V0}',
     },
     subgraph_arb: {
       api_host: process.env.SUBGRAPH_ARB_API_HOST || '{YOUR_SUBGRAPH_ARB_API_HOST}',
+      api_host_v0: process.env.SUBGRAPH_ARB_API_HOST_V0 || '{YOUR_SUBGRAPH_ARB_API_HOST_V0}',
     },
     subgraph_opt: {
       api_host: process.env.SUBGRAPH_OPT_API_HOST || '{YOUR_SUBGRAPH_OPT_API_HOST}',
@@ -36,9 +39,11 @@ exports.handler = async (event, context, callback) => {
     },
     subgraph_ftm: {
       api_host: process.env.SUBGRAPH_FTM_API_HOST || '{YOUR_SUBGRAPH_FTM_API_HOST}',
+      api_host_v0: process.env.SUBGRAPH_FTM_API_HOST_V0 || '{YOUR_SUBGRAPH_FTM_API_HOST_V0}',
     },
     subgraph_xdai: {
       api_host: process.env.SUBGRAPH_XDAI_API_HOST || '{YOUR_SUBGRAPH_XDAI_API_HOST}',
+      api_host_v0: process.env.SUBGRAPH_XDAI_API_HOST_V0 || '{YOUR_SUBGRAPH_XDAI_API_HOST_V0}',
     },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
@@ -76,9 +81,12 @@ exports.handler = async (event, context, callback) => {
     delete event.queryStringParameters.api_name;
     // remove chain_id parameter before setup query string parameters
     delete event.queryStringParameters.chain_id;
+    const apiVersion = event.queryStringParameters.api_version;
+    // remove api_version parameter before setup query string parameters
+    delete event.queryStringParameters.api_version;
 
     // initial requester object
-    const requester = axios.create({ baseURL: env[apiName].api_host });
+    const requester = axios.create({ baseURL: env[apiName][`api_host${apiVersion ? `_${apiVersion}` : ''}`] });
 
     // initial response object
     let res = null;
