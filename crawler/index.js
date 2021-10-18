@@ -21,8 +21,8 @@ exports.handler = async (event, context, callback) => {
     opensearcher: {
       api_host: process.env.OPENSEARCHER_API_HOST || '{YOUR_OPENSEARCHER_API_HOST}',
     },
-    chains: (process.env.CHAINS || '{YOUR_CHAINS}').split(','),
-    chains_v0: (process.env.CHAINS_V0 || '{YOUR_CHAINS_V0}').split(','),
+    chains: JSON.parse(process.env.CHAINS || '{YOUR_CHAINS}'),
+    chains_v0: JSON.parse(process.env.CHAINS_V0 || '{YOUR_CHAINS_V0}'),
     max_page: process.env.MAX_PAGE ? Number(process.env.MAX_PAGE) : 10,
     currency: process.env.CURRENCY || 'usd',
   };
@@ -56,7 +56,7 @@ exports.handler = async (event, context, callback) => {
     const version = versions[i];
 
     for (let j = 0; j < env[`chains${version ? `_${version}` : ''}`].length; j++) {
-      const chain_id = env[`chains${version ? `_${version}` : ''}`][j];
+      const chain = env[`chains${version ? `_${version}` : ''}`][j];
 
       const size = 1000;
       let skip = 0;
@@ -67,7 +67,7 @@ exports.handler = async (event, context, callback) => {
         const params = {
           api_name: 'subgraph',
           api_version: version,
-          chain_id,
+          chain_id: chain.id,
           query: `
             {
               dayMetrics(orderBy: dayStartTimestamp, orderDirection: desc, skip: ${skip}, first: ${size}) {
@@ -93,7 +93,7 @@ exports.handler = async (event, context, callback) => {
               dayStartTimestamp: Number(dayMetric.dayStartTimestamp),
               volume: Number(dayMetric.volume),
               txCount: Number(dayMetric.txCount),
-              chain_id,
+              chain_id: chain.id,
               version,
             };
           });
@@ -105,7 +105,7 @@ exports.handler = async (event, context, callback) => {
               let contract = contracts.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
-                const _contracts = await getContracts(chain_id, record.assetId);
+                const _contracts = await getContracts(chain.chain_id, record.assetId);
 
                 if (_contracts) {
                   contracts = _.uniqBy(_.concat(_contracts, contracts), 'contract_address');
