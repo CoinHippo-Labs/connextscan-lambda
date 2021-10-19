@@ -103,7 +103,7 @@ exports.handler = async (event, context, callback) => {
         }
         if (body) {
           // send request
-          res = await requester.put(path, body, { auth })
+          res = await requester.put(path, path.includes('_update') ? { doc: body } : body, { auth })
             // set response data from error handled by exception
             .catch(error => { return { data: { error } }; });
 
@@ -113,7 +113,7 @@ exports.handler = async (event, context, callback) => {
             }
 
             // send request
-            res = await requester.post(path, { doc: body }, { auth })
+            res = await requester.post(path, path.includes('_update') ? { doc: body } : body, { auth })
               // set response data from error handled by exception
               .catch(error => { return { data: { error } }; });
           }
