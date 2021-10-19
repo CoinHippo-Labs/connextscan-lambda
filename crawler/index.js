@@ -23,7 +23,7 @@ exports.handler = async (event, context, callback) => {
     },
     chains: JSON.parse(process.env.CHAINS || '{YOUR_CHAINS}'),
     chains_v0: JSON.parse(process.env.CHAINS_V0 || '{YOUR_CHAINS_V0}'),
-    max_page: process.env.MAX_PAGE ? Number(process.env.MAX_PAGE) : 10,
+    max_page: process.env.MAX_PAGE ? Number(process.env.MAX_PAGE) : 3,
     currency: process.env.CURRENCY || 'usd',
   };
 
