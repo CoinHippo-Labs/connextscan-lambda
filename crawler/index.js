@@ -116,10 +116,12 @@ exports.handler = async (event, context, callback) => {
 
               record = { ...record, id: `${chain.id}-${record.id}`, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (record.volume * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
 
-              // send request
-              await opensearcher.post('', { ...record, index: 'day_metrics', method: 'update', id: record.id })
-                // set response data from error handled by exception
-                .catch(error => { return { data: { error } }; });
+              if (record?.volume > 0 && record?.txCount > 0) {
+                // send request
+                await opensearcher.post('', { ...record, index: 'day_metrics', method: 'update', id: record.id })
+                  // set response data from error handled by exception
+                  .catch(error => { return { data: { error } }; });
+              }
             }
           }
         }
