@@ -10,6 +10,7 @@ The implementation is based on Amazon Web Services' services, including ([AWS La
 - [crawler](/crawler) - A function for collecting data from `Subgraph` and indexing data to OpenSearch Service, which is implemented based on [AWS EventBridge](https://aws.amazon.com/eventbridge).
 
 ## Architecture Design
+<img width="857" alt="explorer-architecture" src="https://user-images.githubusercontent.com/13881651/138571018-9f20fb13-483e-42ce-ab7a-c01d0285a8ac.png">
 
 ## Follow us
 - [Website](https://coinhippo.io)
