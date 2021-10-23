@@ -1,4 +1,4 @@
-# Connext Network Explorer - Website
+# Connext Network Explorer - Lambda functions
 
 
 
