@@ -92,7 +92,7 @@ exports.handler = async (event, context, callback) => {
             return {
               ...dayMetric,
               dayStartTimestamp: Number(dayMetric.dayStartTimestamp),
-              volume: Number(dayMetric.volume),
+              volume: dayMetric.volume,
               txCount: Number(dayMetric.txCount),
               chain_id: chain.id,
               version,
@@ -102,7 +102,7 @@ exports.handler = async (event, context, callback) => {
           for (let k = 0; k < data.length; k++) {
             let record = data[k];
 
-            if (record?.id && record.assetId && record.txCount > 0 && record.volume > 0) {
+            if (record?.id && record.assetId && record.txCount > 0 && record.volume) {
               let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
@@ -114,12 +114,11 @@ exports.handler = async (event, context, callback) => {
                   contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
                 }
               }
-
-              record = { ...record, id: `${chain.id}-${record.id}`, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (record.volume * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
+              record = { ...record, id: `${chain.id}-${record.id}`, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (Number(record.volume) * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
 
               if (record?.txCount > 0 && record?.normalize_volume > 0) {
                 // send request
-                await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
+                const a = await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
                   // set response data from error handled by exception
                   .catch(error => { return { data: { error } }; });
               }
