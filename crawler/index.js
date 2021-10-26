@@ -21,6 +21,7 @@ exports.handler = async (event, context, callback) => {
     opensearcher: {
       api_host: process.env.OPENSEARCHER_API_HOST || '{YOUR_OPENSEARCHER_API_HOST}',
     },
+    index_name: process.env.INDEX_NAME || 'day_metrics',
     chains: JSON.parse(process.env.CHAINS || '{YOUR_CHAINS}'),
     chains_v0: JSON.parse(process.env.CHAINS_V0 || '{YOUR_CHAINS_V0}'),
     max_page: process.env.MAX_PAGE ? Number(process.env.MAX_PAGE) : 3,
@@ -118,7 +119,7 @@ exports.handler = async (event, context, callback) => {
 
               if (record?.txCount > 0 && record?.normalize_volume > 0) {
                 // send request
-                await opensearcher.post('', { ...record, index: 'day_metrics', method: 'update', id: record.id })
+                await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
                   // set response data from error handled by exception
                   .catch(error => { return { data: { error } }; });
               }
