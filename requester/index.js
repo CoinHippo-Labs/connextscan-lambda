@@ -283,7 +283,7 @@ exports.handler = async (event, context, callback) => {
                 res.data = { data };
               }
             }
-            else if ([42, 80001, 421611].includes(chain_id)) {
+            else if ([42, 97, 80001, 421611].includes(chain_id)) {
               if (res.data.data) {
                 const data = res.data.data;
 
@@ -373,7 +373,7 @@ exports.handler = async (event, context, callback) => {
                 res.data = { data: { items: data } };
               }
             }
-            else if ([42, 80001, 421611].includes(chain_id)) {
+            else if ([42, 97, 80001, 421611].includes(chain_id)) {
               if (res.data.data?.items) {
                 const data = res.data.data.items;
 
