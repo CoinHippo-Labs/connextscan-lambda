@@ -6,7 +6,7 @@ else
 	NETWORK=$1
 fi
 
-LAMBDA_FUNC_NAME=connext-${NETWORK}-dynamodb
+LAMBDA_FUNC_NAME=connext-dynamodb-${NETWORK}
 PROJECT_PATH=~/Desktop/connext/lambda/dynamodb
 
 cd ${PROJECT_PATH}

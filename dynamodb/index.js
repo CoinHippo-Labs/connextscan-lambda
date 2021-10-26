@@ -227,7 +227,7 @@ exports.handler = async (event, context, callback) => {
   }
   // auto migrate data
   else {
-    const table_names = ['connext-contracts'];
+    const table_names = (process.env.DYNAMODB_MIGRATE_TABLES || 'connext-contracts').split(',');
 
     for (let i = 0; i < table_names.length; i++) {
       const table_name = table_names[i];
