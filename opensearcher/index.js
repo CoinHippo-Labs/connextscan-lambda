@@ -103,17 +103,25 @@ exports.handler = async (event, context, callback) => {
         }
         if (body) {
           // send request
-          res = await requester.put(path, path.includes('_update') ? { doc: body } : body, { auth })
+          res = await (path.includes('_update') ?
+            requester.post(path, { doc: body }, { auth })
+            :
+            requester.put(path, body, { auth })
+          )
             // set response data from error handled by exception
             .catch(error => { return { data: { error } }; });
 
           if (res && res.data && res.data.error) {
             if (path) {
-              path = path.replace(path.includes('_doc') ? '_doc' : '_update', path.includes('_update') ? '_update' : '_doc');
+              path = path.replace(path.includes('_doc') ? '_doc' : '_update', path.includes('_doc') ? '_update' : '_doc');
             }
 
             // send request
-            res = await requester.post(path, path.includes('_update') ? { doc: body } : body, { auth })
+            res = await (path.includes('_update') ?
+              requester.post(path, { doc: body }, { auth })
+              :
+              requester.put(path, body, { auth })
+            )
               // set response data from error handled by exception
               .catch(error => { return { data: { error } }; });
           }
