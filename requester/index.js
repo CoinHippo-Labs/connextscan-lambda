@@ -51,6 +51,24 @@ exports.handler = async (event, context, callback) => {
     subgraph_mbase: {
       api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
     },
+    subgraph_rop: {
+      api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
+    },
+    subgraph_rin: {
+      api_host: process.env.SUBGRAPH_RIN_API_HOST || '{YOUR_SUBGRAPH_RIN_API_HOST}',
+    },
+    subgraph_gor: {
+      api_host: process.env.SUBGRAPH_GOR_API_HOST || '{YOUR_SUBGRAPH_GOR_API_HOST}',
+    },
+    subgraph_kov: {
+      api_host: process.env.SUBGRAPH_KOV_API_HOST || '{YOUR_SUBGRAPH_KOV_API_HOST}',
+    },
+    subgraph_mum: {
+      api_host: process.env.SUBGRAPH_MUM_API_HOST || '{YOUR_SUBGRAPH_MUM_API_HOST}',
+    },
+    subgraph_arbr: {
+      api_host: process.env.SUBGRAPH_ARBR_API_HOST || '{YOUR_SUBGRAPH_ARBR_API_HOST}',
+    },
     coingecko: {
       api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
     },
@@ -240,6 +258,45 @@ exports.handler = async (event, context, callback) => {
                 res.data = { data };
               }
             }
+            else if ([3, 4, 5, 69].includes(chain_id)) {
+              if (res.data.error) {
+                const data = [];
+
+                for (let i = 0; i < contract_addresses.length; i++) {
+                  const contract_address = contract_addresses[i];
+
+                  data.push({
+                    contract_decimals: 18,
+                    contract_name: 'Test Token',
+                    contract_ticker_symbol: 'TEST',
+                    contract_address,
+                    prices: [{ price: 1 }],
+                  });
+                }
+
+                res.data = { data };
+              }
+            }
+            else if ([42, 80001, 421611].includes(chain_id)) {
+              if (res.data.data) {
+                const data = res.data.data;
+
+                for (let i = 0; i < contract_addresses.length; i++) {
+                  const contract_address = contract_addresses[i];
+
+                  const index = data.findIndex(contract => contract.contract_address === contract_address);
+  
+                  if (index > -1) {
+                    data[index] = {
+                      ...data[index],
+                      prices: data[index]?.prices?.[0]?.price ? data[index].prices : [{ price: 1 }],
+                    };
+                  }
+                }
+
+                res.data = { data };
+              }
+            }
 
             if (res?.data?.data) {
               res.data.data = res.data.data.map(contract => {
@@ -304,6 +361,25 @@ exports.handler = async (event, context, callback) => {
                         quote: balance.quote ||(1 * Number(balance.balance) / Math.pow(10, Number(balance.contract_decimals))),
                       };
                     }
+                  }
+                }
+
+                res.data = { data: { items: data } };
+              }
+            }
+            else if ([42, 80001, 421611].includes(chain_id)) {
+              if (res.data.data?.items) {
+                const data = res.data.data.items;
+
+                for (let i = 0; i < data.length; i++) {
+                  const balance = data[i];
+
+                  if (balance?.contract_address) {
+                    data[i] = {
+                      ...balance,
+                      quote_rate: balance.quote_rate || 1,
+                      quote: balance.quote ||(1 * Number(balance.balance) / Math.pow(10, Number(balance.contract_decimals))),
+                    };
                   }
                 }
 
