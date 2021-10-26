@@ -63,11 +63,17 @@ exports.handler = async (event, context, callback) => {
     subgraph_kov: {
       api_host: process.env.SUBGRAPH_KOV_API_HOST || '{YOUR_SUBGRAPH_KOV_API_HOST}',
     },
+    subgraph_bsct: {
+      api_host: process.env.SUBGRAPH_BSCT_API_HOST || '{YOUR_SUBGRAPH_BSCT_API_HOST}',
+    },
     subgraph_mum: {
       api_host: process.env.SUBGRAPH_MUM_API_HOST || '{YOUR_SUBGRAPH_MUM_API_HOST}',
     },
     subgraph_arbr: {
       api_host: process.env.SUBGRAPH_ARBR_API_HOST || '{YOUR_SUBGRAPH_ARBR_API_HOST}',
+    },
+    subgraph_optk: {
+      api_host: process.env.SUBGRAPH_OPTK_API_HOST || '{YOUR_SUBGRAPH_OPTK_API_HOST}',
     },
     coingecko: {
       api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
