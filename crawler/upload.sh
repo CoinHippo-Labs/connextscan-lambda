@@ -1,9 +1,9 @@
 #!/bin/bash
 if [ -z "$1" ]
 then
-	NETWORK="mainnet"
+  NETWORK="mainnet"
 else
-	NETWORK=$1
+  NETWORK=$1
 fi
 
 LAMBDA_FUNC_NAME=connext-crawler-${NETWORK}
