@@ -82,6 +82,9 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
       api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
     },
+    ens: {
+      api_host: process.env.ENS_SUBGRAPH_API_HOST || '{YOUR_ENS_SUBGRAPH_API_HOST}',
+    },
     cache_contracts: {
       api_host: process.env.DYNAMODB_API_HOST || '{YOUR_DYNAMODB_API_HOST}',
       table_name: process.env.DYNAMODB_CACHE_CONTRACTS_TABLE_NAME || '{YOUR_DYNAMODB_CACHE_CONTRACTS_TABLE_NAME}',
@@ -408,6 +411,16 @@ exports.handler = async (event, context, callback) => {
           // set cache
           await setCache({ ID: cacheId, Expired: moment(time).add(4, 'hours').valueOf(), Json: JSON.stringify(res.data) });
         }
+        break;
+      case 'ens':
+        // normalize path parameter
+        path = path || '';
+        // setup query string parameters
+        params = { ...event.queryStringParameters };
+        // send request
+        res = await requester.post(path, { ...params })
+          // set response data from error handled by exception
+          .catch(error => { return { data: { error } }; });
         break;
       default: // do nothing
     }
