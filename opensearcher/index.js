@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
     password: process.env.OPENSEARCH_PASSWORD || '{YOUR_OPENSEARCH_PASSWORD}',
   };
 
-  const normalizeObject = object => Object.fromEntries(Object.entries(object).map(([key, value]) => [key, typeof value === 'object' ? normalizeObject(value) : typeof value === 'boolean' ? value : !isNaN(value) ? Number(value) : value]));
+  const normalizeObject = object => Array.isArray(object) ? object : Object.fromEntries(Object.entries(object).map(([key, value]) => [key, typeof value === 'object' ? normalizeObject(value) : typeof value === 'boolean' ? value : !isNaN(value) ? Number(value) : value]));
 
   // response data variable
   let response = null;
