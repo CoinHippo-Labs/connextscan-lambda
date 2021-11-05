@@ -95,7 +95,7 @@ exports.handler = async (event, context, callback) => {
   };
 
   // get logo
-  const getLogoFromContract = contract_address => contract_address ? contracts?.find(contract => contract.addresses.findIndex(address => address.contract_address === contract_address) > -1)?.logo_url : null;
+  const getLogoFromContract = (contract_address, chain_id) => contract_address ? contracts?.find(contract => contract.addresses.findIndex(address => address.contract_address === contract_address && (!address.chain_id || address.chain_id === chain_id)) > -1)?.logo_url : null;
 
   // response data variable
   let response = null;
@@ -114,6 +114,8 @@ exports.handler = async (event, context, callback) => {
 
     // initial requester object
     const requester = axios.create({ baseURL: env[apiName][`api_host${apiVersion ? `_${apiVersion}` : ''}`] });
+
+    const coingecker = axios.create({ baseURL: env.coingecko.api_host });
 
     // initial response object
     let res = null;
@@ -231,37 +233,6 @@ exports.handler = async (event, context, callback) => {
                       prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
                     });
                   }
-                  else if (contract_address === '0x0000000000000000000000000000000000000000') {
-                    data.push({
-                      contract_decimals: 18,
-                      contract_name: 'xDai',
-                      contract_ticker_symbol: 'XDAI',
-                      contract_address,
-                      prices: [{ price: 1 }],
-                    });
-                  }
-                }
-
-                res.data = { data };
-              }
-            }
-            else if (chain_id === 42161) {
-              if (res.data.data) {
-                const data = res.data.data;
-
-                for (let i = 0; i < contract_addresses.length; i++) {
-                  const contract_address = contract_addresses[i];
-
-                  if (['0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'].includes(contract_address)) {
-                    const index = data.findIndex(contract => contract.contract_address === contract_address);
-    
-                    if (index > -1) {
-                      data[index] = {
-                        ...data[index],
-                        prices: data[index]?.prices?.[0]?.price ? data[index].prices : [{ price: 1 }],
-                      };
-                    }
-                  }
                 }
 
                 res.data = { data };
@@ -308,10 +279,50 @@ exports.handler = async (event, context, callback) => {
             }
 
             if (res?.data?.data) {
+              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id));
+              for (let i = 0; i < _contracts.length; i++) {
+                const _contract = _contracts[i];
+
+                if (contract_addresses.includes(_contract.contract_address) && (res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address) < 0 || res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address && typeof contract?.prices?.[0]?.price !== 'number') > -1)) {
+                  // send request
+                  const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
+                    // set response data from error handled by exception
+                    .catch(error => { return { data: { error } }; });
+
+                  if (typeof resCoin?.data?.market_data?.current_price?.usd === 'number') {
+                    if (res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address) > -1) {
+                      res.data.data = res.data.data.map(contract => {
+                        if (contract.contract_address === _contract.contract_address) {
+                          contract = {
+                            ...contract,
+                            ..._contract,
+                            prices: [{ price: resCoin.data.market_data.current_price.usd }],
+                            logo_url: resCoin.data.image?.large || resCoin.image?.thumb,
+                            contract_name: resCoin.data.name || _contract.contract_name || contract.contract_name,
+                            contract_ticker_symbol: resCoin.data.symbol?.toUpperCase() || _contract.contract_ticker_symbol || contract.contract_ticker_symbol,
+                          };
+                        }
+
+                        return contract;
+                      });
+                    }
+                    else {
+                      res.data.data.push({
+                        ..._contract,
+                        prices: [{ price: resCoin.data.market_data.current_price.usd }],
+                        logo_url: resCoin.data.image?.large || resCoin.image?.thumb,
+                        contract_name: resCoin.data.name || _contract.contract_name,
+                        contract_ticker_symbol: resCoin.data.symbol?.toUpperCase() || _contract.contract_ticker_symbol,
+                      });
+                    }
+                  }
+                }
+              }
+
               res.data.data = res.data.data.map(contract => {
                 return {
                   ...contract,
-                  logo_url: _.uniq(_.concat(contract?.logo_url, getLogoFromContract(contract?.contract_address)).filter(url => url)),
+                  logo_url: _.uniq(_.concat(contract?.logo_url, getLogoFromContract(contract?.contract_address, chain_id)).filter(url => url)),
                 };
               });
             }
@@ -355,27 +366,6 @@ exports.handler = async (event, context, callback) => {
                 res.data = { data };
               }
             }
-            else if (chain_id === 42161) {
-              if (res.data.data?.items) {
-                const data = res.data.data.items;
-
-                for (let i = 0; i < data.length; i++) {
-                  const balance = data[i];
-
-                  if (balance?.contract_address) {
-                    if (['0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1'].includes(balance.contract_address)) {
-                      data[i] = {
-                        ...balance,
-                        quote_rate: balance.quote_rate || 1,
-                        quote: balance.quote ||(1 * Number(balance.balance) / Math.pow(10, Number(balance.contract_decimals))),
-                      };
-                    }
-                  }
-                }
-
-                res.data = { data: { items: data } };
-              }
-            }
             else if ([42, 97, 80001, 421611].includes(chain_id)) {
               if (res.data.data?.items) {
                 const data = res.data.data.items;
@@ -397,10 +387,39 @@ exports.handler = async (event, context, callback) => {
             }
 
             if (res?.data?.data?.items) {
+              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id));
+              for (let i = 0; i < _contracts.length; i++) {
+                const _contract = _contracts[i];
+
+                if (res.data.data.items.findIndex(balance => balance?.contract_address === _contract.contract_address && typeof balance?.quote_rate !== 'number') > -1) {
+                  // send request
+                  const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
+                    // set response data from error handled by exception
+                    .catch(error => { return { data: { error } }; });
+
+                  if (typeof resCoin?.data?.market_data?.current_price?.usd === 'number') {
+                    res.data.data.items = res.data.data.items.map(balance => {
+                      if (balance?.contract_address === _contract.contract_address) {
+                        balance = {
+                          ...balance,
+                          quote_rate: resCoin.data.market_data.current_price.usd,
+                          quote: resCoin.data.market_data.current_price.usd * Number(balance.balance) / Math.pow(10, Number(balance.contract_decimals || _contract.contract_decimals)),
+                          logo_url: resCoin.data.image?.large || resCoin.image?.thumb,
+                          contract_name: resCoin.data.name || _contract.contract_name || balance.contract_name,
+                          contract_ticker_symbol: resCoin.data.symbol?.toUpperCase() || _contract.contract_ticker_symbol || balance.contract_ticker_symbol,
+                        };
+                      }
+
+                      return balance;
+                    });
+                  }
+                }
+              }
+
               res.data.data.items = res.data.data.items.map(balance => {
                 return {
                   ...balance,
-                  logo_url: _.uniq(_.concat(balance?.logo_url, getLogoFromContract(balance?.contract_address)).filter(url => url)),
+                  logo_url: _.uniq(_.concat(balance?.logo_url, getLogoFromContract(balance?.contract_address, chain_id)).filter(url => url)),
                 };
               });
             }
