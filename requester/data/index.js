@@ -37,7 +37,7 @@ const contracts = [
       {
         contract_address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
         chain_id: 42161,
-        contract_decimals: 6,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       { contract_address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063', chain_id: 137 },
