@@ -55,7 +55,7 @@ const contracts = [
         contract_decimals: 18,
         contract_name: 'xDai',
         contract_ticker_symbol: 'XDAI',
-        coingecko_id: 'xdai-stake',
+        coingecko_id: 'xdai',
       },
     ],
   },
