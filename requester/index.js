@@ -266,7 +266,7 @@ exports.handler = async (event, context, callback) => {
 
                   const index = data.findIndex(contract => contract.contract_address === contract_address);
   
-                  if (index > -1) {
+                  if (index > -1 && contracts.flatMap(contract => contract.addresses.filter(_address => _address.contract_address === contract_address && _address.chain_id === chain_id && _address.coingecko_id)).length < 1) {
                     data[index] = {
                       ...data[index],
                       prices: data[index]?.prices?.[0]?.price ? data[index].prices : [{ price: 1 }],
@@ -373,7 +373,7 @@ exports.handler = async (event, context, callback) => {
                 for (let i = 0; i < data.length; i++) {
                   const balance = data[i];
 
-                  if (balance?.contract_address) {
+                  if (balance?.contract_address && contracts.flatMap(contract => contract.addresses.filter(_address => _address.contract_address === balance?.contract_address && _address.chain_id === chain_id && _address.coingecko_id)).length < 1) {
                     data[i] = {
                       ...balance,
                       quote_rate: balance.quote_rate || 1,
