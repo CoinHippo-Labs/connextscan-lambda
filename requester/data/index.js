@@ -72,6 +72,14 @@ const contracts = [
       },
       {
         contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 42161,
+        contract_decimals: 18,
+        contract_name: 'Ethereum',
+        contract_ticker_symbol: 'ETH',
+        coingecko_id: 'ethereum',
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 3,
         contract_decimals: 18,
         contract_name: 'Ethereum',
