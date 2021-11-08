@@ -13,6 +13,7 @@ const contracts = [
       { contract_address: '0x55d398326f99059ff775485246999027b3197955', chain_id: 56 },
       { contract_address: '0x4ecaba5870353805a9f068101a40e0f32ed605c6', chain_id: 100 },
       { contract_address: '0xc7198437980c041c805a1edcba50c1ce5db95118', chain_id: 43114 },
+      { contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c', chain_id: 1285 },
     ],
   },
   {
