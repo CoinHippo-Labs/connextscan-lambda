@@ -116,6 +116,19 @@ const contracts = [
     logo_url: null,
     addresses: [
       {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 1285,
+        contract_decimals: 18,
+        contract_name: 'Moonriver',
+        contract_ticker_symbol: 'MOVR',
+        coingecko_id: 'moonriver',
+      },
+    ],
+  },
+  {
+    logo_url: null,
+    addresses: [
+      {
         contract_address: '0xabc6790673a60b8a7f588450f59d2d256b1aef7f',
         chain_id: 56,
         contract_decimals: 18,
