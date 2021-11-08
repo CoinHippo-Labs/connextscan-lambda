@@ -45,6 +45,9 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.SUBGRAPH_XDAI_API_HOST || '{YOUR_SUBGRAPH_XDAI_API_HOST}',
       api_host_v0: process.env.SUBGRAPH_XDAI_API_HOST_V0 || '{YOUR_SUBGRAPH_XDAI_API_HOST_V0}',
     },
+    subgraph_movr: {
+      api_host: process.env.SUBGRAPH_MOVR_API_HOST || '{YOUR_SUBGRAPH_MOVR_API_HOST}',
+    },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
     },
