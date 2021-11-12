@@ -325,7 +325,7 @@ exports.handler = async (event, context, callback) => {
               res.data.data = res.data.data.map(contract => {
                 return {
                   ...contract,
-                  logo_url: _.uniq(_.concat(contract?.logo_url, getLogoFromContract(contract?.contract_address, chain_id)).filter(url => url)),
+                  logo_url: _.uniq(_.concat(getLogoFromContract(contract?.contract_address, chain_id), contract?.logo_url).filter(url => url)),
                 };
               });
             }
@@ -422,7 +422,7 @@ exports.handler = async (event, context, callback) => {
               res.data.data.items = res.data.data.items.map(balance => {
                 return {
                   ...balance,
-                  logo_url: _.uniq(_.concat(balance?.logo_url, getLogoFromContract(balance?.contract_address, chain_id)).filter(url => url)),
+                  logo_url: _.uniq(_.concat(getLogoFromContract(balance?.contract_address, chain_id), balance?.logo_url).filter(url => url)),
                 };
               });
             }
