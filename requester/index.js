@@ -366,6 +366,31 @@ exports.handler = async (event, context, callback) => {
                   };
                 }
 
+                params = { module: 'account', action: 'balance', address };
+
+                // send request
+                res = await blockscouter.get(path, { params })
+                  // set response data from error handled by exception
+                  .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                if (res?.data?.result) {
+                  data = {
+                    items: _.concat(data?.items || [], [res.data.result].map(balance => {
+                      return {
+                        contract_decimals: 18,
+                        contract_name: 'xDai',
+                        contract_ticker_symbol: 'xDAI',
+                        contract_address: '0x0000000000000000000000000000000000000000',
+                        supports_erc: ['erc20'],
+                        type: 'cryptocurrency',
+                        balance: Number(balance),
+                        quote_rate: 1,
+                        quote: 1 * Number(balance),
+                      };
+                    })),
+                  };
+                }
+
                 res.data = { data };
               }
             }
