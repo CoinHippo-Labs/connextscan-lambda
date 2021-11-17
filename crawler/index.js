@@ -120,7 +120,7 @@ exports.handler = async (event, context, callback) => {
 
               if (record.normalize_volume > 0 || record.sendingTxCount > 0) {
                 // send request
-                const a = await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
+                await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
                   // set response data from error handled by exception
                   .catch(error => { return { data: { error } }; });
               }
