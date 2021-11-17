@@ -104,7 +104,7 @@ exports.handler = async (event, context, callback) => {
           for (let k = 0; k < data.length; k++) {
             let record = data[k];
 
-            if (record?.id && record.assetId && (record.txCount > 0 || record.sendingTxCount > 0) && record.volume) {
+            if (record?.id && record.assetId && ((record.txCount > 0 &&  && record.volume) || record.sendingTxCount > 0)) {
               let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
@@ -118,7 +118,7 @@ exports.handler = async (event, context, callback) => {
               }
               record = { ...record, id: `${chain.id}-${record.id}`, normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (Number(record.volume) * contract.prices[0].price / Math.pow(10, contract.contract_decimals)) };
 
-              if (record.normalize_volume > 0) {
+              if (record.normalize_volume > 0 || record.sendingTxCount > 0) {
                 // send request
                 const a = await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
                   // set response data from error handled by exception
