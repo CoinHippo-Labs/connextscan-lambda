@@ -104,7 +104,7 @@ exports.handler = async (event, context, callback) => {
           for (let k = 0; k < data.length; k++) {
             let record = data[k];
 
-            if (record?.id && record.assetId && ((record.txCount > 0 &&  && record.volume) || record.sendingTxCount > 0)) {
+            if (record?.id && record.assetId && ((record.txCount > 0 && record.volume) || record.sendingTxCount > 0)) {
               let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
