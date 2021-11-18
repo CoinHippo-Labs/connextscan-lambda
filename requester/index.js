@@ -385,7 +385,7 @@ exports.handler = async (event, context, callback) => {
                         type: 'cryptocurrency',
                         balance: Number(balance),
                         quote_rate: 1,
-                        quote: 1 * Number(balance),
+                        quote: 1 * Number(balance) / Math.pow(10, 18),
                       };
                     })),
                   };
