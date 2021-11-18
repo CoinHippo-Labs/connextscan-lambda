@@ -286,16 +286,16 @@ exports.handler = async (event, context, callback) => {
               for (let i = 0; i < _contracts.length; i++) {
                 const _contract = _contracts[i];
 
-                if (contract_addresses.includes(_contract.contract_address) && (res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address) < 0 || res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address && typeof contract?.prices?.[0]?.price !== 'number') > -1)) {
+                if (contract_addresses.includes(_contract.contract_address?.toLowerCase()) && (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) < 0 || res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase() && typeof contract?.prices?.[0]?.price !== 'number') > -1)) {
                   // send request
                   const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
                     // set response data from error handled by exception
                     .catch(error => { return { data: { error } }; });
 
                   if (typeof resCoin?.data?.market_data?.current_price?.usd === 'number') {
-                    if (res.data.data.findIndex(contract => contract.contract_address === _contract.contract_address) > -1) {
+                    if (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) > -1) {
                       res.data.data = res.data.data.map(contract => {
-                        if (contract.contract_address === _contract.contract_address) {
+                        if (contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) {
                           contract = {
                             ...contract,
                             ..._contract,

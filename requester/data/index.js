@@ -9,7 +9,7 @@ const contracts = [
         coingecko_id: 'tether',
       },
       {
-        contract_address: '0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+        contract_address: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58',
         chain_id: 10,
         contract_decimals: 6,
         coingecko_id: 'tether',
@@ -37,7 +37,7 @@ const contracts = [
         coingecko_id: 'usd-coin',
       },
       {
-        contract_address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
+        contract_address: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
         chain_id: 10,
         contract_decimals: 6,
         coingecko_id: 'usd-coin',
@@ -64,7 +64,7 @@ const contracts = [
         coingecko_id: 'dai',
       },
       {
-        contract_address: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',
+        contract_address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
         chain_id: 10,
         contract_decimals: 18,
         coingecko_id: 'dai',
