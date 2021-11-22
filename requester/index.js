@@ -84,6 +84,7 @@ exports.handler = async (event, context, callback) => {
     covalent: {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
       api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
+      stable_threshold: Number(process.env.STABLE_THRESHOLD) || 0.05,
     },
     ens: {
       api_host: process.env.ENS_SUBGRAPH_API_HOST || '{YOUR_ENS_SUBGRAPH_API_HOST}',
@@ -282,11 +283,11 @@ exports.handler = async (event, context, callback) => {
             }
 
             if (res?.data?.data) {
-              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id));
+              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id).map(_address => { return { ..._address, is_stable: contract?.is_stable } }));
               for (let i = 0; i < _contracts.length; i++) {
                 const _contract = _contracts[i];
 
-                if (contract_addresses.includes(_contract.contract_address?.toLowerCase()) && (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) < 0 || res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase() && typeof contract?.prices?.[0]?.price !== 'number') > -1)) {
+                if (contract_addresses.includes(_contract.contract_address?.toLowerCase()) && (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) < 0 || res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase() && (typeof contract?.prices?.[0]?.price !== 'number' || (_contract.is_stable && (Math.abs(contract?.prices?.[0]?.price - 1) > env.covalent.stable_threshold)))) > -1)) {
                   // send request
                   const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
                     // set response data from error handled by exception
@@ -415,11 +416,11 @@ exports.handler = async (event, context, callback) => {
             }
 
             if (res?.data?.data?.items) {
-              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id));
+              const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id).map(_address => { return { ..._address, is_stable: contract?.is_stable } }));
               for (let i = 0; i < _contracts.length; i++) {
                 const _contract = _contracts[i];
 
-                if (res.data.data.items.findIndex(balance => balance?.contract_address === _contract.contract_address && typeof balance?.quote_rate !== 'number') > -1) {
+                if (res.data.data.items.findIndex(balance => balance?.contract_address === _contract.contract_address && typeof balance?.quote_rate !== 'number' || (_contract.is_stable && (Math.abs(balance?.quote_rate - 1) > env.covalent.stable_threshold))) > -1) {
                   // send request
                   const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
                     // set response data from error handled by exception
