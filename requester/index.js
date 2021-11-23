@@ -18,65 +18,84 @@ exports.handler = async (event, context, callback) => {
   const env = {
     subgraph_eth: {
       api_host: process.env.SUBGRAPH_ETH_API_HOST || '{YOUR_SUBGRAPH_ETH_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_ETH_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ETH_API_HOST_ANALYTIC}',
     },
     subgraph_bsc: {
       api_host: process.env.SUBGRAPH_BSC_API_HOST || '{YOUR_SUBGRAPH_BSC_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_BSC_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_BSC_API_HOST_ANALYTIC}',
       api_host_v0: process.env.SUBGRAPH_BSC_API_HOST_V0 || '{YOUR_SUBGRAPH_BSC_API_HOST_V0}',
     },
     subgraph_matic: {
       api_host: process.env.SUBGRAPH_MATIC_API_HOST || '{YOUR_SUBGRAPH_MATIC_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MATIC_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MATIC_API_HOST_ANALYTIC}',
       api_host_v0: process.env.SUBGRAPH_MATIC_API_HOST_V0 || '{YOUR_SUBGRAPH_MATIC_API_HOST_V0}',
     },
     subgraph_arb: {
       api_host: process.env.SUBGRAPH_ARB_API_HOST || '{YOUR_SUBGRAPH_ARB_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_ARB_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ARB_API_HOST_ANALYTIC}',
       api_host_v0: process.env.SUBGRAPH_ARB_API_HOST_V0 || '{YOUR_SUBGRAPH_ARB_API_HOST_V0}',
     },
     subgraph_opt: {
       api_host: process.env.SUBGRAPH_OPT_API_HOST || '{YOUR_SUBGRAPH_OPT_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_OPT_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_OPT_API_HOST_ANALYTIC}',
     },
     subgraph_avax: {
       api_host: process.env.SUBGRAPH_AVAX_API_HOST || '{YOUR_SUBGRAPH_AVAX_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_AVAX_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_AVAX_API_HOST_ANALYTIC}',
     },
     subgraph_ftm: {
       api_host: process.env.SUBGRAPH_FTM_API_HOST || '{YOUR_SUBGRAPH_FTM_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_FTM_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FTM_API_HOST_ANALYTIC}',
       api_host_v0: process.env.SUBGRAPH_FTM_API_HOST_V0 || '{YOUR_SUBGRAPH_FTM_API_HOST_V0}',
     },
     subgraph_xdai: {
       api_host: process.env.SUBGRAPH_XDAI_API_HOST || '{YOUR_SUBGRAPH_XDAI_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_XDAI_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_XDAI_API_HOST_ANALYTIC}',
       api_host_v0: process.env.SUBGRAPH_XDAI_API_HOST_V0 || '{YOUR_SUBGRAPH_XDAI_API_HOST_V0}',
     },
     subgraph_movr: {
       api_host: process.env.SUBGRAPH_MOVR_API_HOST || '{YOUR_SUBGRAPH_MOVR_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MOVR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MOVR_API_HOST_ANALYTIC}',
     },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_HECO_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_HECO_API_HOST_ANALYTIC}',
     },
     subgraph_mbase: {
       api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MBASE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MBASE_API_HOST_ANALYTIC}',
     },
     subgraph_rop: {
       api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_ROP_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ROP_API_HOST_ANALYTIC}',
     },
     subgraph_rin: {
       api_host: process.env.SUBGRAPH_RIN_API_HOST || '{YOUR_SUBGRAPH_RIN_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_RIN_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_RIN_API_HOST_ANALYTIC}',
     },
     subgraph_gor: {
       api_host: process.env.SUBGRAPH_GOR_API_HOST || '{YOUR_SUBGRAPH_GOR_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_GOR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_GOR_API_HOST_ANALYTIC}',
     },
     subgraph_kov: {
       api_host: process.env.SUBGRAPH_KOV_API_HOST || '{YOUR_SUBGRAPH_KOV_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_KOV_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_KOV_API_HOST_ANALYTIC}',
     },
     subgraph_bsct: {
       api_host: process.env.SUBGRAPH_BSCT_API_HOST || '{YOUR_SUBGRAPH_BSCT_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_BSCT_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_BSCT_API_HOST_ANALYTIC}',
     },
     subgraph_mum: {
       api_host: process.env.SUBGRAPH_MUM_API_HOST || '{YOUR_SUBGRAPH_MUM_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MUM_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MUM_API_HOST_ANALYTIC}',
     },
     subgraph_arbr: {
       api_host: process.env.SUBGRAPH_ARBR_API_HOST || '{YOUR_SUBGRAPH_ARBR_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_ARBR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ARBR_API_HOST_ANALYTIC}',
     },
     subgraph_optk: {
       api_host: process.env.SUBGRAPH_OPTK_API_HOST || '{YOUR_SUBGRAPH_OPTK_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_OPTK_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_OPTK_API_HOST_ANALYTIC}',
     },
     coingecko: {
       api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
@@ -115,9 +134,12 @@ exports.handler = async (event, context, callback) => {
     const apiVersion = event.queryStringParameters.api_version;
     // remove api_version parameter before setup query string parameters
     delete event.queryStringParameters.api_version;
+    const apiType = event.queryStringParameters.api_type;
+    // remove api_type parameter before setup query string parameters
+    delete event.queryStringParameters.api_type;
 
     // initial requester object
-    const requester = axios.create({ baseURL: env[apiName][`api_host${apiVersion ? `_${apiVersion}` : ''}`] });
+    const requester = axios.create({ baseURL: env[apiName][`api_host${apiVersion ? `_${apiVersion}` : ''}${apiType ? `_${apiType}` : ''}`] });
 
     const coingecker = axios.create({ baseURL: env.coingecko.api_host });
 
