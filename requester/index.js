@@ -8,6 +8,7 @@ exports.handler = async (event, context, callback) => {
 
   // import modules
   const { contracts } = require('./data');
+  const bridge_config = require('./bridge_config');
   const _ = require('lodash');
   const moment = require('moment');
 
@@ -115,6 +116,7 @@ exports.handler = async (event, context, callback) => {
     blockscout: {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
     },
+    bridge_config: {},
   };
 
   // get logo
@@ -492,6 +494,8 @@ exports.handler = async (event, context, callback) => {
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
         break;
+      case 'bridge_config':
+        res = { data: bridge_config[`${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}`] };
       default: // do nothing
     }
 
