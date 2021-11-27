@@ -149,7 +149,7 @@ const chains = [
       {
         chainId: '0x64',
         chainName: 'xDAI Chain',
-        rpcUrls: ['https://rpc.xdaichain.com', 'https://xdai.poanetwork.dev', 'wss://rpc.xdaichain.com/wss', 'wss://xdai.poanetwork.dev/wss', 'http://xdai.poanetwork.dev', 'https://dai.poa.network', 'ws://xdai.poanetwork.dev:8546'],
+        rpcUrls: ['https://rpc.xdaichain.com', 'https://xdai.poanetwork.dev', 'wss://rpc.xdaichain.com/wss', 'wss://xdai.poanetwork.dev/wss'/*, 'http://xdai.poanetwork.dev'*/, 'https://dai.poa.network', 'ws://xdai.poanetwork.dev:8546'],
         nativeCurrency: {
           name: 'xDAI',
           symbol: 'xDAI',
