@@ -499,7 +499,7 @@ exports.handler = async (event, context, callback) => {
 
         if (event.queryStringParameters.class === 'chains') {
           if (res?.data) {
-            res.data = res.data.map(_chain => { return { ..._chain, subgraph: [env[`subgraph_${_chain.id}`]?.api_host] } });
+            res.data = res.data.map(_chain => { return { ..._chain, subgraph: _chain.subgraph || [env[`subgraph_${_chain.id}`]?.api_host] } });
           }
         }
       default: // do nothing
