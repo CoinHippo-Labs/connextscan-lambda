@@ -68,7 +68,7 @@ exports.handler = async (event, context, callback) => {
         const params = {
           api_name: 'subgraph',
           api_version: version,
-          api_type: !version ? 'analytics' : '',
+          api_type: !version ? 'analytic' : '',
           chain_id: chain.id,
           query: `
             {
