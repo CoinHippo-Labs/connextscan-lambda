@@ -496,11 +496,17 @@ exports.handler = async (event, context, callback) => {
         break;
       case 'bridge_config':
         res = { data: bridge_config[`${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}`] };
+
+        if (event.queryStringParameters.class === 'chains') {
+          if (res?.data) {
+            res.data = res.data.map(_chain => { return { ..._chain, subgraph: [env[`subgraph_${_chain.id}`]?.api_host] } });
+          }
+        }
       default: // do nothing
     }
 
     // set response data
-    if (res && res.data) {
+    if (res?.data) {
       response = res.data;
 
       // remove error config
