@@ -79,8 +79,8 @@ exports.handler = async (event, context, callback) => {
                 volume
                 txCount
                 ${!version ? 'sendingTxCount' : ''}
-                ${!version ? 'receivingTxCount' : ''}
-                ${!version ? 'cancelTxCount' : ''}
+                ${!version && !['matic'].includes(chain.id) ? 'receivingTxCount' : ''}
+                ${!version && !['matic'].includes(chain.id) ? 'cancelTxCount' : ''}
               }
             }
           `,
