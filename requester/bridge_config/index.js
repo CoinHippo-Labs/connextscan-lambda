@@ -704,6 +704,32 @@ const assets = [
       },
     ],
   },
+  {
+    id: 'btc',
+    symbol: 'BTC',
+    contracts: [
+      {
+        contract_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+        chain_id: 1,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
+        chain_id: 137,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x50b7545627a5162f82a992c33b87adc75187b218',
+        chain_id: 43114,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x321162cd933e2be498cd2267a90534a804051b11',
+        chain_id: 250,
+        contract_decimals: 8,
+      },
+    ],
+  },
 ];
 
 const assets_testnet = [
