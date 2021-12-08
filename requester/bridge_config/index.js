@@ -39,7 +39,7 @@ const chains = [
       {
         chainId: '0x38',
         chainName: 'Binance Smart Chain Mainnet',
-        rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed2.ninicoin.io', 'https://bsc-dataseed3.ninicoin.io', 'https://bsc-dataseed1.binance.org', 'https://bsc-dataseed2.binance.org', 'https://bsc-dataseed3.binance.org', 'https://bsc-dataseed4.binance.org', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed2.defibit.io', 'https://bsc-dataseed3.defibit.io', 'https://bsc-dataseed4.defibit.io', 'wss://bsc-ws-node.nariox.org'],
+        rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed2.ninicoin.io', 'https://bsc-dataseed3.ninicoin.io', 'https://bsc-dataseed4.ninicoin.io', 'https://bsc-dataseed1.binance.org', 'https://bsc-dataseed2.binance.org', 'https://bsc-dataseed3.binance.org', 'https://bsc-dataseed4.binance.org', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed2.defibit.io', 'https://bsc-dataseed3.defibit.io', 'https://bsc-dataseed4.defibit.io', 'wss://bsc-ws-node.nariox.org'],
         nativeCurrency: {
           name: 'Binance Chain Native Token',
           symbol: 'BNB',
@@ -69,7 +69,7 @@ const chains = [
       {
         chainId: '0x89',
         chainName: 'Matic Mainnet',
-        rpcUrls: ['https://polygon-rpc.com', 'https://polygon-mainnet.infura.io/v3/e02a34c8aa5d4156aeed1142ea2173c8'/*, 'https://rpc-mainnet.matic.network'*/, 'wss://ws-mainnet.matic.network'],
+        rpcUrls: ['https://polygon-rpc.com', 'https://polygon-mainnet.infura.io/v3/e02a34c8aa5d4156aeed1142ea2173c8', 'wss://ws-mainnet.matic.network'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
@@ -219,7 +219,7 @@ const chains = [
       {
         chainId: '0x64',
         chainName: 'xDAI Chain',
-        rpcUrls: ['https://rpc.xdaichain.com', 'https://xdai.poanetwork.dev', 'wss://rpc.xdaichain.com/wss', 'wss://xdai.poanetwork.dev/wss'/*, 'http://xdai.poanetwork.dev'*/, 'https://dai.poa.network', 'ws://xdai.poanetwork.dev:8546'],
+        rpcUrls: ['https://rpc.xdaichain.com', 'https://xdai.poanetwork.dev', 'wss://rpc.xdaichain.com/wss', 'wss://xdai.poanetwork.dev/wss', 'https://dai.poa.network', 'ws://xdai.poanetwork.dev:8546'],
         nativeCurrency: {
           name: 'xDAI',
           symbol: 'xDAI',
@@ -402,7 +402,7 @@ const chains_testnet = [
       {
         chainId: '0x61',
         chainName: 'Binance Smart Chain Testnet',
-        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545', 'https://data-seed-prebsc-2-s1.binance.org:8545', 'https://data-seed-prebsc-1-s2.binance.org:8545', 'https://data-seed-prebsc-2-s2.binance.org:8545', 'https://data-seed-prebsc-1-s3.binance.org:8545', 'https://data-seed-prebsc-2-s3.binance.org:8545'],
+        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545', 'https://data-seed-prebsc-1-s2.binance.org:8545', 'https://data-seed-prebsc-1-s3.binance.org:8545', 'https://data-seed-prebsc-2-s2.binance.org:8545', 'https://data-seed-prebsc-2-s3.binance.org:8545'],
         nativeCurrency: {
           name: 'Binance Chain Native Token',
           symbol: 'BNB',
@@ -432,7 +432,7 @@ const chains_testnet = [
       {
         chainId: '0x13881',
         chainName: 'Matic Testnet Mumbai',
-        rpcUrls: ['https://rpc-mumbai.maticvigil.com/', 'https://rpc-mumbai.matic.today', 'wss://ws-mumbai.matic.today'],
+        rpcUrls: ['https://rpc-mumbai.maticvigil.com/', 'wss://ws-mumbai.matic.today'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
