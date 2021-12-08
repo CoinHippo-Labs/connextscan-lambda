@@ -28,6 +28,9 @@ exports.handler = async (event, context, callback) => {
     currency: process.env.CURRENCY || 'usd',
   };
 
+  // function for synchronous sleep
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
   // initial requester object
   const requester = axios.create({ baseURL: env.requester.api_host });
 
@@ -102,7 +105,7 @@ exports.handler = async (event, context, callback) => {
               sendingTxCount: Number(dayMetric.sendingTxCount) || 0,
               receivingTxCount: Number(dayMetric.receivingTxCount) || 0,
               cancelTxCount: Number(dayMetric.cancelTxCount) || 0,
-              volumeIn: Number(dayMetric.volumeIn) || 0,
+              volumeIn: dayMetric.volumeIn,
               chain_id: chain.id,
               version,
             };
@@ -111,7 +114,7 @@ exports.handler = async (event, context, callback) => {
           for (let k = 0; k < data.length; k++) {
             let record = data[k];
 
-            if (record?.id && record.assetId && ((record.txCount > 0 && record.volume) || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0 || record.volumeIn)) {
+            if (record?.id && record.assetId && ((record.txCount > 0 && (record.volume || record.volumeIn)) || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
               let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
@@ -131,6 +134,8 @@ exports.handler = async (event, context, callback) => {
               };
 
               if (record.normalize_volume > 0 || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0 || record.normalize_volumeIn > 0) {
+                await sleep(100)
+
                 // send request
                 await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
                   // set response data from error handled by exception
