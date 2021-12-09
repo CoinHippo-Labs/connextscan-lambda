@@ -80,7 +80,7 @@ exports.handler = async (event, context, callback) => {
                 dayStartTimestamp
                 assetId
                 volume
-                txCount
+                ${version ? 'txCount' : ''}
                 ${!version ? 'sendingTxCount' : ''}
                 ${!version && ![''].includes(chain.id) ? 'receivingTxCount' : ''}
                 ${!version && ![''].includes(chain.id) ? 'cancelTxCount' : ''}
@@ -101,9 +101,9 @@ exports.handler = async (event, context, callback) => {
               ...dayMetric,
               dayStartTimestamp: Number(dayMetric.dayStartTimestamp),
               volume: dayMetric.volume,
-              txCount: Number(dayMetric.txCount),
+              txCount: Number(dayMetric.txCount) || 0,
               sendingTxCount: Number(dayMetric.sendingTxCount) || 0,
-              receivingTxCount: Number(dayMetric.receivingTxCount) || 0,
+              receivingTxCount: Number(dayMetric.receivingTxCount) || Number(dayMetric.txCount) || 0,
               cancelTxCount: Number(dayMetric.cancelTxCount) || 0,
               volumeIn: dayMetric.volumeIn,
               chain_id: chain.id,
@@ -114,7 +114,7 @@ exports.handler = async (event, context, callback) => {
           for (let k = 0; k < data.length; k++) {
             let record = data[k];
 
-            if (record?.id && record.assetId && ((record.txCount > 0 && (record.volume || record.volumeIn)) || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
+            if (record?.id && record.assetId && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
               let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
 
               if (!contract) {
@@ -134,7 +134,7 @@ exports.handler = async (event, context, callback) => {
               };
 
               if (record.normalize_volume > 0 || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0 || record.normalize_volumeIn > 0) {
-                await sleep(100)
+                await sleep(100);
 
                 // send request
                 await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
