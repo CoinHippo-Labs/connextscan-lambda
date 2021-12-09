@@ -69,7 +69,7 @@ const chains = [
       {
         chainId: '0x89',
         chainName: 'Matic Mainnet',
-        rpcUrls: ['https://polygon-rpc.com', 'https://polygon-mainnet.infura.io/v3/e02a34c8aa5d4156aeed1142ea2173c8', 'wss://ws-mainnet.matic.network'],
+        rpcUrls: ['https://polygon-rpc.com', 'wss://ws-mainnet.matic.network'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
