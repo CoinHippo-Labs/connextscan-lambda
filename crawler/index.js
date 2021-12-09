@@ -80,11 +80,10 @@ exports.handler = async (event, context, callback) => {
                 dayStartTimestamp
                 assetId
                 volume
-                ${version ? 'txCount' : ''}
-                ${!version ? 'sendingTxCount' : ''}
-                ${!version && ![''].includes(chain.id) ? 'receivingTxCount' : ''}
-                ${!version && ![''].includes(chain.id) ? 'cancelTxCount' : ''}
-                ${!version && ![''].includes(chain.id) ? 'volumeIn' : ''}
+                sendingTxCount
+                receivingTxCount
+                cancelTxCount
+                volumeIn
               }
             }
           `,
@@ -101,9 +100,8 @@ exports.handler = async (event, context, callback) => {
               ...dayMetric,
               dayStartTimestamp: Number(dayMetric.dayStartTimestamp),
               volume: dayMetric.volume,
-              txCount: Number(dayMetric.txCount) || 0,
               sendingTxCount: Number(dayMetric.sendingTxCount) || 0,
-              receivingTxCount: Number(dayMetric.receivingTxCount) || Number(dayMetric.txCount) || 0,
+              receivingTxCount: Number(dayMetric.receivingTxCount) || 0,
               cancelTxCount: Number(dayMetric.cancelTxCount) || 0,
               volumeIn: dayMetric.volumeIn,
               chain_id: chain.id,
