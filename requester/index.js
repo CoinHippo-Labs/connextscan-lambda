@@ -208,12 +208,12 @@ exports.handler = async (event, context, callback) => {
           cacheId = `${chain_id}-${_.last(path.split('/').filter(_path => _path))}`;
 
           // get cache
-          resCache = await getCache(cacheId);
+          resCache = !params?.to && await getCache(cacheId);
 
           if (resCache?.data?.data?.Json && resCache.data.data.Expired > time.valueOf()) {
             res = { data: JSON.parse(resCache.data.data.Json) };
           }
-          else {
+          else if (!params?.to) {
             // set cache
             setCache = async data => await cacher.post('', { table_name: env.cache_contracts.table_name, method: 'put', ...data })
               .catch(error => { return { data: null }; });
@@ -221,10 +221,22 @@ exports.handler = async (event, context, callback) => {
         }
 
         if (!res) {
-          // send request
-          res = await requester.get(path, { params })
-            // set response data from error handled by exception
-            .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+          const chain_id = Number(path.split('/').filter(_path => _path)[2]);
+          const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
+
+          if (path?.startsWith('/pricing/historical_by_addresses_v2/') && params?.to && (
+            [100].includes(chain_id) ||
+            path?.includes('/0x0000000000000000000000000000000000000000')) ||
+            contracts.findIndex(contract => contract.addresses.findIndex(_address => (!_address.chain_id || _address.chain_id === chain_id) && contract_addresses?.includes(_address.contract_address) && _address.coingecko_id) > -1) > -1
+          ) {
+            res = { data: { data: [], error: [100].includes(chain_id) } };
+          }
+          else {
+            // send request
+            res = await requester.get(path, { params })
+              // set response data from error handled by exception
+              .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+          }
         }
 
         if (res.data) {
@@ -306,6 +318,10 @@ exports.handler = async (event, context, callback) => {
               }
             }
 
+            if (params?.to && !res?.data?.data) {
+              res = { data: { data: [] } };
+            }
+
             if (res?.data?.data) {
               const _contracts = contracts.flatMap(contract => contract.addresses.filter(_address => (!_address.chain_id || _address.chain_id === chain_id) && _address.coingecko_id).map(_address => { return { ..._address, is_stable: contract?.is_stable } }));
               for (let i = 0; i < _contracts.length; i++) {
@@ -313,7 +329,7 @@ exports.handler = async (event, context, callback) => {
 
                 if (contract_addresses.includes(_contract.contract_address?.toLowerCase()) && (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) < 0 || res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase() && (typeof contract?.prices?.[0]?.price !== 'number' || (_contract.is_stable && (Math.abs(contract?.prices?.[0]?.price - 1) > env.covalent.stable_threshold)))) > -1)) {
                   // send request
-                  const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}`)
+                  const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}${params?.to ? '/history' : ''}`, params?.to ? { params: { date: _.reverse(params.to.split('-')).join('-'), localization: 'false' } } : null)
                     // set response data from error handled by exception
                     .catch(error => { return { data: { error } }; });
 
@@ -324,7 +340,7 @@ exports.handler = async (event, context, callback) => {
                           contract = {
                             ...contract,
                             ..._contract,
-                            prices: [{ price: resCoin.data.market_data.current_price.usd }],
+                            prices: [{ price: resCoin.data.market_data.current_price.usd, date: params?.to }],
                             logo_url: resCoin.data.image?.large || resCoin.image?.thumb,
                             contract_name: resCoin.data.name || _contract.contract_name || contract.contract_name,
                             contract_ticker_symbol: resCoin.data.symbol?.toUpperCase() || _contract.contract_ticker_symbol || contract.contract_ticker_symbol,
@@ -337,7 +353,7 @@ exports.handler = async (event, context, callback) => {
                     else {
                       res.data.data.push({
                         ..._contract,
-                        prices: [{ price: resCoin.data.market_data.current_price.usd }],
+                        prices: [{ price: resCoin.data.market_data.current_price.usd, date: params?.to }],
                         logo_url: resCoin.data.image?.large || resCoin.image?.thumb,
                         contract_name: resCoin.data.name || _contract.contract_name,
                         contract_ticker_symbol: resCoin.data.symbol?.toUpperCase() || _contract.contract_ticker_symbol,

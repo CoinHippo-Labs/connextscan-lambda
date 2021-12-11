@@ -97,6 +97,12 @@ const contracts = [
     is_stable: true,
     addresses: [
       {
+        contract_address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+        chain_id: 1,
+        contract_decimals: 18,
+        coingecko_id: 'dai',
+      },
+      {
         contract_address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
         chain_id: 42161,
         contract_decimals: 18,
@@ -162,6 +168,38 @@ const contracts = [
         coingecko_id: 'ethereum',
       },
       {
+        contract_address: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+        chain_id: 56,
+        contract_decimals: 18,
+        contract_name: 'Ethereum',
+        contract_ticker_symbol: 'ETH',
+        coingecko_id: 'ethereum',
+      },
+      {
+        contract_address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+        chain_id: 137,
+        contract_decimals: 18,
+        contract_name: 'Ethereum',
+        contract_ticker_symbol: 'ETH',
+        coingecko_id: 'ethereum',
+      },
+      {
+        contract_address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
+        chain_id: 43114,
+        contract_decimals: 18,
+        contract_name: 'Ethereum',
+        contract_ticker_symbol: 'ETH',
+        coingecko_id: 'ethereum',
+      },
+      {
+        contract_address: '0x74b23882a30290451a17c44f4f05243b6b58c76d',
+        chain_id: 250,
+        contract_decimals: 18,
+        contract_name: 'Ethereum',
+        contract_ticker_symbol: 'ETH',
+        coingecko_id: 'ethereum',
+      },
+      {
         contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 42161,
         contract_decimals: 18,
@@ -208,6 +246,35 @@ const contracts = [
         contract_name: 'Ethereum',
         contract_ticker_symbol: 'ETH',
         coingecko_id: 'ethereum',
+      },
+    ],
+  },
+  {
+    logo_url: '/logos/contracts/wbtc.png',
+    addresses: [
+      {
+        contract_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+        chain_id: 1,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
+      },
+      {
+        contract_address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
+        chain_id: 137,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
+      },
+      {
+        contract_address: '0x50b7545627a5162f82a992c33b87adc75187b218',
+        chain_id: 43114,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
+      },
+      {
+        contract_address: '0x321162cd933e2be498cd2267a90534a804051b11',
+        chain_id: 250,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
       },
     ],
   },
