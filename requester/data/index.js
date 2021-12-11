@@ -58,6 +58,12 @@ const contracts = [
     is_stable: true,
     addresses: [
       {
+        contract_address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        chain_id: 1,
+        contract_decimals: 6,
+        coingecko_id: 'usd-coin',
+      },
+      {
         contract_address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
         chain_id: 42161,
         contract_decimals: 6,
@@ -96,6 +102,12 @@ const contracts = [
       {
         contract_address: '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664',
         chain_id: 43114,
+        contract_decimals: 6,
+        coingecko_id: 'usd-coin',
+      },
+      {
+        contract_address: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
+        chain_id: 1285,
         contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
