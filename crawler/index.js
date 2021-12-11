@@ -54,7 +54,7 @@ exports.handler = async (event, context, callback) => {
 
   const contracts = {};
 
-  const versions = ['v0', ''];
+  const versions = [/*'v0', */''];
 
   for (let i = 0; i < versions.length; i++) {
     const version = versions[i];
@@ -113,26 +113,35 @@ exports.handler = async (event, context, callback) => {
             let record = data[k];
 
             if (record?.id && record.assetId && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
-              let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
+              const date = moment(record.dayStartTimestamp * 1000).format('YYYY-MM-DD');
+              const from = date;//moment().substract(365, 'days').format('YYYY-MM-DD');
+              const to = date;//moment().format('YYYY-MM-DD');
+
+              let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId && _contract.key === `${record.assetId}_${date}`);
 
               if (!contract) {
-                const _contracts = await getContracts(chain.chain_id, record.assetId);
+                const _contracts = await getContracts(chain.chain_id, record.assetId, { from, to });
 
                 if (_contracts) {
-                  contracts[chain.id] = _.uniqBy(_.concat(_contracts || [], contracts[chain.id] || []), 'contract_address');
+                  contracts[chain.id] = _.uniqBy(_.concat(_contracts?.map(_contract => { return { ..._contract, key: `${_contract.contract_address}_${date}` } }) || [], contracts[chain.id] || []), 'key');
 
                   contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
                 }
               }
+
+              const priceIndex = contract?.prices?.findIndex(_price => _price.date === date);
+              const price = contract?.prices?.[priceIndex > -1 ? priceIndex : 0]?.price;
+
               record = {
                 ...record,
                 id: `${chain.id}-${record.id}`,
-                normalize_volume: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (Number(record.volume) * contract.prices[0].price / Math.pow(10, contract.contract_decimals)),
-                normalize_volumeIn: contract?.contract_decimals && typeof contract?.prices?.[0].price === 'number' && (Number(record.volumeIn) * contract.prices[0].price / Math.pow(10, contract.contract_decimals)),
+                price,
+                normalize_volume: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volume) / Math.pow(10, contract.contract_decimals)) * price),
+                normalize_volumeIn: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volumeIn) / Math.pow(10, contract.contract_decimals)) * price),
               };
 
-              if (record.normalize_volume > 0 || record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0 || record.normalize_volumeIn > 0) {
-                await sleep(100);
+              if ((record.normalize_volume > 0 || record.normalize_volumeIn > 0) && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
+                // await sleep(100);
 
                 // send request
                 await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
