@@ -18,16 +18,19 @@ const contracts = [
       {
         contract_address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
         chain_id: 137,
+        contract_decimals: 6,
         coingecko_id: 'tether',
       },
       {
         contract_address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
         chain_id: 250,
+        contract_decimals: 6,
         coingecko_id: 'tether',
       },
       {
         contract_address: '0x55d398326f99059ff775485246999027b3197955',
         chain_id: 56,
+        contract_decimals: 18,
         coingecko_id: 'tether',
       },
       {
@@ -39,11 +42,13 @@ const contracts = [
       {
         contract_address: '0xc7198437980c041c805a1edcba50c1ce5db95118',
         chain_id: 43114,
+        contract_decimals: 6,
         coingecko_id: 'tether',
       },
       {
         contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
         chain_id: 1285,
+        contract_decimals: 6,
         coingecko_id: 'tether',
       },
     ],
@@ -67,16 +72,19 @@ const contracts = [
       {
         contract_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
         chain_id: 137,
+        contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
       {
         contract_address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
         chain_id: 250,
+        contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
       {
         contract_address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
         chain_id: 56,
+        contract_decimals: 18,
         coingecko_id: 'usd-coin',
       },
       {
@@ -88,6 +96,7 @@ const contracts = [
       {
         contract_address: '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664',
         chain_id: 43114,
+        contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
     ],
@@ -117,16 +126,19 @@ const contracts = [
       {
         contract_address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
         chain_id: 137,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       {
         contract_address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
         chain_id: 250,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       {
         contract_address: '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
         chain_id: 56,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       {
