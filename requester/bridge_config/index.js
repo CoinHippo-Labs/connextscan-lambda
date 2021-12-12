@@ -4,7 +4,6 @@ const chains = [
     title: 'Ethereum',
     short_name: 'ETH',
     chain_id: 1,
-    confirmations: 7,
     provider_params: [
       {
         chainId: '0x1',
@@ -34,7 +33,6 @@ const chains = [
     title: 'Binance Smart Chain',
     short_name: 'BSC',
     chain_id: 56,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0x38',
@@ -64,7 +62,6 @@ const chains = [
     title: 'Polygon',
     short_name: 'MATIC',
     chain_id: 137,
-    confirmations: 60,
     provider_params: [
       {
         chainId: '0x89',
@@ -75,7 +72,7 @@ const chains = [
           symbol: 'MATIC',
           decimals: 18,
         },
-        blockExplorerUrls: ['https://polygonscan.com/'],
+        blockExplorerUrls: ['https://polygonscan.com'],
       },
     ],
     explorer: {
@@ -94,7 +91,6 @@ const chains = [
     title: 'Arbitrum',
     short_name: 'ARB',
     chain_id: 42161,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0xa4b1',
@@ -124,7 +120,6 @@ const chains = [
     title: 'Optimism',
     short_name: 'OPT',
     chain_id: 10,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0xa',
@@ -154,7 +149,6 @@ const chains = [
     title: 'Avalanche',
     short_name: 'AVAX',
     chain_id: 43114,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0xa86a',
@@ -165,7 +159,7 @@ const chains = [
           symbol: 'AVAX',
           decimals: 18,
         },
-        blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
+        blockExplorerUrls: ['https://snowtrace.io'],
       },
     ],
     explorer: {
@@ -184,7 +178,6 @@ const chains = [
     title: 'Fantom',
     short_name: 'FTM',
     chain_id: 250,
-    confirmations: 20,
     provider_params: [
       {
         chainId: '0xfa',
@@ -214,7 +207,6 @@ const chains = [
     title: 'xDAI Chain',
     short_name: 'xDAI',
     chain_id: 100,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0x64',
@@ -244,7 +236,6 @@ const chains = [
     title: 'Moonriver',
     short_name: 'MOVR',
     chain_id: 1285,
-    confirmations: 10,
     provider_params: [
       {
         chainId: '0x0505',
@@ -277,7 +268,6 @@ const chains_testnet = [
     title: 'Ropsten',
     short_name: 'ROP',
     chain_id: 3,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x3',
@@ -307,7 +297,6 @@ const chains_testnet = [
     title: 'Rinkeby',
     short_name: 'RIN',
     chain_id: 4,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x4',
@@ -337,7 +326,6 @@ const chains_testnet = [
     title: 'Görli',
     short_name: 'GOR',
     chain_id: 5,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x5',
@@ -367,7 +355,6 @@ const chains_testnet = [
     title: 'Kovan',
     short_name: 'KOV',
     chain_id: 42,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x2a',
@@ -397,7 +384,6 @@ const chains_testnet = [
     title: 'Binance Smart Chain Testnet',
     short_name: 'BSCT',
     chain_id: 97,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x61',
@@ -427,7 +413,6 @@ const chains_testnet = [
     title: 'Mumbai',
     short_name: 'MUM',
     chain_id: 80001,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x13881',
@@ -457,7 +442,6 @@ const chains_testnet = [
     title: 'Arbitrum Rinkeby',
     short_name: 'ARBR',
     chain_id: 421611,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x66eeb',
@@ -487,7 +471,6 @@ const chains_testnet = [
     title: 'Optimism Kovan',
     short_name: 'OPTK',
     chain_id: 69,
-    confirmations: 1,
     provider_params: [
       {
         chainId: '0x45',
