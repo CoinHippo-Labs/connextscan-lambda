@@ -238,7 +238,7 @@ const chains = [
     chain_id: 1285,
     provider_params: [
       {
-        chainId: '0x0505',
+        chainId: '0x505',
         chainName: 'Moonriver',
         rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
         nativeCurrency: {
