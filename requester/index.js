@@ -117,6 +117,7 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
     },
     bridge_config_git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-network-xpollinate',
+    bridge_config_s3_bucket: process.env.BRIDGE_CONFIG_S3_BUCKET || 'https://s3.us-west-1.amazonaws.com/config.xpollinate.connext.network',
     bridge_config: {},
   };
 
@@ -512,26 +513,37 @@ exports.handler = async (event, context, callback) => {
           .catch(error => { return { data: { error } }; });
         break;
       case 'bridge_config':
-        const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}.json`;
+        if (['announcement'].includes(event.queryStringParameters.class)) {
+          const s3_url = `${env.bridge_config_s3_bucket}/${event.queryStringParameters.class}.json`;
 
-        try {
-          res = await axios.get(git_url);
-        } catch (error) {
-          res = null;
+          try {
+            res = await axios.get(s3_url);
+          } catch (error) {
+            res = null;
+          }
         }
+        else {
+          const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}.json`;
 
-        if (!res?.data) {
-          res = { data: bridge_config[`${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}`] };
-        }
+          try {
+            res = await axios.get(git_url);
+          } catch (error) {
+            res = null;
+          }
 
-        if (event.queryStringParameters.class === 'chains') {
-          if (res?.data) {
-            res.data = res.data.map(_chain => {
-              return {
-                ..._chain,
-                subgraph: _chain.subgraph || [env[`subgraph_${_chain.id}`]?.api_host],
-              };
-            });
+          if (!res?.data) {
+            res = { data: bridge_config[`${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}`] };
+          }
+
+          if (event.queryStringParameters.class === 'chains') {
+            if (res?.data) {
+              res.data = res.data.map(_chain => {
+                return {
+                  ..._chain,
+                  subgraph: _chain.subgraph || [env[`subgraph_${_chain.id}`]?.api_host],
+                };
+              });
+            }
           }
         }
       default: // do nothing
