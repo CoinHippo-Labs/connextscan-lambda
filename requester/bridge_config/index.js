@@ -410,7 +410,7 @@ const chains_testnet = [
   },
   {
     id: 'mum',
-    title: 'Mumbai',
+    title: 'Polygon Mumbai',
     short_name: 'MUM',
     chain_id: 80001,
     provider_params: [
