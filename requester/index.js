@@ -11,6 +11,7 @@ exports.handler = async (event, context, callback) => {
   const bridge_config = require('./bridge_config');
   const _ = require('lodash');
   const moment = require('moment');
+  const AWS = require('aws-sdk');
 
   /************************************************
    * Internal API information for requesting data
@@ -117,9 +118,18 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
     },
     bridge_config_git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-network-xpollinate',
-    bridge_config_s3_bucket: process.env.BRIDGE_CONFIG_S3_BUCKET || 'https://s3.us-west-1.amazonaws.com/config.xpollinate.connext.network',
+    bridge_config_s3_url: process.env.BRIDGE_CONFIG_S3_URL || 'https://s3.us-west-1.amazonaws.com',
+    bridge_config_s3_bucket: process.env.BRIDGE_CONFIG_S3_BUCKET || 'config.xpollinate.connext.network',
     bridge_config: {},
   };
+
+  // aws s3
+  AWS.config.update({
+    accessKeyId: process.env.BRIDGE_CONFIG_AWS_ACCESS_KEY_ID || '{YOUR_BRIDGE_CONFIG_AWS_ACCESS_KEY_ID}',
+    secretAccessKey: process.env.BRIDGE_CONFIG_AWS_SECRET_ACCESS_KEY || '{YOUR_BRIDGE_CONFIG_AWS_SECRET_ACCESS_KEY}',
+    region: process.env.BRIDGE_CONFIG_AWS_REGION || 'us-west-1',
+  });
+  const s3 = new AWS.S3();
 
   // get logo
   const getLogoFromContract = (contract_address, chain_id) => contract_address ? contracts?.find(contract => contract.addresses.findIndex(address => address.contract_address === contract_address && (!address.chain_id || address.chain_id === chain_id)) > -1)?.logo_url : null;
@@ -513,36 +523,61 @@ exports.handler = async (event, context, callback) => {
           .catch(error => { return { data: { error } }; });
         break;
       case 'bridge_config':
-        if (['announcement'].includes(event.queryStringParameters.class)) {
-          const s3_url = `${env.bridge_config_s3_bucket}/${event.queryStringParameters.class}.json`;
+        // normalize path parameter
+        path = path || '';
+        // setup query string parameters
+        params = { ...event.queryStringParameters };
 
-          try {
-            res = await axios.get(s3_url);
-          } catch (error) {
-            res = null;
+        if (path === '/set') {
+          if (['announcement'].includes(params.class)) {
+            try {
+              const data = JSON.stringify({ data: params.data });
+
+              res = {
+                data: await new Promise(resolve =>
+                  s3.putObject({
+                    Bucket: env.bridge_config_s3_bucket,
+                    Key: `${params.class}${params.network ? `_${params.network}` : ''}.json`,
+                    Body: data,
+                    ACL: 'private'
+                  }, (err, data) => resolve(data?.Body ? data.Body.toString() : null))
+                ),
+              };
+            } catch (error) {}
           }
         }
         else {
-          const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}.json`;
+          if (['announcement'].includes(params.class)) {
+            const s3_url = `${env.bridge_config_s3_url}/${env.bridge_config_s3_bucket}/${params.class}${params.network ? `_${params.network}` : ''}.json`;
 
-          try {
-            res = await axios.get(git_url);
-          } catch (error) {
-            res = null;
+            try {
+              res = await axios.get(s3_url);
+            } catch (error) {
+              res = null;
+            }
           }
+          else {
+            const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${params.class}${params.network ? `_${params.network}` : ''}.json`;
 
-          if (!res?.data) {
-            res = { data: bridge_config[`${event.queryStringParameters.class}${event.queryStringParameters.network ? `_${event.queryStringParameters.network}` : ''}`] };
-          }
+            try {
+              res = await axios.get(git_url);
+            } catch (error) {
+              res = null;
+            }
 
-          if (event.queryStringParameters.class === 'chains') {
-            if (res?.data) {
-              res.data = res.data.map(_chain => {
-                return {
-                  ..._chain,
-                  subgraph: _chain.subgraph || [env[`subgraph_${_chain.id}`]?.api_host],
-                };
-              });
+            if (!res?.data) {
+              res = { data: bridge_config[`${params.class}${params.network ? `_${params.network}` : ''}`] };
+            }
+
+            if (params.class === 'chains') {
+              if (res?.data) {
+                res.data = res.data.map(_chain => {
+                  return {
+                    ..._chain,
+                    subgraph: _chain.subgraph || [env[`subgraph_${_chain.id}`]?.api_host],
+                  };
+                });
+              }
             }
           }
         }
