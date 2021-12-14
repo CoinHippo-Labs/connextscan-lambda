@@ -349,6 +349,24 @@ const contracts = [
       },
     ],
   },
+  {
+    logo_url: null,
+    addresses: [
+      {
+        contract_address: '0xbd80cfa9d93a87d1bb895f810ea348e496611cd4',
+        chain_id: 137,
+        contract_decimals: 18,
+        coingecko_id: 'fraction',
+      },
+      {
+        contract_address: '0x2bf2ba13735160624a0feae98f6ac8f70885ea61',
+        chain_id: 100,
+        contract_decimals: 18,
+        coingecko_id: 'fraction',
+      },
+    ],
+    
+  },
 ];
 
 module.exports = { contracts };
