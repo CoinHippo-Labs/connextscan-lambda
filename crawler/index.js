@@ -54,7 +54,7 @@ exports.handler = async (event, context, callback) => {
 
   const contracts = {};
 
-  const versions = [/*'v0', */''];
+  const versions = ['v0', ''];
 
   for (let i = 0; i < versions.length; i++) {
     const version = versions[i];
