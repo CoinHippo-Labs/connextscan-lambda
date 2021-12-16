@@ -84,6 +84,7 @@ exports.handler = async (event, context, callback) => {
                 receivingTxCount
                 cancelTxCount
                 volumeIn
+                relayerFee
               }
             }
           `,
@@ -104,6 +105,7 @@ exports.handler = async (event, context, callback) => {
               receivingTxCount: Number(dayMetric.receivingTxCount) || 0,
               cancelTxCount: Number(dayMetric.cancelTxCount) || 0,
               volumeIn: dayMetric.volumeIn,
+              relayerFee: dayMetric.relayerFee,
               chain_id: chain.id,
               version,
             };
@@ -138,9 +140,10 @@ exports.handler = async (event, context, callback) => {
                 price,
                 normalize_volume: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volume) / Math.pow(10, contract.contract_decimals)) * price),
                 normalize_volumeIn: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volumeIn) / Math.pow(10, contract.contract_decimals)) * price),
+                normalize_relayerFee: contract?.contract_decimals && typeof price === 'number' && ((Number(record.relayerFee) / Math.pow(10, contract.contract_decimals)) * price),
               };
 
-              if ((record.normalize_volume > 0 || record.normalize_volumeIn > 0) && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
+              if ((record.normalize_volume > 0 || record.normalize_volumeIn > 0 || record.normalize_relayerFee > 0) && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
                 // await sleep(100);
 
                 // send request
