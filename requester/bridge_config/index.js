@@ -722,6 +722,27 @@ const assets = [
       },
     ],
   },
+  {
+    id: 'grt',
+    symbol: 'GRT',
+    contracts: [
+      {
+        contract_address: '0xc944e90c64b2c07662a292be6244bdf05cda44a7',
+        chain_id: 1,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x5fe2b58c013d7601147dcdd68c143a77499f5531',
+        chain_id: 137,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x23a941036ae778ac51ab04cea08ed6e2fe103614',
+        chain_id: 42161,
+        contract_decimals: 18,
+      },
+    ],
+  },
 ];
 
 const assets_testnet = [
