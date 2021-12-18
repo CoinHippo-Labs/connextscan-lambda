@@ -645,6 +645,11 @@ const assets = [
         contract_decimals: 18,
         is_native: true,
       },
+      {
+        contract_address: '0x80a16016cc4a2e6a2caca8a4a498b1699ff0f844',
+        chain_id: 1285,
+        contract_decimals: 18,
+      },
     ],
   },
   {
@@ -689,6 +694,16 @@ const assets = [
         chain_id: 250,
         contract_decimals: 18,
       },
+      {
+        contract_address: '0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1',
+        chain_id: 100,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c',
+        chain_id: 1285,
+        contract_decimals: 18,
+      },
     ],
   },
   {
@@ -701,6 +716,11 @@ const assets = [
         contract_decimals: 8,
       },
       {
+        contract_address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+        chain_id: 56,
+        contract_decimals: 18,
+      },
+      {
         contract_address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
         chain_id: 137,
         contract_decimals: 8,
@@ -711,6 +731,11 @@ const assets = [
         contract_decimals: 8,
       },
       {
+        contract_address: '0x68f180fcce6836688e9084f035309e29bf0a2095',
+        chain_id: 10,
+        contract_decimals: 8,
+      },
+      {
         contract_address: '0x50b7545627a5162f82a992c33b87adc75187b218',
         chain_id: 43114,
         contract_decimals: 8,
@@ -718,6 +743,16 @@ const assets = [
       {
         contract_address: '0x321162cd933e2be498cd2267a90534a804051b11',
         chain_id: 250,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8',
+        chain_id: 100,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+        chain_id: 1285,
         contract_decimals: 8,
       },
     ],
@@ -739,6 +774,16 @@ const assets = [
       {
         contract_address: '0x23a941036ae778ac51ab04cea08ed6e2fe103614',
         chain_id: 42161,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x8a0cac13c7da965a312f08ea4229c37869e85cb9',
+        chain_id: 43114,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0xfadc59d012ba3c110b08a15b7755a5cb7cbe77d7',
+        chain_id: 100,
         contract_decimals: 18,
       },
     ],
