@@ -59,6 +59,10 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.SUBGRAPH_MOVR_API_HOST || '{YOUR_SUBGRAPH_MOVR_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_MOVR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MOVR_API_HOST_ANALYTIC}',
     },
+    subgraph_fuse: {
+      api_host: process.env.SUBGRAPH_FUSE_API_HOST || '{YOUR_SUBGRAPH_FUSE_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_FUSE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FUSE_API_HOST_ANALYTIC}',
+    },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_HECO_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_HECO_API_HOST_ANALYTIC}',
