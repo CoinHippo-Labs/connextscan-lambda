@@ -271,7 +271,7 @@ const chains = [
         chainName: 'Fuse Network',
         rpcUrls: ['https://rpc.fuse.io'],
         nativeCurrency: {
-          name: 'Fuse',
+          name: 'Fuse Token',
           symbol: 'FUSE',
           decimals: 18,
         },
