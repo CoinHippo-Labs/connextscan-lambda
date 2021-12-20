@@ -260,6 +260,35 @@ const chains = [
       transaction_path: '/tx/{tx}',
     },
   },
+  {
+    id: 'fuse',
+    title: 'Fuse',
+    short_name: 'FUSE',
+    chain_id: 122,
+    provider_params: [
+      {
+        chainId: '0x7a',
+        chainName: 'Fuse Network',
+        rpcUrls: ['https://rpc.fuse.io'],
+        nativeCurrency: {
+          name: 'Fuse',
+          symbol: 'FUSE',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://explorer.fuse.io'],
+      },
+    ],
+    explorer: {
+      name: 'Fuse Explorer',
+      url: 'https://explorer.fuse.io',
+      icon: '/logos/explorers/fuse.png',
+      block_path: '/blocks/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/tokens/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+  },
 ];
 
 const chains_testnet = [
@@ -547,6 +576,11 @@ const assets = [
         chain_id: 1285,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0xfadbbf8ce7d5b7041be672561bba99f79c532e10',
+        chain_id: 122,
+        contract_decimals: 6,
+      },
     ],
   },
   {
@@ -596,6 +630,11 @@ const assets = [
       {
         contract_address: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
         chain_id: 1285,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5',
+        chain_id: 122,
         contract_decimals: 6,
       },
     ],
@@ -648,6 +687,11 @@ const assets = [
       {
         contract_address: '0x80a16016cc4a2e6a2caca8a4a498b1699ff0f844',
         chain_id: 1285,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x94ba7a27c7a95863d1bdc7645ac2951e0cca06ba',
+        chain_id: 122,
         contract_decimals: 18,
       },
     ],
@@ -704,6 +748,11 @@ const assets = [
         chain_id: 1285,
         contract_decimals: 18,
       },
+      {
+        contract_address: '0xa722c13135930332eb3d749b2f0906559d2c5b99',
+        chain_id: 122,
+        contract_decimals: 18,
+      },
     ],
   },
   {
@@ -746,13 +795,18 @@ const assets = [
         contract_decimals: 8,
       },
       {
-        contract_address: '0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8',
+        contract_address: '0x8e5bbbb09ed1ebde8674cda39a0c169401db4252',
         chain_id: 100,
         contract_decimals: 8,
       },
       {
-        contract_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+        contract_address: '0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8',
         chain_id: 1285,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x33284f95ccb7b948d9d352e1439561cf83d8d00d',
+        chain_id: 122,
         contract_decimals: 8,
       },
     ],
@@ -784,6 +838,11 @@ const assets = [
       {
         contract_address: '0xfadc59d012ba3c110b08a15b7755a5cb7cbe77d7',
         chain_id: 100,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x025a4c577198d116ea499193e6d735fdb2e6e841',
+        chain_id: 122,
         contract_decimals: 18,
       },
     ],

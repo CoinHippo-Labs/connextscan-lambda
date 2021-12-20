@@ -365,7 +365,6 @@ const contracts = [
         coingecko_id: 'fraction',
       },
     ],
-    
   },
 ];
 
