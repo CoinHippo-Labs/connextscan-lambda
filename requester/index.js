@@ -241,11 +241,11 @@ exports.handler = async (event, context, callback) => {
           const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
 
           if (path?.startsWith('/pricing/historical_by_addresses_v2/') && params?.to && (
-            [100].includes(chain_id) ||
+            [100, 122].includes(chain_id) ||
             path?.includes('/0x0000000000000000000000000000000000000000') ||
             contracts.findIndex(contract => contract.addresses.findIndex(_address => (!_address.chain_id || _address.chain_id === chain_id) && contract_addresses?.includes(_address.contract_address) && _address.coingecko_id) > -1) > -1
           )) {
-            res = { data: { data: [], error: [100].includes(chain_id) } };
+            res = { data: { data: [], error: [100, 122].includes(chain_id) } };
           }
           else {
             // send request
@@ -334,7 +334,7 @@ exports.handler = async (event, context, callback) => {
               }
             }
 
-            if (params?.to && !res?.data?.data) {
+            if ((params?.to || [122].includes(chain_id)) && !res?.data?.data) {
               res = { data: { data: [] } };
             }
 
