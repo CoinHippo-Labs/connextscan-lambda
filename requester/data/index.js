@@ -51,6 +51,12 @@ const contracts = [
         contract_decimals: 6,
         coingecko_id: 'tether',
       },
+      {
+        contract_address: '0xfadbbf8ce7d5b7041be672561bba99f79c532e10',
+        chain_id: 122,
+        contract_decimals: 6,
+        coingecko_id: 'tether',
+      },
     ],
   },
   {
@@ -111,6 +117,12 @@ const contracts = [
         contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
+      {
+        contract_address: '0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5',
+        chain_id: 122,
+        contract_decimals: 6,
+        coingecko_id: 'usd-coin',
+      },
     ],
   },
   {
@@ -162,6 +174,12 @@ const contracts = [
       {
         contract_address: '0xd586e7f844cea2f87f50152665bcbc2c279d8d70',
         chain_id: 43114,
+        coingecko_id: 'dai',
+      },
+      {
+        contract_address: '0x94ba7a27c7a95863d1bdc7645ac2951e0cca06ba',
+        chain_id: 122,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
     ],
@@ -271,6 +289,12 @@ const contracts = [
         contract_ticker_symbol: 'ETH',
         coingecko_id: 'ethereum',
       },
+      {
+        contract_address: '0xa722c13135930332eb3d749b2f0906559d2c5b99',
+        chain_id: 122,
+        contract_decimals: 18,
+        coingecko_id: 'ethereum',
+      },
     ],
   },
   {
@@ -297,6 +321,12 @@ const contracts = [
       {
         contract_address: '0x321162cd933e2be498cd2267a90534a804051b11',
         chain_id: 250,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
+      },
+      {
+        contract_address: '0x33284f95ccb7b948d9d352e1439561cf83d8d00d',
+        chain_id: 122,
         contract_decimals: 8,
         coingecko_id: 'bitcoin',
       },
@@ -363,6 +393,17 @@ const contracts = [
         chain_id: 100,
         contract_decimals: 18,
         coingecko_id: 'fraction',
+      },
+    ],
+  },
+  {
+    logo_url: null,
+    addresses: [
+      {
+        contract_address: '0x025a4c577198d116ea499193e6d735fdb2e6e841',
+        chain_id: 122,
+        contract_decimals: 18,
+        coingecko_id: 'the-graph',
       },
     ],
   },
