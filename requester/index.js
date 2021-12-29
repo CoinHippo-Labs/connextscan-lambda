@@ -109,7 +109,7 @@ exports.handler = async (event, context, callback) => {
     covalent: {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
       api_key: process.env.COVALENT_API_KEY || '{YOUR_COVALENT_API_KEY}',
-      stable_threshold: Number(process.env.STABLE_THRESHOLD) || 0.001,
+      stable_threshold: Number(process.env.STABLE_THRESHOLD) || 0.005,
     },
     ens: {
       api_host: process.env.ENS_SUBGRAPH_API_HOST || '{YOUR_ENS_SUBGRAPH_API_HOST}',
