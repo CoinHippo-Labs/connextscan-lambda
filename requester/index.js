@@ -343,6 +343,17 @@ exports.handler = async (event, context, callback) => {
               for (let i = 0; i < _contracts.length; i++) {
                 const _contract = _contracts[i];
 
+                if (_contract?.is_stable) {
+                  const index = res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase());
+
+                  if (index > -1) {
+                    res.data.data[index] = {
+                      ...res.data.data[index],
+                      prices: [{ price: 1, date: params?.to }],
+                    };
+                  }
+                }
+
                 if (contract_addresses.includes(_contract.contract_address?.toLowerCase()) && (res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase()) < 0 || res.data.data.findIndex(contract => contract.contract_address?.toLowerCase() === _contract.contract_address?.toLowerCase() && (typeof contract?.prices?.[0]?.price !== 'number' || (_contract.is_stable && (Math.abs(contract?.prices?.[0]?.price - 1) > env.covalent.stable_threshold)))) > -1)) {
                   // send request
                   const resCoin = await coingecker.get(`/coins/${_contract.coingecko_id}${params?.to ? '/history' : ''}`, params?.to ? { params: { date: _.reverse(params.to.split('-')).join('-'), localization: 'false' } } : null)
