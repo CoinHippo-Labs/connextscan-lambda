@@ -407,6 +407,23 @@ const contracts = [
       },
     ],
   },
+  {
+    logo_url: '/logos/contracts/magic.png',
+    addresses: [
+      {
+        contract_address: '0xb0c7a3ba49c7a6eaba6cd4a96c55a1391070ac9a',
+        chain_id: 1,
+        contract_decimals: 18,
+        coingecko_id: 'magic',
+      },
+      {
+        contract_address: '0x539bde0d7dbd336b79148aa742883198bbf60342',
+        chain_id: 42161,
+        contract_decimals: 18,
+        coingecko_id: 'magic',
+      },
+    ],
+  },
 ];
 
 module.exports = { contracts };
