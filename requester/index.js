@@ -221,7 +221,12 @@ exports.handler = async (event, context, callback) => {
 
           const chain_id = Number(path.split('/').filter(_path => _path)[2]);
 
-          cacheId = `${chain_id}-${_.last(path.split('/').filter(_path => _path))}`;
+          let contract_addresses = _.last(path.split('/').filter(_path => _path));
+          if (contract_addresses) {
+            contract_addresses = _.orderBy(contract_addresses.split(',').map(address => { return { address } }), ['address'], ['asc']).map(address => address?.address).join(',');
+          }
+
+          cacheId = `${chain_id}-${contract_addresses}`;
 
           // get cache
           resCache = !params?.to && await getCache(cacheId);
