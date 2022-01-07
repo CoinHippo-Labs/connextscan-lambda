@@ -388,7 +388,7 @@ const chains_testnet = [
       {
         chainId: '0x2a',
         chainName: 'Ethereum Testnet Kovan',
-        rpcUrls: ['https://kovan.poa.network', 'http://kovan.poa.network:8545', 'ws://kovan.poa.network:8546'],
+        rpcUrls: ['https://kovan.poa.network', 'ws://kovan.poa.network:8546'],
         nativeCurrency: {
           name: 'Kovan Ether',
           symbol: 'KOV',
