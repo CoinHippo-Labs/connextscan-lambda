@@ -524,6 +524,35 @@ const chains_testnet = [
       transaction_path: '/tx/{tx}',
     },
   },
+  {
+    id: 'mbase',
+    title: 'Moonbase Alpha',
+    short_name: 'MBase',
+    chain_id: 1287,
+    provider_params: [
+      {
+        chainId: '0x507',
+        chainName: 'Moonbase Alpha',
+        rpcUrls: ['https://rpc.api.moonbase.moonbeam.network', 'https://moonbeam-alpha.api.onfinality.io/public'],
+        nativeCurrency: {
+          name: 'Dev',
+          symbol: 'DEV',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://moonbase.moonscan.io'],
+      },
+    ],
+    explorer: {
+      name: 'Moonscan',
+      url: 'https://moonbase.moonscan.io',
+      icon: '/logos/explorers/moonbeam.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+  },
 ];
 
 const assets = [

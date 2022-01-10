@@ -63,13 +63,13 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.SUBGRAPH_FUSE_API_HOST || '{YOUR_SUBGRAPH_FUSE_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_FUSE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FUSE_API_HOST_ANALYTIC}',
     },
+    subgraph_glmr: {
+      api_host: process.env.SUBGRAPH_GLMR_API_HOST || '{YOUR_SUBGRAPH_GLMR_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_GLMR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_GLMR_API_HOST_ANALYTIC}',
+    },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_HECO_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_HECO_API_HOST_ANALYTIC}',
-    },
-    subgraph_mbase: {
-      api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
-      api_host_analytic: process.env.SUBGRAPH_MBASE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MBASE_API_HOST_ANALYTIC}',
     },
     subgraph_rop: {
       api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
@@ -102,6 +102,10 @@ exports.handler = async (event, context, callback) => {
     subgraph_optk: {
       api_host: process.env.SUBGRAPH_OPTK_API_HOST || '{YOUR_SUBGRAPH_OPTK_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_OPTK_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_OPTK_API_HOST_ANALYTIC}',
+    },
+    subgraph_mbase: {
+      api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MBASE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MBASE_API_HOST_ANALYTIC}',
     },
     coingecko: {
       api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
