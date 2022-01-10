@@ -957,6 +957,11 @@ const assets_testnet = [
         chain_id: 69,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0x4326c29a626d9a98464df8f53856887d43a11759',
+        chain_id: 1287,
+        contract_decimals: 18,
+      },
     ],
   },
 ];
