@@ -52,6 +52,12 @@ const contracts = [
         coingecko_id: 'tether',
       },
       {
+        contract_address: '0x8e70cd5b4ff3f62659049e74b6649c6603a0e594',
+        chain_id: 1284,
+        contract_decimals: 6,
+        coingecko_id: 'tether',
+      },
+      {
         contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
         chain_id: 1285,
         contract_decimals: 6,
@@ -118,7 +124,7 @@ const contracts = [
         coingecko_id: 'usd-coin',
       },
       {
-        contract_address: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
+        contract_address: '0x8f552a71efe5eefc207bf75485b356a0b3f01ec9',
         chain_id: 1284,
         contract_decimals: 6,
         coingecko_id: 'usd-coin',
@@ -186,6 +192,12 @@ const contracts = [
       {
         contract_address: '0xd586e7f844cea2f87f50152665bcbc2c279d8d70',
         chain_id: 43114,
+        coingecko_id: 'dai',
+      },
+      {
+        contract_address: '0xc234a67a4f840e61ade794be47de455361b52413',
+        chain_id: 1284,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       {
@@ -302,6 +314,12 @@ const contracts = [
         coingecko_id: 'ethereum',
       },
       {
+        contract_address: '0x30d2a9f5fdf90ace8c17952cbb4ee48a55d916a7',
+        chain_id: 1284,
+        contract_decimals: 18,
+        coingecko_id: 'ethereum',
+      },
+      {
         contract_address: '0xa722c13135930332eb3d749b2f0906559d2c5b99',
         chain_id: 122,
         contract_decimals: 18,
@@ -333,6 +351,12 @@ const contracts = [
       {
         contract_address: '0x321162cd933e2be498cd2267a90534a804051b11',
         chain_id: 250,
+        contract_decimals: 8,
+        coingecko_id: 'bitcoin',
+      },
+      {
+        contract_address: '0x1dc78acda13a8bc4408b207c9e48cdbc096d95e0',
+        chain_id: 1284,
         contract_decimals: 8,
         coingecko_id: 'bitcoin',
       },
