@@ -47,6 +47,12 @@ const contracts = [
       },
       {
         contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
+        chain_id: 1284,
+        contract_decimals: 6,
+        coingecko_id: 'tether',
+      },
+      {
+        contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
         chain_id: 1285,
         contract_decimals: 6,
         coingecko_id: 'tether',
@@ -108,6 +114,12 @@ const contracts = [
       {
         contract_address: '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664',
         chain_id: 43114,
+        contract_decimals: 6,
+        coingecko_id: 'usd-coin',
+      },
+      {
+        contract_address: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
+        chain_id: 1284,
         contract_decimals: 6,
         coingecko_id: 'usd-coin',
       },
@@ -329,6 +341,19 @@ const contracts = [
         chain_id: 122,
         contract_decimals: 8,
         coingecko_id: 'bitcoin',
+      },
+    ],
+  },
+  {
+    logo_url: '/logos/contracts/glmr.png',
+    addresses: [
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 1284,
+        contract_decimals: 18,
+        contract_name: 'Moonbeam',
+        contract_ticker_symbol: 'GLMR',
+        coingecko_id: 'Moonbeam',
       },
     ],
   },

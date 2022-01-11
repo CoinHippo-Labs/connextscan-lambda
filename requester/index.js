@@ -63,9 +63,9 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.SUBGRAPH_FUSE_API_HOST || '{YOUR_SUBGRAPH_FUSE_API_HOST}',
       api_host_analytic: process.env.SUBGRAPH_FUSE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FUSE_API_HOST_ANALYTIC}',
     },
-    subgraph_glmr: {
-      api_host: process.env.SUBGRAPH_GLMR_API_HOST || '{YOUR_SUBGRAPH_GLMR_API_HOST}',
-      api_host_analytic: process.env.SUBGRAPH_GLMR_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_GLMR_API_HOST_ANALYTIC}',
+    subgraph_mbeam: {
+      api_host: process.env.SUBGRAPH_MBEAM_API_HOST || '{YOUR_SUBGRAPH_MBEAM_API_HOST}',
+      api_host_analytic: process.env.SUBGRAPH_MBEAM_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MBEAM_API_HOST_ANALYTIC}',
     },
     subgraph_heco: {
       api_host: process.env.SUBGRAPH_HECO_API_HOST || '{YOUR_SUBGRAPH_HECO_API_HOST}',
@@ -124,6 +124,9 @@ exports.handler = async (event, context, callback) => {
     },
     blockscout: {
       api_host: process.env.BLOCKSCOUT_API_HOST || 'https://blockscout.com/',
+    },
+    blockscout_mbeam: {
+      api_host: process.env.BLOCKSCOUT_MBEAM_API_HOST || 'https://blockscout.moonbeam.network/',
     },
     bridge_config_git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-network-xpollinate',
     bridge_config_s3_url: process.env.BRIDGE_CONFIG_S3_URL || 'https://s3.us-west-1.amazonaws.com',
@@ -249,7 +252,7 @@ exports.handler = async (event, context, callback) => {
           const chain_id = Number(path.split('/').filter(_path => _path)[2]);
           const contract_addresses = _.last(path.split('/').filter(_path => _path))?.split(',') || [];
 
-          const is_unsupported_chains = [100, 122].includes(chain_id);
+          const is_unsupported_chains = [100, 1284, 122].includes(chain_id);
 
           if (is_unsupported_chains || (path?.startsWith('/pricing/historical_by_addresses_v2/') && params?.to && (
             path?.includes('/0x0000000000000000000000000000000000000000') ||
@@ -280,6 +283,40 @@ exports.handler = async (event, context, callback) => {
                   const contract_address = contract_addresses[i];
 
                   path = '/xdai/mainnet/api';
+                  params = { module: 'token', action: 'getToken', contractaddress: contract_address };
+
+                  // send request
+                  res = await blockscouter.get(path, { params })
+                    // set response data from error handled by exception
+                    .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                  if (res?.data?.result) {
+                    const contract_data = res.data.result;
+
+                    data.push({
+                      contract_decimals: Number(contract_data.decimals),
+                      contract_name: contract_data.name,
+                      contract_ticker_symbol: contract_data.symbol,
+                      contract_address: contract_data.contractAddress,
+                      supports_erc: ['ERC-20'].includes(contract_data.type) ? ['erc20'] : [],
+                      prices: ['usdt', 'usdc', 'dai'].includes(contract_data.symbol?.toLowerCase()) ? [{ price: 1 }] : null,
+                    });
+                  }
+                }
+
+                res.data = { data };
+              }
+            }
+            else if (chain_id === 1284) {
+              if (res.data.error) {
+                const blockscouter = axios.create({ baseURL: env.blockscout_mbeam.api_host });
+
+                const data = [];
+
+                for (let i = 0; i < contract_addresses.length; i++) {
+                  const contract_address = contract_addresses[i];
+
+                  path = '/api';
                   params = { module: 'token', action: 'getToken', contractaddress: contract_address };
 
                   // send request
@@ -464,6 +501,66 @@ exports.handler = async (event, context, callback) => {
                         balance: Number(balance),
                         quote_rate: 1,
                         quote: 1 * Number(balance) / Math.pow(10, 18),
+                      };
+                    })),
+                  };
+                }
+
+                res.data = { data };
+              }
+            }
+            else if (chain_id === 1284) {
+              if (res.data.error) {
+                const blockscouter = axios.create({ baseURL: env.blockscout_mbeam.api_host });
+
+                let data;
+
+                path = '/api';
+                params = { module: 'account', action: 'tokenlist', address };
+
+                // send request
+                res = await blockscouter.get(path, { params })
+                  // set response data from error handled by exception
+                  .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                if (res?.data?.result) {
+                  data = {
+                    items: res.data.result.map(balance => {
+                      return {
+                        contract_decimals: Number(balance.decimals),
+                        contract_name: balance.name,
+                        contract_ticker_symbol: balance.symbol,
+                        contract_address: balance.contractAddress,
+                        supports_erc: ['ERC-20'].includes(balance.type) ? ['erc20'] : [],
+                        type: 'cryptocurrency',
+                        balance: balance.balance,
+                        quote_rate: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 : null,
+                        quote: ['usdt', 'usdc', 'dai'].includes(balance.symbol?.toLowerCase()) ? 1 * Number(balance.balance) / Math.pow(10, Number(balance.decimals)) : null,
+                      };
+                    }),
+                  };
+                }
+
+                params = { module: 'account', action: 'balance', address };
+
+                // send request
+                res = await blockscouter.get(path, { params })
+                  // set response data from error handled by exception
+                  .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+                if (res?.data?.result) {
+                  data = {
+                    items: _.concat(data?.items || [], [res.data.result].map(balance => {
+                      return {
+                        contract_decimals: 18,
+                        contract_name: 'Glimmer',
+                        contract_ticker_symbol: 'GLMR',
+                        contract_address: '0x0000000000000000000000000000000000000000',
+                        supports_erc: ['erc20'],
+                        type: 'cryptocurrency',
+                        balance: Number(balance),
+                        quote_rate: null,
+                        quote: null * Number(balance) / Math.pow(10, 18),
                       };
                     })),
                   };

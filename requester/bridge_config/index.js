@@ -232,6 +232,35 @@ const chains = [
     },
   },
   {
+    id: 'mbeam',
+    title: 'Moonbeam',
+    short_name: 'MBEAM',
+    chain_id: 1284,
+    provider_params: [
+      {
+        chainId: '0x504',
+        chainName: 'Moonbeam',
+        rpcUrls: ['https://rpc.api.moonbeam.network', 'https://moonbeam.api.onfinality.io/public'],
+        nativeCurrency: {
+          name: 'Glimmer',
+          symbol: 'GLMR',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://moonbeam.moonscan.io'],
+      },
+    ],
+    explorer: {
+      name: 'BlockScout',
+      url: 'https://blockscout.moonbeam.network',
+      icon: '/logos/explorers/blockscout.png',
+      block_path: '/blocks/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/tokens/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+  },
+  {
     id: 'movr',
     title: 'Moonriver',
     short_name: 'MOVR',
@@ -527,7 +556,7 @@ const chains_testnet = [
   {
     id: 'mbase',
     title: 'Moonbase Alpha',
-    short_name: 'MBase',
+    short_name: 'MBASE',
     chain_id: 1287,
     provider_params: [
       {
