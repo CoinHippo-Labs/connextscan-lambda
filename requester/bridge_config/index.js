@@ -1019,6 +1019,22 @@ const assets_testnet = [
       },
     ],
   },
+  {
+    id: 'gather',
+    symbol: 'GTH',
+    contracts: [
+      {
+        contract_address: '0xe4149e6851f5f904e21c97210f8862ff98b43173',
+        chain_id: 4,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x14f896e39b374114dd1c750415be0d1f3eab9ce3',
+        chain_id: 97,
+        contract_decimals: 18,
+      },
+    ],
+  },
 ];
 
 module.exports = { chains, chains_testnet, assets, assets_testnet };
