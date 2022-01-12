@@ -27,6 +27,9 @@ const chains = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    nomad: {
+      id: 'ethereum',
+    },
   },
   {
     id: 'bsc',
@@ -260,6 +263,9 @@ const chains = [
       transaction_path: '/tx/{tx}',
     },
     optional_bridge_urls: ['https://app.nomad.xyz'],
+    nomad: {
+      id: 'moonbeam',
+    },
   },
   {
     id: 'movr',
@@ -437,6 +443,9 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    nomad: {
+      id: 'kovan',
+    },
   },
   {
     id: 'bsct',
@@ -583,6 +592,9 @@ const chains_testnet = [
       transaction_path: '/tx/{tx}',
     },
     optional_bridge_urls: ['https://development.app.nomad.xyz'],
+    nomad: {
+      id: 'moonbasealpha',
+    },
   },
 ];
 
