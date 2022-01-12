@@ -184,14 +184,9 @@ const contracts = [
         coingecko_id: 'dai',
       },
       {
-        contract_address: '0x44fA8E6f47987339850636F88629646662444217',
-        chain_id: 100,
-        contract_decimals: 18,
-        coingecko_id: 'dai',
-      },
-      {
         contract_address: '0xd586e7f844cea2f87f50152665bcbc2c279d8d70',
         chain_id: 43114,
+        contract_decimals: 18,
         coingecko_id: 'dai',
       },
       {
