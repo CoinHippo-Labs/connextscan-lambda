@@ -259,6 +259,7 @@ const chains = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    optional_bridge_urls: ['https://app.nomad.xyz'],
   },
   {
     id: 'movr',
