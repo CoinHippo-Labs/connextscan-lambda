@@ -634,6 +634,7 @@ const assets = [
         contract_address: '0x8e70cd5b4ff3f62659049e74b6649c6603a0e594',
         chain_id: 1284,
         contract_decimals: 6,
+        is_nomad_support: true,
       },
       {
         contract_address: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
@@ -695,6 +696,7 @@ const assets = [
         contract_address: '0x8f552a71efe5eefc207bf75485b356a0b3f01ec9',
         chain_id: 1284,
         contract_decimals: 6,
+        is_nomad_support: true,
       },
       {
         contract_address: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
@@ -757,6 +759,7 @@ const assets = [
         contract_address: '0xc234a67a4f840e61ade794be47de455361b52413',
         chain_id: 1284,
         contract_decimals: 18,
+        is_nomad_support: true,
       },
       {
         contract_address: '0x80a16016cc4a2e6a2caca8a4a498b1699ff0f844',
@@ -821,6 +824,7 @@ const assets = [
         contract_address: '0x30d2a9f5fdf90ace8c17952cbb4ee48a55d916a7',
         chain_id: 1284,
         contract_decimals: 18,
+        is_nomad_support: true,
       },
       {
         contract_address: '0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c',
