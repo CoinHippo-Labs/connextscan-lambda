@@ -468,6 +468,23 @@ const contracts = [
       },
     ],
   },
+  {
+    logo_url: '/logos/contracts/gth.png',
+    addresses: [
+      {
+        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
+        chain_id: 1,
+        contract_decimals: 18,
+        coingecko_id: 'magic',
+      },
+      {
+        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
+        chain_id: 56,
+        contract_decimals: 18,
+        coingecko_id: 'magic',
+      },
+    ],
+  },
 ];
 
 module.exports = { contracts };
