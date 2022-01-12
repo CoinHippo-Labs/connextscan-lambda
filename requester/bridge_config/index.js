@@ -993,7 +993,6 @@ const assets = [
   {
     id: 'gth',
     symbol: 'GTH',
-    is_staging: true,
     contracts: [
       {
         contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
