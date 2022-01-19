@@ -860,6 +860,7 @@ const assets = [
         contract_address: '0x30d2a9f5fdf90ace8c17952cbb4ee48a55d916a7',
         chain_id: 1284,
         contract_decimals: 18,
+        symbol: 'WETH',
       },
       {
         contract_address: '0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c',
@@ -870,6 +871,7 @@ const assets = [
         contract_address: '0xa722c13135930332eb3d749b2f0906559d2c5b99',
         chain_id: 122,
         contract_decimals: 18,
+        symbol: 'WETH',
       },
     ],
     nomad_support: [
@@ -892,6 +894,7 @@ const assets = [
         contract_address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
         chain_id: 56,
         contract_decimals: 18,
+        symbol: 'BTCB',
       },
       {
         contract_address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
@@ -965,6 +968,7 @@ const assets = [
         contract_address: '0x8a0cac13c7da965a312f08ea4229c37869e85cb9',
         chain_id: 43114,
         contract_decimals: 18,
+        symbol: 'GRT.e',
       },
       {
         contract_address: '0xfadc59d012ba3c110b08a15b7755a5cb7cbe77d7',
