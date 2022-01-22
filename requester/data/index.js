@@ -502,7 +502,7 @@ const contracts = [
         coingecko_id: 'fei-usd',
       },
       {
-        contract_address: '0xbfae6fecd8124ba33cbb2180aab0fe4c03914a5a',
+        contract_address: '0x4a717522566c7a09fd2774ccedc5a8c43c5f9fd2',
         chain_id: 42161,
         contract_decimals: 18,
         coingecko_id: 'fei-usd',
