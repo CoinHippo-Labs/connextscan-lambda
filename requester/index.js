@@ -7,11 +7,13 @@ exports.handler = async (event, context, callback) => {
   const axios = require('axios');
 
   // import modules
-  const { contracts } = require('./data');
-  const bridge_config = require('./bridge_config');
   const _ = require('lodash');
   const moment = require('moment');
   const AWS = require('aws-sdk');
+
+  // data
+  const { contracts } = require('./data');
+  const bridge_config = require('./bridge_config');
 
   /************************************************
    * Internal API information for requesting data
@@ -679,7 +681,8 @@ exports.handler = async (event, context, callback) => {
             }
           }
           else {
-            const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${params.class}${params.network ? `_${params.network}` : ''}.json`;
+            // const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${params.class}${params.network ? `_${params.network}` : ''}.json`;
+            const git_url = `https://raw.githubusercontent.com/${env.bridge_config_git_repo}/main/config/${params.class}.json`;
 
             try {
               res = await axios.get(git_url);

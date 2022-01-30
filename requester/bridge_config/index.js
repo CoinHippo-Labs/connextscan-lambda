@@ -1,4 +1,4 @@
-const chains = [
+const chains_mainnet = [
   {
     id: 'eth',
     title: 'Ethereum',
@@ -598,7 +598,7 @@ const chains_testnet = [
   },
 ];
 
-const assets = [
+const assets_mainnet = [
   {
     id: 'usdt',
     symbol: 'USDT',
@@ -1141,4 +1141,4 @@ const assets_testnet = [
   },
 ];
 
-module.exports = { chains, chains_testnet, assets, assets_testnet };
+module.exports = { chains_mainnet, chains_testnet, assets_mainnet, assets_testnet };
