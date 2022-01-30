@@ -65,7 +65,7 @@ exports.handler = async (event, context, callback) => {
       body.height = Number(body.height);
     }
 
-    const objectFields = ['aggs', 'query', 'sort'];
+    const objectFields = ['aggs', 'query', 'sort', 'fields'];
 
     objectFields.forEach(objectField => {
       if (body[objectField]) {
@@ -102,20 +102,15 @@ exports.handler = async (event, context, callback) => {
           path = `/${index}/_doc/${id}`;
         }
         if (body) {
-          // send request
-          res = await (path.includes('_update') ?
-            requester.post(path, { doc: body }, { auth })
-            :
-            requester.put(path, body, { auth })
-          )
-            // set response data from error handled by exception
-            .catch(error => { return { data: { error } }; });
-
-          if (res && res.data && res.data.error) {
-            if (path) {
-              path = path.replace(path.includes('_doc') ? '_doc' : '_update', path.includes('_doc') ? '_update' : '_doc');
-            }
-
+          if (path.includes('/_update_by_query')) {
+            try {
+              // send request
+              res = await requester.post(path, body, { auth })
+                // set response data from error handled by exception
+                .catch(error => { return { data: { error } }; });
+            } catch (error) {}
+          }
+          else {
             // send request
             res = await (path.includes('_update') ?
               requester.post(path, { doc: body }, { auth })
@@ -124,6 +119,21 @@ exports.handler = async (event, context, callback) => {
             )
               // set response data from error handled by exception
               .catch(error => { return { data: { error } }; });
+
+            if (res && res.data && res.data.error) {
+              if (path) {
+                path = path.replace(path.includes('_doc') ? '_doc' : '_update', path.includes('_doc') ? '_update' : '_doc');
+              }
+
+              // send request
+              res = await (path.includes('_update') ?
+                requester.post(path, { doc: body }, { auth })
+                :
+                requester.put(path, body, { auth })
+              )
+                // set response data from error handled by exception
+                .catch(error => { return { data: { error } }; });
+            }
           }
         }
         break;
