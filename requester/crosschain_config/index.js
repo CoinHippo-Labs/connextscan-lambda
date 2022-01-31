@@ -1,6 +1,6 @@
 const chains_mainnet = [
   {
-    id: 'eth',
+    id: 'ethereum',
     title: 'Ethereum',
     short_name: 'ETH',
     chain_id: 1,
@@ -27,12 +27,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
-    nomad: {
-      id: 'ethereum',
-    },
+    image: '/logos/chains/mainnet/ethereum.png',
+    color: '#c0c2c3',
   },
   {
-    id: 'bsc',
+    id: 'binance',
     title: 'Binance Smart Chain',
     short_name: 'BSC',
     chain_id: 56,
@@ -59,9 +58,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/binance.png',
+    color: '#e8b30b',
   },
   {
-    id: 'matic',
+    id: 'polygon',
     title: 'Polygon',
     short_name: 'MATIC',
     chain_id: 137,
@@ -88,9 +89,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/polygon.png',
+    color: '#8247e5',
   },
   {
-    id: 'arb',
+    id: 'arbitrum',
     title: 'Arbitrum',
     short_name: 'ARB',
     chain_id: 42161,
@@ -117,9 +120,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/arbitrum.png',
+    color: '#28a0f0',
   },
   {
-    id: 'opt',
+    id: 'optimism',
     title: 'Optimism',
     short_name: 'OPT',
     chain_id: 10,
@@ -146,9 +151,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/optimism.png',
+    color: '#dc2626',
   },
   {
-    id: 'avax',
+    id: 'avalanche',
     title: 'Avalanche',
     short_name: 'AVAX',
     chain_id: 43114,
@@ -175,9 +182,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/avalanche.png',
+    color: '#e84143',
   },
   {
-    id: 'ftm',
+    id: 'fantom',
     title: 'Fantom',
     short_name: 'FTM',
     chain_id: 250,
@@ -204,11 +213,13 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/fantom.png',
+    color: '#1869ff',
   },
   {
-    id: 'xdai',
+    id: 'gnosis',
     title: 'Gnosis Chain',
-    short_name: 'xDAI',
+    short_name: 'Gnosis',
     chain_id: 100,
     provider_params: [
       {
@@ -233,9 +244,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/gnosis.png',
+    color: '#48a9a6',
   },
   {
-    id: 'mbeam',
+    id: 'moonbeam',
     title: 'Moonbeam',
     short_name: 'MBEAM',
     chain_id: 1284,
@@ -262,13 +275,11 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
-    optional_bridge_urls: ['https://app.nomad.xyz'],
-    nomad: {
-      id: 'moonbeam',
-    },
+    image: '/logos/chains/mainnet/moonbeam.png',
+    color: '#53cbc8',
   },
   {
-    id: 'movr',
+    id: 'moonriver',
     title: 'Moonriver',
     short_name: 'MOVR',
     chain_id: 1285,
@@ -295,6 +306,8 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/moonriver.png',
+    color: '#e6af07',
   },
   {
     id: 'fuse',
@@ -324,20 +337,22 @@ const chains_mainnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/mainnet/fuse.png',
+    color: '#fde047',
   },
 ];
 
 const chains_testnet = [
   {
-    id: 'rop',
-    title: 'Ropsten',
+    id: 'ropsten',
+    title: 'Ethereum Ropsten',
     short_name: 'ROP',
     chain_id: 3,
     provider_params: [
       {
         chainId: '0x3',
         chainName: 'Ethereum Testnet Ropsten',
-        rpcUrls: ['https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
+        rpcUrls: ['https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161', 'wss://ropsten.infura.io/ws/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
         nativeCurrency: {
           name: 'Ropsten Ether',
           symbol: 'ROP',
@@ -356,10 +371,12 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/ropsten.png',
+    color: '#c0c2c3',
   },
   {
-    id: 'rin',
-    title: 'Rinkeby',
+    id: 'rinkeby',
+    title: 'Ethereum Rinkeby',
     short_name: 'RIN',
     chain_id: 4,
     provider_params: [
@@ -385,10 +402,12 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/rinkeby.png',
+    color: '#c0c2c3',
   },
   {
-    id: 'gor',
-    title: 'Görli',
+    id: 'gorli',
+    title: 'Ethereum Görli',
     short_name: 'GOR',
     chain_id: 5,
     provider_params: [
@@ -414,10 +433,12 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/gorli.png',
+    color: '#c0c2c3',
   },
   {
-    id: 'kov',
-    title: 'Kovan',
+    id: 'kovan',
+    title: 'Ethereum Kovan',
     short_name: 'KOV',
     chain_id: 42,
     provider_params: [
@@ -443,13 +464,12 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
-    nomad: {
-      id: 'kovan',
-    },
+    image: '/logos/chains/testnet/kovan.png',
+    color: '#c0c2c3',
   },
   {
-    id: 'bsct',
-    title: 'Binance Smart Chain Testnet',
+    id: 'binance',
+    title: 'Binance Testnet',
     short_name: 'BSCT',
     chain_id: 97,
     provider_params: [
@@ -475,9 +495,11 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/binance.png',
+    color: '#e8b30b',
   },
   {
-    id: 'mum',
+    id: 'mumbai',
     title: 'Polygon Mumbai',
     short_name: 'MUM',
     chain_id: 80001,
@@ -504,9 +526,11 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/mumbai.png',
+    color: '#8247e5',
   },
   {
-    id: 'arbr',
+    id: 'arbitrum',
     title: 'Arbitrum Rinkeby',
     short_name: 'ARBR',
     chain_id: 421611,
@@ -533,9 +557,11 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/arbitrum.png',
+    color: '#28a0f0',
   },
   {
-    id: 'optk',
+    id: 'optimism',
     title: 'Optimism Kovan',
     short_name: 'OPTK',
     chain_id: 69,
@@ -562,16 +588,18 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
+    image: '/logos/chains/testnet/optimism.png',
+    color: '#dc2626',
   },
   {
-    id: 'mbase',
+    id: 'moonbase',
     title: 'Moonbase Alpha',
     short_name: 'MBASE',
     chain_id: 1287,
     provider_params: [
       {
         chainId: '0x507',
-        chainName: 'Moonbase Alpha',
+        chainName: 'Moonbeam Testnet',
         rpcUrls: ['https://rpc.api.moonbase.moonbeam.network', 'https://moonbeam-alpha.api.onfinality.io/public'],
         nativeCurrency: {
           name: 'Dev',
@@ -591,10 +619,8 @@ const chains_testnet = [
       contract_0_path: '/address/{address}',
       transaction_path: '/tx/{tx}',
     },
-    optional_bridge_urls: ['https://development.app.nomad.xyz'],
-    nomad: {
-      id: 'moonbasealpha',
-    },
+    image: '/logos/chains/testnet/moonbase.png',
+    color: '#53cbc8',
   },
 ];
 
@@ -602,6 +628,9 @@ const assets_mainnet = [
   {
     id: 'usdt',
     symbol: 'USDT',
+    image: '/logos/assets/usdt.png',
+    coingecko_id: 'tether',
+    is_stable: true,
     contracts: [
       {
         contract_address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -661,16 +690,13 @@ const assets_mainnet = [
         contract_decimals: 6,
       },
     ],
-    nomad_support: [
-      {
-        from_chain_id: 1,
-        to_chain_id: 1284,
-      },
-    ],
   },
   {
     id: 'usdc',
     symbol: 'USDC',
+    image: '/logos/assets/usdc.png',
+    coingecko_id: 'usd-coin',
+    is_stable: true,
     contracts: [
       {
         contract_address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -729,16 +755,13 @@ const assets_mainnet = [
         contract_decimals: 6,
       },
     ],
-    nomad_support: [
-      {
-        from_chain_id: 1,
-        to_chain_id: 1284,
-      },
-    ],
   },
   {
     id: 'dai',
     symbol: 'DAI',
+    image: '/logos/assets/dai.png',
+    coingecko_id: 'dai',
+    is_stable: true,
     contracts: [
       {
         contract_address: '0x6b175474e89094c44da98b954eedeac495271d0f',
@@ -799,16 +822,12 @@ const assets_mainnet = [
         contract_decimals: 18,
       },
     ],
-    nomad_support: [
-      {
-        from_chain_id: 1,
-        to_chain_id: 1284,
-      },
-    ],
   },
   {
     id: 'eth',
     symbol: 'ETH',
+    image: '/logos/assets/eth.png',
+    coingecko_id: 'ethereum',
     contracts: [
       {
         contract_address: '0x0000000000000000000000000000000000000000',
@@ -874,16 +893,12 @@ const assets_mainnet = [
         symbol: 'WETH',
       },
     ],
-    nomad_support: [
-      {
-        from_chain_id: 1,
-        to_chain_id: 1284,
-      },
-    ],
   },
   {
     id: 'wbtc',
     symbol: 'WBTC',
+    image: '/logos/assets/wbtc.png',
+    coingecko_id: 'wrapped-bitcoin',
     contracts: [
       {
         contract_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
@@ -948,6 +963,8 @@ const assets_mainnet = [
   {
     id: 'grt',
     symbol: 'GRT',
+    image: '/logos/assets/grt.png',
+    coingecko_id: 'the-graph',
     contracts: [
       {
         contract_address: '0xc944e90c64b2c07662a292be6244bdf05cda44a7',
@@ -985,7 +1002,8 @@ const assets_mainnet = [
   {
     id: 'miva',
     symbol: 'MIVA',
-    is_staging: true,
+    image: '/logos/assets/miva.png',
+    coingecko_id: 'minerva-wallet',
     contracts: [
       {
         contract_address: '0xc0b2983a17573660053beeed6fdb1053107cf387',
@@ -1002,7 +1020,8 @@ const assets_mainnet = [
   {
     id: 'magic',
     symbol: 'MAGIC',
-    is_staging: true,
+    image: '/logos/assets/magic.png',
+    coingecko_id: 'magic',
     contracts: [
       {
         contract_address: '0xb0c7a3ba49c7a6eaba6cd4a96c55a1391070ac9a',
@@ -1019,6 +1038,8 @@ const assets_mainnet = [
   {
     id: 'gth',
     symbol: 'GTH',
+    image: '/logos/assets/gth.png',
+    coingecko_id: 'gather',
     contracts: [
       {
         contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
@@ -1035,6 +1056,9 @@ const assets_mainnet = [
   {
     id: 'fei',
     symbol: 'FEI',
+    image: '/logos/assets/fei.png',
+    coingecko_id: 'fei-usd',
+    is_stable: true,
     contracts: [
       {
         contract_address: '0x956f47f50a910163d8bf957cf5846d573e7f87ca',
@@ -1116,16 +1140,12 @@ const assets_testnet = [
         contract_decimals: 18,
       },
     ],
-    nomad_support: [
-      {
-        from_chain_id: 42,
-        to_chain_id: 1287,
-      },
-    ],
   },
   {
     id: 'gth',
     symbol: 'GTH',
+    image: '/logos/assets/gth.png',
+    coingecko_id: 'gather',
     contracts: [
       {
         contract_address: '0xe4149e6851f5f904e21c97210f8862ff98b43173',
