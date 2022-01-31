@@ -226,6 +226,7 @@ exports.handler = async (event, context, callback) => {
         params = { ...event.queryStringParameters };
 
         const assets = crosschain_config[`assets_${env.network}`];
+        const index_name = `tokens${['testnet'].includes(env.network) ? `_${env.network}` : ''}`;
         const addresses = _.uniq((params.addresses || params.address)?.split(',').map(a => a?.trim().toLowerCase()).filter(a => a) || []);
         const date = params.date;
 
@@ -243,7 +244,7 @@ exports.handler = async (event, context, callback) => {
             },
           };
 
-          const resCache = !date && await opensearcher.post('', { index: 'tokens', method: 'search', query, size: addresses.length })
+          const resCache = !date && await opensearcher.post('', { index: index_name, method: 'search', query, size: addresses.length })
             .catch(error => { return { data: { error } }; });
 
           const data = addresses.map(a => { return { chain_id: chainId, contract_address: a } });
@@ -264,7 +265,7 @@ exports.handler = async (event, context, callback) => {
             if (date) {
               for (let i = 0; i < coingeckoIds.length; i++) {
                 // send request
-                const resTokens = await coingecker.get(`/coins/${coingeckoIds[i]}/history`, { params: { id: coingeckoIds[i], date: moment(date).format('DD-MM-YYYY'), localization: 'false' } })
+                const resTokens = await coingecker.get(`/coins/${coingeckoIds[i]}/history`, { params: { id: coingeckoIds[i], date: moment(Number(date)).format('DD-MM-YYYY'), localization: 'false' } })
                   // set response data from error handled by exception
                   .catch(error => { return { data: { error } }; });
 
@@ -327,7 +328,7 @@ exports.handler = async (event, context, callback) => {
             }
           }
 
-          toUpdateData = toUpdateData.filter(d => data.findIndex(_d => _d?.contract_address === d?.contract_address && !('symbol' in _d)) < 0);
+          toUpdateData = toUpdateData.filter(d => data.findIndex(_d => _d?.contract_address === d?.contract_address && !('symbol' in _d)) > -1);
         
           const contractAddresses = toUpdateData.map(d => d?.contract_address).filter(a => a);
 
@@ -406,7 +407,8 @@ exports.handler = async (event, context, callback) => {
               default:
                 params = { key: env.covalent.api_key };
                 if (date) {
-                  params.to = moment(date).format('YYYY-MM-DD');
+                  params.from = moment(Number(date)).format('YYYY-MM-DD');
+                  params.to = moment(Number(date)).format('YYYY-MM-DD');
                 }
 
                 // send request
@@ -450,13 +452,13 @@ exports.handler = async (event, context, callback) => {
               const id = `${d?.chain_id || chainId}_${d?.contract_address?.toLowerCase()}`;
 
               // send request
-              opensearcher.post('', { index: 'tokens', method: 'update', path: `/tokens/_update/${id}`, id, ...d })
+              opensearcher.post('', { index: index_name, method: 'update', path: `/tokens/_update/${id}`, id, ...d })
                 // set response data from error handled by exception
                 .catch(error => { return { data: { error } }; });
             });
           }
 
-          res.data = { data };
+          res = { data: { data } };
         }
         break;
       case 'coingecko':

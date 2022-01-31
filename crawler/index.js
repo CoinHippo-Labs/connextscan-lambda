@@ -9,6 +9,9 @@ exports.handler = async (event, context, callback) => {
   // import modules
   const _ = require('lodash');
   const moment = require('moment');
+  const BigNumber = require('bignumber.js');
+
+  BigNumber.config({ DECIMAL_PLACES: Number(40), EXPONENTIAL_AT: [-7, Number(40)] });
 
   /************************************************
    * Internal API information for requesting data
@@ -25,54 +28,45 @@ exports.handler = async (event, context, callback) => {
     chains: JSON.parse(process.env.CHAINS || '{YOUR_CHAINS}'),
     chains_v0: JSON.parse(process.env.CHAINS_V0 || '{YOUR_CHAINS_V0}'),
     max_page: process.env.MAX_PAGE ? Number(process.env.MAX_PAGE) : 3,
-    currency: process.env.CURRENCY || 'usd',
   };
 
-  // function for synchronous sleep
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-  // initial requester object
+  // initial request object
   const requester = axios.create({ baseURL: env.requester.api_host });
-
   const opensearcher = axios.create({ baseURL: env.opensearcher.api_host });
 
-  const getContracts = async (chain_id, contract_addresses, params) => {
-    const path = '';
+  const getTokens = async (chain_id, addresses, params) => {
     params = {
-      api_name: 'covalent',
-      path: `/pricing/historical_by_addresses_v2/${chain_id}/${env.currency}/${contract_addresses}/`,
       ...params,
+      module: 'tokens',
+      chain_id,
+      addresses,
     };
 
     // send request
-    const res = await requester.get(path, { params })
+    const res = await requester.get(null, { params })
       // set response data from error handled by exception
       .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
 
     return res?.data?.data;
   };
 
-  const contracts = {};
-
-  const versions = ['v0', ''];
+  const tokens = {}, versions = ['v0', ''];
 
   for (let i = 0; i < versions.length; i++) {
     const version = versions[i];
 
     for (let j = 0; j < env[`chains${version ? `_${version}` : ''}`].length; j++) {
-      const chain = env[`chains${version ? `_${version}` : ''}`][j];
+      const chain_id = env[`chains${version ? `_${version}` : ''}`][j];
 
       const size = 1000;
-      let skip = 0;
-      let hasMore = true;
+      let skip = 0, hasMore = true;
 
       while (hasMore && (skip / size < env.max_page)) {
-        const path = '';
         const params = {
-          api_name: 'subgraph',
+          module: 'subgraph',
           api_version: version,
           api_type: !version ? 'analytic' : '',
-          chain_id: chain.id,
+          chain_id,
           query: `
             {
               dayMetrics(orderBy: dayStartTimestamp, orderDirection: desc, skip: ${skip}, first: ${size}) {
@@ -91,22 +85,22 @@ exports.handler = async (event, context, callback) => {
         };
 
         // send request
-        const res = await requester.get(path, { params })
+        const res = await requester.get(null, { params })
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
 
         if (res?.data?.data?.dayMetrics) {
-          const data = res.data.data.dayMetrics.map(dayMetric => {
+          const data = res.data.data.dayMetrics.map(d => {
             return {
-              ...dayMetric,
-              dayStartTimestamp: Number(dayMetric.dayStartTimestamp),
-              volume: dayMetric.volume,
-              sendingTxCount: Number(dayMetric.sendingTxCount) || 0,
-              receivingTxCount: Number(dayMetric.receivingTxCount) || 0,
-              cancelTxCount: Number(dayMetric.cancelTxCount) || 0,
-              volumeIn: dayMetric.volumeIn,
-              relayerFee: dayMetric.relayerFee,
-              chain_id: chain.id,
+              ...d,
+              dayStartTimestamp: Number(d.dayStartTimestamp),
+              volume: d.volume,
+              sendingTxCount: Number(d.sendingTxCount) || 0,
+              receivingTxCount: Number(d.receivingTxCount) || 0,
+              cancelTxCount: Number(d.cancelTxCount) || 0,
+              volumeIn: d.volumeIn,
+              relayerFee: d.relayerFee,
+              chain_id,
               version,
             };
           });
@@ -115,39 +109,34 @@ exports.handler = async (event, context, callback) => {
             let record = data[k];
 
             if (record?.id && record.assetId && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
-              const date = moment(record.dayStartTimestamp * 1000).format('YYYY-MM-DD');
-              const from = date;//moment().substract(365, 'days').format('YYYY-MM-DD');
-              const to = date;//moment().format('YYYY-MM-DD');
+              record.assetId = record.assetId?.toLowerCase();
 
-              let contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId && _contract.key === `${record.assetId}_${date}`);
+              const date = record.dayStartTimestamp * 1000;
+              const date_string = moment(date).format('YYYY-MM-DD');
 
-              if (!contract) {
-                const _contracts = await getContracts(chain.chain_id, record.assetId, { from, to });
+              let token = tokens[chain_id]?.find(c => c?.contract_address === record.assetId && c.key === `${record.assetId}_${date_string}`);
+              if (!token) {
+                const _tokens = await getTokens(chain_id, record.assetId, { date });
+                if (_tokens) {
+                  tokens[chain_id] = _.uniqBy(_.concat(_tokens?.map(c => { return { ...c, key: `${c?.contract_address}_${date_string}` } }) || [], tokens[chain_id] || []), 'key');
 
-                if (_contracts) {
-                  contracts[chain.id] = _.uniqBy(_.concat(_contracts?.map(_contract => { return { ..._contract, key: `${_contract.contract_address}_${date}` } }) || [], contracts[chain.id] || []), 'key');
-
-                  contract = contracts[chain.id]?.find(_contract => _contract.contract_address === record.assetId);
+                  token = tokens[chain_id]?.find(c => c?.contract_address === record.assetId);
                 }
               }
 
-              const priceIndex = contract?.prices?.findIndex(_price => _price.date === date);
-              const price = contract?.prices?.[priceIndex > -1 ? priceIndex : 0]?.price;
-
+              const price = token?.price;
               record = {
                 ...record,
-                id: `${chain.id}-${record.id}`,
+                id: `${chain_id}_${record.id}`,
                 price,
-                normalize_volume: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volume) / Math.pow(10, contract.contract_decimals)) * price),
-                normalize_volumeIn: contract?.contract_decimals && typeof price === 'number' && ((Number(record.volumeIn) / Math.pow(10, contract.contract_decimals)) * price),
-                normalize_relayerFee: contract?.contract_decimals && typeof price === 'number' && ((Number(record.relayerFee) / Math.pow(10, contract.contract_decimals)) * price),
+                volume_value: token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(record.volume) ? record.volume : 0).shiftedBy(-token.contract_decimals).toNumber() * price),
+                volumeIn_value: token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(record.volumeIn) ? record.volumeIn : 0).shiftedBy(-token.contract_decimals).toNumber() * price),
+                relayerFee_value: token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(record.relayerFee) ? record.relayerFee : 0).shiftedBy(-token.contract_decimals).toNumber() * price),
               };
 
-              if ((record.normalize_volume > 0 || record.normalize_volumeIn > 0 || record.normalize_relayerFee > 0) && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
-                // await sleep(100);
-
+              if ((record.volume_value > 0 || record.volumeIn_value > 0 || record.relayerFee_value > 0) && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
                 // send request
-                await opensearcher.post('', { ...record, index: env.index_name, method: 'update', id: record.id })
+                await opensearcher.post('', { index: env.index_name, method: 'update', id: record.id, ...record })
                   // set response data from error handled by exception
                   .catch(error => { return { data: { error } }; });
               }

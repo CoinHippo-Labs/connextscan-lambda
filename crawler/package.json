@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.21.1",
+    "bignumber.js": "^9.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1"
   }
