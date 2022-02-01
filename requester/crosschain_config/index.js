@@ -219,7 +219,7 @@ const chains_mainnet = [
   {
     id: 'gnosis',
     title: 'Gnosis Chain',
-    short_name: 'Gnosis',
+    short_name: 'GNO',
     chain_id: 100,
     provider_params: [
       {
