@@ -73,10 +73,10 @@ exports.handler = async (event, context, callback) => {
                 id
                 dayStartTimestamp
                 assetId
-                volume
                 sendingTxCount
                 receivingTxCount
                 cancelTxCount
+                volume
                 volumeIn
                 relayerFee
               }
@@ -94,10 +94,10 @@ exports.handler = async (event, context, callback) => {
             return {
               ...d,
               dayStartTimestamp: Number(d.dayStartTimestamp),
-              volume: d.volume,
               sendingTxCount: Number(d.sendingTxCount) || 0,
               receivingTxCount: Number(d.receivingTxCount) || 0,
               cancelTxCount: Number(d.cancelTxCount) || 0,
+              volume: d.volume,
               volumeIn: d.volumeIn,
               relayerFee: d.relayerFee,
               chain_id,
