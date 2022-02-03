@@ -1217,6 +1217,20 @@ const assets_testnet = [
       },
     ],
   },
+  {
+    id: 'matic',
+    symbol: 'MATIC',
+    image: '/logos/assets/matic.png',
+    coingecko_id: 'matic-network',
+    contracts: [
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 80001,
+        contract_decimals: 18,
+        is_native: true,
+      },
+    ],
+  },
 ];
 
 module.exports = { chains_mainnet, chains_testnet, assets_mainnet, assets_testnet };
