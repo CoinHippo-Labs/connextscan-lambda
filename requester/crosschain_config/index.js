@@ -1159,6 +1159,64 @@ const assets_testnet = [
       },
     ],
   },
+  {
+    id: 'eth',
+    symbol: 'ETH',
+    image: '/logos/assets/eth.png',
+    coingecko_id: 'ethereum',
+    contracts: [
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 3,
+        contract_decimals: 18,
+        is_native: true,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 4,
+        contract_decimals: 18,
+        is_native: true,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 5,
+        contract_decimals: 18,
+        is_native: true,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 42,
+        contract_decimals: 18,
+        is_native: true,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 421611,
+        contract_decimals: 18,
+        is_native: true,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 69,
+        contract_decimals: 18,
+        is_native: true,
+      },
+    ],
+  },
+  {
+    id: 'bnb',
+    symbol: 'BNB',
+    image: '/logos/assets/bnb.png',
+    coingecko_id: 'binancecoin',
+    contracts: [
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 97,
+        contract_decimals: 18,
+        is_native: true,
+      },
+    ],
+  },
 ];
 
 module.exports = { chains_mainnet, chains_testnet, assets_mainnet, assets_testnet };

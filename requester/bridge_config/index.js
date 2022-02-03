@@ -208,7 +208,7 @@ const chains_mainnet = [
   {
     id: 'xdai',
     title: 'Gnosis Chain',
-    short_name: 'xDAI',
+    short_name: 'GNO',
     chain_id: 100,
     provider_params: [
       {
