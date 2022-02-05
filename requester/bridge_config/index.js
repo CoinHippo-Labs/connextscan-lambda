@@ -1,6 +1,6 @@
 const chains_mainnet = [
   {
-    id: 'eth',
+    id: 'ethereum',
     title: 'Ethereum',
     short_name: 'ETH',
     chain_id: 1,
@@ -32,7 +32,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'bsc',
+    id: 'binance',
     title: 'Binance Smart Chain',
     short_name: 'BSC',
     chain_id: 56,
@@ -61,7 +61,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'matic',
+    id: 'polygon',
     title: 'Polygon',
     short_name: 'MATIC',
     chain_id: 137,
@@ -90,7 +90,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'arb',
+    id: 'arbitrum',
     title: 'Arbitrum',
     short_name: 'ARB',
     chain_id: 42161,
@@ -119,7 +119,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'opt',
+    id: 'optimism',
     title: 'Optimism',
     short_name: 'OPT',
     chain_id: 10,
@@ -148,7 +148,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'avax',
+    id: 'avalanche',
     title: 'Avalanche',
     short_name: 'AVAX',
     chain_id: 43114,
@@ -177,7 +177,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'ftm',
+    id: 'fantom',
     title: 'Fantom',
     short_name: 'FTM',
     chain_id: 250,
@@ -206,7 +206,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'xdai',
+    id: 'gnosis',
     title: 'Gnosis Chain',
     short_name: 'GNO',
     chain_id: 100,
@@ -235,7 +235,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'mbeam',
+    id: 'moonbeam',
     title: 'Moonbeam',
     short_name: 'MBEAM',
     chain_id: 1284,
@@ -268,7 +268,7 @@ const chains_mainnet = [
     },
   },
   {
-    id: 'movr',
+    id: 'moonriver',
     title: 'Moonriver',
     short_name: 'MOVR',
     chain_id: 1285,
@@ -329,7 +329,7 @@ const chains_mainnet = [
 
 const chains_testnet = [
   {
-    id: 'rop',
+    id: 'ropsten',
     title: 'Ropsten',
     short_name: 'ROP',
     chain_id: 3,
@@ -358,7 +358,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'rin',
+    id: 'rinkeby',
     title: 'Rinkeby',
     short_name: 'RIN',
     chain_id: 4,
@@ -387,7 +387,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'gor',
+    id: 'gorli',
     title: 'Görli',
     short_name: 'GOR',
     chain_id: 5,
@@ -416,7 +416,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'kov',
+    id: 'kovan',
     title: 'Kovan',
     short_name: 'KOV',
     chain_id: 42,
@@ -448,7 +448,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'bsct',
+    id: 'binance',
     title: 'Binance Smart Chain Testnet',
     short_name: 'BSCT',
     chain_id: 97,
@@ -477,7 +477,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'mum',
+    id: 'mumbai',
     title: 'Polygon Mumbai',
     short_name: 'MUM',
     chain_id: 80001,
@@ -506,7 +506,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'arbr',
+    id: 'arbitrum',
     title: 'Arbitrum Rinkeby',
     short_name: 'ARBR',
     chain_id: 421611,
@@ -535,7 +535,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'optk',
+    id: 'optimism',
     title: 'Optimism Kovan',
     short_name: 'OPTK',
     chain_id: 69,
@@ -564,7 +564,7 @@ const chains_testnet = [
     },
   },
   {
-    id: 'mbase',
+    id: 'moonbase',
     title: 'Moonbase Alpha',
     short_name: 'MBASE',
     chain_id: 1287,

@@ -805,6 +805,7 @@ const assets_mainnet = [
         contract_decimals: 18,
         is_native: true,
         symbol: 'xDAI',
+        image: '/logos/assets/xdai.png',
       },
       {
         contract_address: '0xc234a67a4f840e61ade794be47de455361b52413',
