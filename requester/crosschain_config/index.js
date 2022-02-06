@@ -1090,7 +1090,7 @@ const assets_mainnet = [
   },
   {
     id: 'fraction',
-    symbol: 'FRACTION'
+    symbol: 'FRACTION',
     coingecko_id: 'fraction',
     contracts: [
       {
