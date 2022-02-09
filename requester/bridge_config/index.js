@@ -1013,6 +1013,7 @@ const assets_mainnet = [
     id: 'gno',
     symbol: 'GNO',
     image: '/logos/assets/gno.png',
+    is_staging: true,
     contracts: [
       {
         contract_address: '0x6810e776880c02933d47db1b9fc05908e5386b96',
