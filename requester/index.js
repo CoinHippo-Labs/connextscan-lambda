@@ -250,7 +250,7 @@ exports.handler = async (event, context, callback) => {
             });
           }
 
-          let toUpdateData = data.filter(d => !d?.updated_at || d.updated_at < time.subtract(1, 'hours'));
+          let toUpdateData = data.filter(d => !d?.updated_at || d.updated_at < time.subtract(1, 'hours').valueOf());
 
           const coingeckoIds = toUpdateData.map(d => assets?.find(a => a?.contracts?.findIndex(c => c?.chain_id === chainId && c.contract_address === d.contract_address) > -1 && a.coingecko_id)?.coingecko_id).filter(id => id);
 
@@ -438,11 +438,12 @@ exports.handler = async (event, context, callback) => {
             }
           }
 
-          const toUpdateCache = !date && data.filter(d => (!d?.updated_at || d.updated_at < time.subtract(1, 'hours')) && 'symbol' in d);
+          const toUpdateCache = !date && data.filter(d => (!d?.updated_at || d.updated_at < time.subtract(1, 'hours').valueOf()) && 'symbol' in d);
 
           if (toUpdateCache?.length > 0) {
             toUpdateCache.forEach(d => {
               const id = `${d?.chain_id || chainId}_${d?.contract_address?.toLowerCase()}`;
+              d.updated_at = moment().valueOf();
 
               // send request
               opensearcher.post('', { index: index_name, method: 'update', path: `/${index_name}/_update/${id}`, id, ...d })
