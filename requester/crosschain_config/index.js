@@ -507,7 +507,7 @@ const chains_testnet = [
       {
         chainId: '0x13881',
         chainName: 'Matic Testnet Mumbai',
-        rpcUrls: ['https://rpc-mumbai.maticvigil.com/', 'wss://ws-mumbai.matic.today'],
+        rpcUrls: ['https://rpc-mumbai.matic.today', 'wss://ws-mumbai.matic.today'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
