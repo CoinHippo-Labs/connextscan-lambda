@@ -911,6 +911,7 @@ const assets_mainnet = [
         chain_id: 56,
         contract_decimals: 18,
         symbol: 'BTCB',
+        image: '/logos/assets/btc.png',
       },
       {
         contract_address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
