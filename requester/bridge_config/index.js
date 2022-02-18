@@ -803,7 +803,6 @@ const assets_mainnet = [
         contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 100,
         contract_decimals: 18,
-        is_native: true,
         symbol: 'xDAI',
         image: '/logos/assets/xdai.png',
       },
@@ -839,7 +838,6 @@ const assets_mainnet = [
         contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 1,
         contract_decimals: 18,
-        is_native: true,
       },
       {
         contract_address: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -856,13 +854,11 @@ const assets_mainnet = [
         contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 42161,
         contract_decimals: 18,
-        is_native: true,
       },
       {
         contract_address: '0x0000000000000000000000000000000000000000',
         chain_id: 10,
         contract_decimals: 18,
-        is_native: true,
       },
       {
         contract_address: '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab',
