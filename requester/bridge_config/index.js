@@ -81,7 +81,7 @@ const chains_mainnet = [
       },
     ],
     explorer: {
-      name: 'PolygonScan',
+      name: 'Polygonscan',
       url: 'https://polygonscan.com',
       icon: '/logos/explorers/polygonscan.png',
       block_path: '/block/{block}',
@@ -511,7 +511,7 @@ const chains_testnet = [
       },
     ],
     explorer: {
-      name: 'PolygonScan',
+      name: 'Polygonscan',
       url: 'https://mumbai.polygonscan.com',
       icon: '/logos/explorers/polygonscan.png',
       block_path: '/block/{block}',
