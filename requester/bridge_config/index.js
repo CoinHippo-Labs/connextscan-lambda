@@ -93,66 +93,6 @@ const chains_mainnet = [
     image: '/logos/chains/mainnet/polygon.png',
   },
   {
-    id: 'arbitrum',
-    title: 'Arbitrum',
-    short_name: 'ARB',
-    chain_id: 42161,
-    provider_params: [
-      {
-        chainId: '0xa4b1',
-        chainName: 'Arbitrum One',
-        rpcUrls: ['https://arb1.arbitrum.io/rpc'],
-        nativeCurrency: {
-          name: 'Arbitrum Ether',
-          symbol: 'tETH',
-          decimals: 18,
-        },
-        blockExplorerUrls: ['https://arbiscan.io'],
-      },
-    ],
-    explorer: {
-      name: 'Arbiscan',
-      url: 'https://arbiscan.io',
-      icon: '/logos/explorers/arbiscan.png',
-      block_path: '/block/{block}',
-      address_path: '/address/{address}',
-      contract_path: '/token/{address}',
-      contract_0_path: '/address/{address}',
-      transaction_path: '/tx/{tx}',
-    },
-    image: '/logos/chains/mainnet/arbitrum.png',
-  },
-  {
-    id: 'optimism',
-    title: 'Optimism',
-    short_name: 'OPT',
-    chain_id: 10,
-    provider_params: [
-      {
-        chainId: '0xa',
-        chainName: 'Optimism Mainnet',
-        rpcUrls: ['https://mainnet.optimism.io'],
-        nativeCurrency: {
-          name: 'Ether',
-          symbol: 'OETH',
-          decimals: 18,
-        },
-        blockExplorerUrls: ['https://optimistic.etherscan.io'],
-      },
-    ],
-    explorer: {
-      name: 'Etherscan',
-      url: 'https://optimistic.etherscan.io',
-      icon: '/logos/explorers/optimism.png',
-      block_path: '/block/{block}',
-      address_path: '/address/{address}',
-      contract_path: '/token/{address}',
-      contract_0_path: '/address/{address}',
-      transaction_path: '/tx/{tx}',
-    },
-    image: '/logos/chains/mainnet/optimism.png',
-  },
-  {
     id: 'avalanche',
     title: 'Avalanche',
     short_name: 'AVAX',
@@ -241,6 +181,66 @@ const chains_mainnet = [
       transaction_path: '/tx/{tx}',
     },
     image: '/logos/chains/mainnet/gnosis.png',
+  },
+  {
+    id: 'arbitrum',
+    title: 'Arbitrum',
+    short_name: 'ARB',
+    chain_id: 42161,
+    provider_params: [
+      {
+        chainId: '0xa4b1',
+        chainName: 'Arbitrum One',
+        rpcUrls: ['https://arb1.arbitrum.io/rpc'],
+        nativeCurrency: {
+          name: 'Arbitrum Ether',
+          symbol: 'tETH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://arbiscan.io'],
+      },
+    ],
+    explorer: {
+      name: 'Arbiscan',
+      url: 'https://arbiscan.io',
+      icon: '/logos/explorers/arbiscan.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/arbitrum.png',
+  },
+  {
+    id: 'optimism',
+    title: 'Optimism',
+    short_name: 'OPT',
+    chain_id: 10,
+    provider_params: [
+      {
+        chainId: '0xa',
+        chainName: 'Optimism Mainnet',
+        rpcUrls: ['https://mainnet.optimism.io'],
+        nativeCurrency: {
+          name: 'Ether',
+          symbol: 'OETH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://optimistic.etherscan.io'],
+      },
+    ],
+    explorer: {
+      name: 'Etherscan',
+      url: 'https://optimistic.etherscan.io',
+      icon: '/logos/explorers/optimism.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/optimism.png',
   },
   {
     id: 'moonbeam',
@@ -1035,59 +1035,6 @@ const assets_mainnet = [
     ],
   },
   {
-    id: 'miva',
-    symbol: 'MIVA',
-    image: '/logos/assets/miva.png',
-    is_staging: true,
-    contracts: [
-      {
-        contract_address: '0xc0b2983a17573660053beeed6fdb1053107cf387',
-        chain_id: 137,
-        contract_decimals: 18,
-      },
-      {
-        contract_address: '0x63e62989d9eb2d37dfdb1f93a22f063635b07d51',
-        chain_id: 100,
-        contract_decimals: 18,
-      },
-    ],
-  },
-  {
-    id: 'magic',
-    symbol: 'MAGIC',
-    image: '/logos/assets/magic.png',
-    is_staging: true,
-    contracts: [
-      {
-        contract_address: '0xb0c7a3ba49c7a6eaba6cd4a96c55a1391070ac9a',
-        chain_id: 1,
-        contract_decimals: 18,
-      },
-      {
-        contract_address: '0x539bde0d7dbd336b79148aa742883198bbf60342',
-        chain_id: 42161,
-        contract_decimals: 18,
-      },
-    ],
-  },
-  {
-    id: 'gth',
-    symbol: 'GTH',
-    image: '/logos/assets/gth.png',
-    contracts: [
-      {
-        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
-        chain_id: 1,
-        contract_decimals: 18,
-      },
-      {
-        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
-        chain_id: 56,
-        contract_decimals: 18,
-      },
-    ],
-  },
-  {
     id: 'fei',
     symbol: 'FEI',
     image: '/logos/assets/fei.png',
@@ -1119,6 +1066,60 @@ const assets_mainnet = [
       },
     ],
   },
+  {
+    id: 'gth',
+    symbol: 'GTH',
+    image: '/logos/assets/gth.png',
+    contracts: [
+      {
+        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
+        chain_id: 1,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
+        chain_id: 56,
+        contract_decimals: 18,
+      },
+    ],
+  },
+  {
+    id: 'magic',
+    symbol: 'MAGIC',
+    image: '/logos/assets/magic.png',
+    is_staging: true,
+    contracts: [
+      {
+        contract_address: '0xb0c7a3ba49c7a6eaba6cd4a96c55a1391070ac9a',
+        chain_id: 1,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x539bde0d7dbd336b79148aa742883198bbf60342',
+        chain_id: 42161,
+        contract_decimals: 18,
+      },
+    ],
+  },
+  {
+    id: 'miva',
+    symbol: 'MIVA',
+    image: '/logos/assets/miva.png',
+    is_staging: true,
+    contracts: [
+      {
+        contract_address: '0xc0b2983a17573660053beeed6fdb1053107cf387',
+        chain_id: 137,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x63e62989d9eb2d37dfdb1f93a22f063635b07d51',
+        chain_id: 100,
+        contract_decimals: 18,
+      },
+    ],
+  },
+  
 ];
 
 const assets_testnet = [
