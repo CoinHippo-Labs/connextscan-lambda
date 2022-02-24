@@ -287,7 +287,7 @@ const chains_mainnet = [
       {
         chainId: '0x505',
         chainName: 'Moonriver',
-        rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
+        rpcUrls: ['https://rpc.api.moonriver.moonbeam.network'],
         nativeCurrency: {
           name: 'Moonriver',
           symbol: 'MOVR',
