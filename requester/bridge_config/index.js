@@ -336,6 +336,36 @@ const chains_mainnet = [
     },
     image: '/logos/chains/mainnet/fuse.png',
   },
+  {
+    id: 'milkomeda',
+    title: 'Milkomeda Cardano (C1)',
+    short_name: 'MMeda',
+    chain_id: 2001,
+    provider_params: [
+      {
+        chainId: '0x7d1',
+        chainName: 'Milkomeda Cardano (C1)',
+        rpcUrls: ['https://rpc.c1.milkomeda.com:8545'],
+        nativeCurrency: {
+          name: 'MilkADA',
+          symbol: 'MilkADA',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://rpc.c1.milkomeda.com:4000'],
+      },
+    ],
+    explorer: {
+      name: 'BlockScout',
+      url: 'https://rpc.c1.milkomeda.com:4000',
+      icon: '/logos/explorers/blockscout.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/milkomeda.png',
+  },
 ];
 
 const chains_testnet = [
@@ -681,6 +711,11 @@ const assets_mainnet = [
         chain_id: 122,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0xab58da63dfdd6b97eaab3c94165ef6f43d951fb2',
+        chain_id: 2001,
+        contract_decimals: 6,
+      },
     ],
     nomad_support: [
       {
@@ -748,6 +783,11 @@ const assets_mainnet = [
       {
         contract_address: '0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5',
         chain_id: 122,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x5a955fddf055f2de3281d99718f5f1531744b102',
+        chain_id: 2001,
         contract_decimals: 6,
       },
     ],
@@ -819,6 +859,11 @@ const assets_mainnet = [
       {
         contract_address: '0x94ba7a27c7a95863d1bdc7645ac2951e0cca06ba',
         chain_id: 122,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x41eafc40cd5cb904157a10158f73ff2824dc1339',
+        chain_id: 2001,
         contract_decimals: 18,
       },
     ],
@@ -894,6 +939,12 @@ const assets_mainnet = [
         contract_decimals: 18,
         symbol: 'WETH',
       },
+      {
+        contract_address: '0x5950f9b6ef36f3127ea66799e64d0ea1f5fdb9d1',
+        chain_id: 2001,
+        contract_decimals: 18,
+        symbol: 'WETH',
+      },
     ],
     nomad_support: [
       {
@@ -964,6 +1015,11 @@ const assets_mainnet = [
       {
         contract_address: '0x33284f95ccb7b948d9d352e1439561cf83d8d00d',
         chain_id: 122,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x48aeb7584ba26d3791f06fba360db435b3d7a174',
+        chain_id: 2001,
         contract_decimals: 8,
       },
     ],

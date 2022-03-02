@@ -71,6 +71,10 @@ exports.handler = async (event, context, callback) => {
         api_host: process.env.SUBGRAPH_FUSE_API_HOST || '{YOUR_SUBGRAPH_FUSE_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_FUSE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FUSE_API_HOST_ANALYTIC}',
       },
+      2001: {
+        api_host: process.env.SUBGRAPH_MMEDA_API_HOST || '{YOUR_SUBGRAPH_MMEDA_API_HOST}',
+        api_host_analytic: process.env.SUBGRAPH_MMEDA_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MMEDA_API_HOST_ANALYTIC}',
+      },
       3: {
         api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_ROP_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ROP_API_HOST_ANALYTIC}',
@@ -134,6 +138,9 @@ exports.handler = async (event, context, callback) => {
     blockscout_fuse: {
       api_host: process.env.BLOCKSCOUT_FUSE_API_HOST || 'https://explorer.fuse.io/',
     },
+    blockscout_milkomeda: {
+      api_host: process.env.BLOCKSCOUT_MILKOMEDA_API_HOST || 'https://rpc.c1.milkomeda.com:4000/',
+    },
     crosschain_config: {},
     bridge_config: {
       git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-network-xpollinate',
@@ -182,6 +189,7 @@ exports.handler = async (event, context, callback) => {
     const blockscouter = axios.create({ baseURL: env.blockscout.api_host });
     const blockscouter_moonbeam = axios.create({ baseURL: env.blockscout_moonbeam.api_host });
     const blockscouter_fuse = axios.create({ baseURL: env.blockscout_fuse.api_host });
+    const blockscouter_milkomeda = axios.create({ baseURL: env.blockscout_milkomeda.api_host });
 
     // initial response object
     let res = null;
@@ -342,6 +350,11 @@ exports.handler = async (event, context, callback) => {
               case 122:
                 if (!bs) {
                   bs = blockscouter_fuse;
+                  bsPath = '/api';
+                }
+              case 2001:
+                if (!bs) {
+                  bs = blockscouter_milkomeda;
                   bsPath = '/api';
                 }
 
