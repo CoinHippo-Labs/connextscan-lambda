@@ -1175,7 +1175,6 @@ const assets_mainnet = [
       },
     ],
   },
-  
 ];
 
 const assets_testnet = [
