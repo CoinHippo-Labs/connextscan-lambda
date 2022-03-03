@@ -10,6 +10,9 @@ exports.handler = async (event, context, callback) => {
   const _ = require('lodash');
   const moment = require('moment');
   const AWS = require('aws-sdk');
+  const BigNumber = require('bignumber.js');
+
+  BigNumber.config({ DECIMAL_PLACES: Number(40), EXPONENTIAL_AT: [-7, Number(40)] });
 
   // data
   const crosschain_config = require('./crosschain_config');
@@ -116,6 +119,9 @@ exports.handler = async (event, context, callback) => {
       currency: 'usd',
       stable_threshold: Number(process.env.STABLE_THRESHOLD) || 0.005,
     },
+    requester: {
+      api_host: process.env.REQUESTER_API_HOST || '{YOUR_REQUESTER_API_HOST}',
+    },
     opensearcher: {
       api_host: process.env.OPENSEARCHER_API_HOST || '{YOUR_OPENSEARCHER_API_HOST}',
     },
@@ -183,6 +189,7 @@ exports.handler = async (event, context, callback) => {
 
     // initial request object
     const requester = axios.create({ baseURL: ['subgraph'].includes(_module) ? env[_module][chainId]?.[`api_host${apiVersion ? `_${apiVersion}` : ''}${apiType ? `_${apiType}` : ''}`] : env[_module].api_host });
+    const _requester = axios.create({ baseURL: env.requester.api_host });
     const opensearcher = axios.create({ baseURL: env.opensearcher.api_host });
     const coingecker = axios.create({ baseURL: env.coingecko.api_host });
     const covalentor = axios.create({ baseURL: env.covalent.api_host });
@@ -190,6 +197,36 @@ exports.handler = async (event, context, callback) => {
     const blockscouter_moonbeam = axios.create({ baseURL: env.blockscout_moonbeam.api_host });
     const blockscouter_fuse = axios.create({ baseURL: env.blockscout_fuse.api_host });
     const blockscouter_milkomeda = axios.create({ baseURL: env.blockscout_milkomeda.api_host });
+
+    const tx_manager = {
+      chain_tx: tx => {
+        switch (tx?.status) {
+          case 'Fulfilled':
+            return tx?.fulfillTransactionHash;
+          case 'Prepared':
+            return tx?.prepareTransactionHash;
+          default:
+            return tx?.cancelTransactionHash;
+        }
+      },
+      from: tx => tx?.initiator,
+    };
+
+    const getTokens = async (chain_id, addresses, params) => {
+      params = {
+        ...params,
+        module: 'tokens',
+        chain_id,
+        addresses,
+      };
+
+      // send request
+      const res = await _requester.get(null, { params })
+        // set response data from error handled by exception
+        .catch(error => { return { data: { data: null, error: true, error_message: error.message, error_code: error.code } }; });
+
+      return res?.data?.data;
+    };
 
     // initial response object
     let res = null;
@@ -219,6 +256,57 @@ exports.handler = async (event, context, callback) => {
         res = await requester.post(path, { ...params })
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
+
+        if (params.query?.includes('transactions(')) {
+          if (res?.data?.transactions?.length > 0 || res?.data?.user?.transactions?.length > 0) {
+            const tokens = {}, index_name = `transactions${['testnet'].includes(env.network) ? `_${env.network}` : ''}`, transactions = res.data.transactions || res.data.user.transactions;
+
+            if (transactions) {
+              for (let i = 0; i < transactions.length; i++) {
+                const t = transactions[i];
+
+                if (t) {
+                  const tx = {
+                    ...t,
+                    chainTx: tx_manager.chain_tx(t),
+                    chainId: Number(t.chainId),
+                    preparedTimestamp: Number(t.preparedTimestamp) * 1000,
+                    fulfillTimestamp: Number(t.fulfillTimestamp) * 1000,
+                    cancelTimestamp: Number(t.cancelTimestamp) * 1000,
+                    expiry: Number(t.expiry) * 1000,
+                    sendingAddress: tx_manager.from(t),
+                    sendingChainId: Number(t.sendingChainId),
+                    receivingChainId: Number(t.receivingChainId),
+                  };
+
+                  const chain_id = tx.chainId;
+                  const side = chain_id === tx.sendingChainId ? 'sending' : 'receiving';
+                  const asset_id = tx.[`${side}AssetId`]?.toLowerCase();
+                  const date = tx.preparedTimestamp;
+                  const date_string = moment(date).format('YYYY-MM-DD');
+                  let token = tokens[chain_id]?.find(c => c?.contract_address === asset_id && c.key === `${asset_id}_${date_string}`);
+                  if (!token) {
+                    const _tokens = await getTokens(chain_id, asset_id, { date });
+                    if (_tokens) {
+                      tokens[chain_id] = _.uniqBy(_.concat(_tokens?.map(c => { return { ...c, key: `${c?.contract_address}_${date_string}` } }) || [], tokens[chain_id] || []), 'key');
+                      token = tokens[chain_id]?.find(c => c?.contract_address === asset_id);
+                    }
+                  }
+                  const price = token?.price;
+
+                  tx.price = price;
+                  tx.amount_value = token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(tx.amount) ? tx.amount : 0).shiftedBy(-token.contract_decimals).toNumber() * price);
+                  tx.relayerFee_value = token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(tx.relayerFee) ? tx.relayerFee : 0).shiftedBy(-token.contract_decimals).toNumber() * price);
+
+                  // send request
+                  opensearcher.post('', { index: index_name, method: 'update', path: `/${index_name}/_update/${tx.transactionId}`, id: tx.transactionId, [`${side}`]: tx })
+                    // set response data from error handled by exception
+                    .catch(error => { return { data: { error } }; });
+                }
+              }
+            }
+          }
+        }
         break;
       case 'tokens':
         // normalize path parameter
