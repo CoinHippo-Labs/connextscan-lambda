@@ -281,7 +281,7 @@ exports.handler = async (event, context, callback) => {
 
                   const chain_id = tx.chainId;
                   const side = chain_id === tx.sendingChainId ? 'sending' : 'receiving';
-                  const asset_id = tx.[`${side}AssetId`]?.toLowerCase();
+                  const asset_id = tx[`${side}AssetId`]?.toLowerCase();
                   const date = tx.preparedTimestamp;
                   const date_string = moment(date).format('YYYY-MM-DD');
                   let token = tokens[chain_id]?.find(c => c?.contract_address === asset_id && c.key === `${asset_id}_${date_string}`);
