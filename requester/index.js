@@ -258,8 +258,8 @@ exports.handler = async (event, context, callback) => {
           .catch(error => { return { data: { error } }; });
 
         if (params.query?.includes('transactions(')) {
-          if (res?.data?.transactions?.length > 0 || res?.data?.user?.transactions?.length > 0) {
-            const tokens = {}, index_name = `transactions${['testnet'].includes(env.network) ? `_${env.network}` : ''}`, transactions = res.data.transactions || res.data.user.transactions;
+          if (res?.data?.data?.transactions?.length > 0 || res?.data?.data?.user?.transactions?.length > 0) {
+            const tokens = {}, index_name = `transactions${['testnet'].includes(env.network) ? `_${env.network}` : ''}`, transactions = res.data.data.transactions || res.data.data.user.transactions;
 
             if (transactions) {
               for (let i = 0; i < transactions.length; i++) {
