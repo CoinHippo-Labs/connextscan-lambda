@@ -110,21 +110,18 @@ exports.handler = async (event, context, callback) => {
 
             if (record?.id && record.assetId && (record.sendingTxCount > 0 || record.receivingTxCount > 0 || record.cancelTxCount > 0)) {
               record.assetId = record.assetId?.toLowerCase();
-
               const date = record.dayStartTimestamp * 1000;
               const date_string = moment(date).format('YYYY-MM-DD');
-
               let token = tokens[chain_id]?.find(c => c?.contract_address === record.assetId && c.key === `${record.assetId}_${date_string}`);
               if (!token) {
                 const _tokens = await getTokens(chain_id, record.assetId, { date });
                 if (_tokens) {
                   tokens[chain_id] = _.uniqBy(_.concat(_tokens?.map(c => { return { ...c, key: `${c?.contract_address}_${date_string}` } }) || [], tokens[chain_id] || []), 'key');
-
                   token = tokens[chain_id]?.find(c => c?.contract_address === record.assetId);
                 }
               }
-
               const price = token?.price;
+
               record = {
                 ...record,
                 id: `${chain_id}_${record.id}`,
