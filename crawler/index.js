@@ -18,6 +18,7 @@ exports.handler = async (event, context, callback) => {
    * You can setup these environment variables below on the AWS Lambda function's configuration.
    ************************************************/
   const env = {
+    network: process.env.NETWORK || 'testnet',
     requester: {
       api_host: process.env.REQUESTER_API_HOST || '{YOUR_REQUESTER_API_HOST}',
     },
@@ -117,7 +118,7 @@ exports.handler = async (event, context, callback) => {
     for (let i = 0; i < chains_params.length; i++) {
       const { chain_id } = chains_params[i];
       let { skip, hasMore } = chains_params[i];
-      const size = 25;
+      const size = env.network === 'testnet' ? 10 : 25;
 
       while (hasMore) {
         const params = {
