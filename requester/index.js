@@ -298,10 +298,16 @@ exports.handler = async (event, context, callback) => {
                   tx.amount_value = token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(tx.amount) ? tx.amount : 0).shiftedBy(-token.contract_decimals).toNumber() * price);
                   tx.relayerFee_value = token?.contract_decimals && typeof price === 'number' && (BigNumber(!isNaN(tx.relayerFee) ? tx.relayerFee : 0).shiftedBy(-token.contract_decimals).toNumber() * price);
 
-                  // send request
-                  opensearcher.post('', { index: index_name, method: 'update', path: `/${index_name}/_update/${tx.transactionId}`, id: tx.transactionId, [`${side}`]: tx })
-                    // set response data from error handled by exception
-                    .catch(error => { return { data: { error } }; });
+                  const body = { index: index_name, method: 'update', path: `/${index_name}/_update/${tx.transactionId}`, id: tx.transactionId, [`${side}`]: tx };
+
+                  if (params.sync === 'true') {
+                    await opensearcher.post('', body)
+                      .catch(error => { return { data: { error } }; });
+                  }
+                  else {
+                    opensearcher.post('', body)
+                      .catch(error => { return { data: { error } }; });
+                  }
                 }
               }
             }
