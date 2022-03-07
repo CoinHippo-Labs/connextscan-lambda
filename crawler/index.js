@@ -132,13 +132,12 @@ exports.handler = async (event, context, callback) => {
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
 
-        hasMore = res?.data?.data?.transactions?.length === size;
+        hasMore = res?.data?.data?.transactions?.length >= size;
 
         if (hasMore) {
           skip += size;
+          hasMore = skip < size;
         }
-
-        hasMore = skip < size;
 
         chains_params[i].skip = skip;
         chains_params[i].hasMore = hasMore;
