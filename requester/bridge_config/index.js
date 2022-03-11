@@ -34,16 +34,16 @@ const chains_mainnet = [
   },
   {
     id: 'binance',
-    title: 'Binance Smart Chain',
-    short_name: 'BSC',
+    title: 'BNB Chain',
+    short_name: 'BNB',
     chain_id: 56,
     provider_params: [
       {
         chainId: '0x38',
-        chainName: 'Binance Smart Chain Mainnet',
+        chainName: 'BNB Chain Mainnet',
         rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed2.ninicoin.io', 'https://bsc-dataseed3.ninicoin.io', 'https://bsc-dataseed4.ninicoin.io', 'https://bsc-dataseed1.binance.org', 'https://bsc-dataseed2.binance.org', 'https://bsc-dataseed3.binance.org', 'https://bsc-dataseed4.binance.org', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed2.defibit.io', 'https://bsc-dataseed3.defibit.io', 'https://bsc-dataseed4.defibit.io', 'wss://bsc-ws-node.nariox.org'],
         nativeCurrency: {
-          name: 'Binance Chain Native Token',
+          name: 'BNB Token',
           symbol: 'BNB',
           decimals: 18,
         },
@@ -494,16 +494,16 @@ const chains_testnet = [
   },
   {
     id: 'binance',
-    title: 'Binance Testnet',
-    short_name: 'BSCT',
+    title: 'BNB Chain Testnet',
+    short_name: 'BNBT',
     chain_id: 97,
     provider_params: [
       {
         chainId: '0x61',
-        chainName: 'Binance Smart Chain Testnet',
+        chainName: 'BNB Chain Testnet',
         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545', 'https://data-seed-prebsc-1-s2.binance.org:8545', 'https://data-seed-prebsc-1-s3.binance.org:8545', 'https://data-seed-prebsc-2-s2.binance.org:8545', 'https://data-seed-prebsc-2-s3.binance.org:8545'],
         nativeCurrency: {
-          name: 'Binance Chain Native Token',
+          name: 'BNB Token',
           symbol: 'BNB',
           decimals: 18,
         },
