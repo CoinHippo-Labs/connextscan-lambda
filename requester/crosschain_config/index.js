@@ -197,7 +197,7 @@ const chains_mainnet = [
         rpcUrls: ['https://arb1.arbitrum.io/rpc'],
         nativeCurrency: {
           name: 'Arbitrum Ether',
-          symbol: 'tETH',
+          symbol: 'aETH',
           decimals: 18,
         },
         blockExplorerUrls: ['https://arbiscan.io'],
@@ -573,7 +573,7 @@ const chains_testnet = [
         rpcUrls: ['https://rinkeby.arbitrum.io/rpc'],
         nativeCurrency: {
           name: 'Arbitrum Ether',
-          symbol: 'tETH',
+          symbol: 'aETH',
           decimals: 18,
         },
         blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
