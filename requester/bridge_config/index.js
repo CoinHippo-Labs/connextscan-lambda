@@ -348,7 +348,7 @@ const chains_mainnet = [
         rpcUrls: ['https://rpc.c1.milkomeda.com:8545'],
         nativeCurrency: {
           name: 'MilkADA',
-          symbol: 'MilkADA',
+          symbol: 'mADA',
           decimals: 18,
         },
         blockExplorerUrls: ['https://rpc.c1.milkomeda.com:4000'],
