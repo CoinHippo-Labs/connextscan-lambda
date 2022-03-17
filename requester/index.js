@@ -74,6 +74,10 @@ exports.handler = async (event, context, callback) => {
         api_host: process.env.SUBGRAPH_FUSE_API_HOST || '{YOUR_SUBGRAPH_FUSE_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_FUSE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FUSE_API_HOST_ANALYTIC}',
       },
+      2001: {
+        api_host: process.env.SUBGRAPH_MMEDA_API_HOST  || '{YOUR_SUBGRAPH_MMEDA_API_HOST  }',
+        api_host_analytic: process.env.SUBGRAPH_MMEDA_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MMEDA_API_HOST_ANALYTIC}',
+      },
       288: {
         api_host: process.env.SUBGRAPH_BOBA_API_HOST || '{YOUR_SUBGRAPH_BOBA_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_BOBA_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_BOBA_API_HOST_ANALYTIC}',
