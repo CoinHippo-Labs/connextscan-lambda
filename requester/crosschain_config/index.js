@@ -343,7 +343,7 @@ const chains_mainnet = [
   {
     id: 'milkomeda',
     title: 'Milkomeda Cardano (C1)',
-    short_name: 'MMeda',
+    short_name: 'MMEDA',
     chain_id: 2001,
     is_staging: true,
     provider_params: [
@@ -375,7 +375,7 @@ const chains_mainnet = [
   {
     id: 'boba',
     title: 'Boba L2',
-    short_name: 'Boba',
+    short_name: 'BOBA',
     chain_id: 288,
     is_staging: true,
     provider_params: [
@@ -407,7 +407,7 @@ const chains_mainnet = [
   {
     id: 'harmony',
     title: 'Harmony One',
-    short_name: 'HOne',
+    short_name: 'HONE',
     chain_id: 1666600000,
     is_staging: true,
     provider_params: [
