@@ -372,6 +372,70 @@ const chains_mainnet = [
     image: '/logos/chains/mainnet/milkomeda.png',
     color: '#a4b2d8',
   },
+  {
+    id: 'boba',
+    title: 'Boba L2',
+    short_name: 'Boba',
+    chain_id: 288,
+    is_staging: true,
+    provider_params: [
+      {
+        chainId: '0x120',
+        chainName: 'Boba L2',
+        rpcUrls: ['https://mainnet.boba.network'],
+        nativeCurrency: {
+          name: 'Ethereum',
+          symbol: 'ETH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://blockexplorer.boba.network'],
+      },
+    ],
+    explorer: {
+      name: 'BlockScout',
+      url: 'https://blockexplorer.boba.network',
+      icon: '/logos/explorers/blockscout.png',
+      block_path: '/blocks/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/tokens/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/boba.png',
+    color: '#cbff00',
+  },
+  {
+    id: 'harmony',
+    title: 'Harmony One',
+    short_name: 'HOne',
+    chain_id: 1666600000,
+    is_staging: true,
+    provider_params: [
+      {
+        chainId: '0x120',
+        chainName: 'Harmony One',
+        rpcUrls: ['https://api.harmony.one'],
+        nativeCurrency: {
+          name: 'One',
+          symbol: 'ONE',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://explorer.harmony.one'],
+      },
+    ],
+    explorer: {
+      name: 'Harmony',
+      url: 'https://explorer.harmony.one',
+      icon: '/logos/explorers/harmony.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/address/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/harmony.png',
+    color: '#42decd',
+  },
 ];
 
 const chains_testnet = [
@@ -721,6 +785,21 @@ const assets_mainnet = [
         chain_id: 122,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0xab58da63dfdd6b97eaab3c94165ef6f43d951fb2',
+        chain_id: 2001,
+        contract_decimals: 6
+      },
+      {
+        contract_address: '0x5de1677344d3cb0d7d465c10b72a8f60699c062d',
+        chain_id: 288,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x3c2b8be99c50593081eaa2a724f0b8285f5aba8f',
+        chain_id: 1666600000,
+        contract_decimals: 6,
+      },
     ],
   },
   {
@@ -784,6 +863,21 @@ const assets_mainnet = [
       {
         contract_address: '0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5',
         chain_id: 122,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x5a955fddf055f2de3281d99718f5f1531744b102',
+        chain_id: 2001,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x66a2a913e447d6b4bf33efbec43aaef87890fbbc',
+        chain_id: 288,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0x985458e523db3d53125813ed68c274899e9dfab4',
+        chain_id: 1666600000,
         contract_decimals: 6,
       },
     ],
@@ -851,6 +945,21 @@ const assets_mainnet = [
       {
         contract_address: '0x94ba7a27c7a95863d1bdc7645ac2951e0cca06ba',
         chain_id: 122,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x41eafc40cd5cb904157a10158f73ff2824dc1339',
+        chain_id: 2001,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0xf74195bb8a5cf652411867c5c2c5b8c2a402be35',
+        chain_id: 288,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
+        chain_id: 1666600000,
         contract_decimals: 18,
       },
     ],
@@ -921,6 +1030,17 @@ const assets_mainnet = [
         contract_decimals: 18,
         symbol: 'WETH',
       },
+      {
+        contract_address: '0x5950f9b6ef36f3127ea66799e64d0ea1f5fdb9d1',
+        chain_id: 2001,
+        contract_decimals: 18,
+        symbol: 'WETH',
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 288,
+        contract_decimals: 18,
+      },
     ],
   },
   {
@@ -986,6 +1106,16 @@ const assets_mainnet = [
       {
         contract_address: '0x33284f95ccb7b948d9d352e1439561cf83d8d00d',
         chain_id: 122,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x48aeb7584ba26d3791f06fba360db435b3d7a174',
+        chain_id: 2001,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0xdc0486f8bf31df57a952bcd3c1d3e166e3d9ec8b',
+        chain_id: 288,
         contract_decimals: 8,
       },
     ],
