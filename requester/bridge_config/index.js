@@ -426,6 +426,36 @@ const chains_mainnet = [
     },
     image: '/logos/chains/mainnet/harmony.png',
   },
+  {
+    id: 'gather',
+    title: 'Gather Network',
+    short_name: 'GTH',
+    chain_id: 192837465,
+    provider_params: [
+      {
+        chainId: '0xb7e7759',
+        chainName: 'Gather Network',
+        rpcUrls: ['https://mainnet.gather.network'],
+        nativeCurrency: {
+          name: 'Gather',
+          symbol: 'GTH',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://explorer.gather.network'],
+      },
+    ],
+    explorer: {
+      name: 'Gather',
+      url: 'https://explorer.gather.network',
+      icon: '/logos/explorers/gather.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/address/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/gather.png',
+  },
 ];
 
 const chains_testnet = [
@@ -1235,6 +1265,11 @@ const assets_mainnet = [
       {
         contract_address: '0xeb986da994e4a118d5956b02d8b7c3c7ce373674',
         chain_id: 56,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x0000000000000000000000000000000000000000',
+        chain_id: 192837465,
         contract_decimals: 18,
       },
     ],

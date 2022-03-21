@@ -86,6 +86,10 @@ exports.handler = async (event, context, callback) => {
         api_host: process.env.SUBGRAPH_HARMONY_API_HOST || '{YOUR_SUBGRAPH_HARMONY_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_HARMONY_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_HARMONY_API_HOST_ANALYTIC}',
       },
+      192837465: {
+        api_host: process.env.SUBGRAPH_GTH_API_HOST || '{YOUR_SUBGRAPH_GTH_API_HOST}',
+        api_host_analytic: process.env.SUBGRAPH_GTH_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_GTH_API_HOST_ANALYTIC}',
+      },
       3: {
         api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_ROP_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ROP_API_HOST_ANALYTIC}',
@@ -137,7 +141,7 @@ exports.handler = async (event, context, callback) => {
       api_host: process.env.COINGECKO_API_HOST || 'https://api.coingecko.com/api/v3/',
     },
     ens: {
-      api_host: process.env.ENS_SUBGRAPH_API_HOST || '{YOUR_ENS_SUBGRAPH_API_HOST}',
+      api_host: process.env.ENS_SUBGRAPH_API_HOST || 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
     },
     covalent: {
       api_host: process.env.COVALENT_API_HOST || 'https://api.covalenthq.com/v1/',
@@ -157,6 +161,9 @@ exports.handler = async (event, context, callback) => {
     },
     blockscout_boba: {
       api_host: process.env.BLOCKSCOUT_BOBA_API_HOST || 'https://blockexplorer.boba.network/',
+    },
+    blockscout_gather: {
+      api_host: process.env.BLOCKSCOUT_GTH_API_HOST || 'https://explorer.gather.network/',
     },
     crosschain_config: {},
     bridge_config: {
@@ -209,6 +216,7 @@ exports.handler = async (event, context, callback) => {
     const blockscouter_fuse = axios.create({ baseURL: env.blockscout_fuse.api_host });
     const blockscouter_milkomeda = axios.create({ baseURL: env.blockscout_milkomeda.api_host });
     const blockscouter_boba = axios.create({ baseURL: env.blockscout_boba.api_host });
+    const blockscouter_gather = axios.create({ baseURL: env.blockscout_gather.api_host });
 
     const tx_manager = {
       chain_tx: tx => {
@@ -466,6 +474,11 @@ exports.handler = async (event, context, callback) => {
               case 288:
                 if (!bs) {
                   bs = blockscouter_boba;
+                  bsPath = '/api';
+                }
+              case 192837465:
+                if (!bs) {
+                  bs = blockscouter_gather;
                   bsPath = '/api';
                 }
 
