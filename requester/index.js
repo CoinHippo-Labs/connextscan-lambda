@@ -126,6 +126,10 @@ exports.handler = async (event, context, callback) => {
         api_host: process.env.SUBGRAPH_MBASE_API_HOST || '{YOUR_SUBGRAPH_MBASE_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_MBASE_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MBASE_API_HOST_ANALYTIC}',
       },
+      2221: {
+        api_host: process.env.SUBGRAPH_KAVAA_API_HOST || '{YOUR_SUBGRAPH_KAVAA_API_HOST}',
+        api_host_analytic: process.env.SUBGRAPH_KAVAA_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_KAVAA_API_HOST_ANALYTIC}',
+      },
     },
     tokens: {
       currency: 'usd',
@@ -164,6 +168,9 @@ exports.handler = async (event, context, callback) => {
     },
     blockscout_gather: {
       api_host: process.env.BLOCKSCOUT_GTH_API_HOST || 'https://explorer.gather.network/',
+    },
+    blockscout_kava_alpha: {
+      api_host: process.env.BLOCKSCOUT_KAVA_ALPHA_API_HOST || 'https://explorer.evm-alpha.kava.io/',
     },
     crosschain_config: {},
     bridge_config: {
@@ -217,6 +224,7 @@ exports.handler = async (event, context, callback) => {
     const blockscouter_milkomeda = axios.create({ baseURL: env.blockscout_milkomeda.api_host });
     const blockscouter_boba = axios.create({ baseURL: env.blockscout_boba.api_host });
     const blockscouter_gather = axios.create({ baseURL: env.blockscout_gather.api_host });
+    const blockscouter_kava_alpha = axios.create({ baseURL: env.blockscout_kava_alpha.api_host });
 
     const tx_manager = {
       chain_tx: tx => {
@@ -479,6 +487,11 @@ exports.handler = async (event, context, callback) => {
               case 192837465:
                 if (!bs) {
                   bs = blockscouter_gather;
+                  bsPath = '/api';
+                }
+              case 2221:
+                if (!bs) {
+                  bs = blockscouter_kava_alpha;
                   bsPath = '/api';
                 }
 

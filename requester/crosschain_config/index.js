@@ -392,9 +392,9 @@ const chains_mainnet = [
       },
     ],
     explorer: {
-      name: 'BlockScout',
+      name: 'Boba',
       url: 'https://blockexplorer.boba.network',
-      icon: '/logos/explorers/blockscout.png',
+      icon: '/logos/explorers/boba.png',
       block_path: '/blocks/{block}',
       address_path: '/address/{address}',
       contract_path: '/tokens/{address}',
@@ -749,6 +749,37 @@ const chains_testnet = [
     },
     image: '/logos/chains/testnet/moonbase.png',
     color: '#53cbc8',
+  },
+  {
+    id: 'kava',
+    title: 'Kava Alphanet',
+    short_name: 'KAVAA',
+    chain_id: 2221,
+    provider_params: [
+      {
+        chainId: '0x8ad',
+        chainName: 'Kava Alphanet',
+        rpcUrls: ['https://evm.evm-alpha.kava.io'],
+        nativeCurrency: {
+          name: 'Kava',
+          symbol: 'KAVA',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://explorer.evm-alpha.kava.io'],
+      },
+    ],
+    explorer: {
+      name: 'Kava',
+      url: 'https://explorer.evm-alpha.kava.io',
+      icon: '/logos/explorers/kava.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/testnet/kava.png',
+    color: '#ff554f',
   },
 ];
 
@@ -1379,6 +1410,11 @@ const assets_testnet = [
       {
         contract_address: '0x7195845bfa648c04c1571979dc1bcf240af60aeb',
         chain_id: 1287,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x6a67ab6261a6d48cc5e2250a4a50bbbe10173861',
+        chain_id: 2221,
         contract_decimals: 18,
       },
     ],
