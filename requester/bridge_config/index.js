@@ -8,7 +8,7 @@ const chains_mainnet = [
       {
         chainId: '0x1',
         chainName: 'Ethereum Mainnet',
-        rpcUrls: ['https://api.mycryptoapi.com/eth', 'https://cloudflare-eth.com'],
+        rpcUrls: ['https://rpc.ankr.com/eth', 'https://cloudflare-eth.com'],
         nativeCurrency: {
           name: 'Ether',
           symbol: 'ETH',
@@ -41,7 +41,7 @@ const chains_mainnet = [
       {
         chainId: '0x38',
         chainName: 'BNB Chain Mainnet',
-        rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed2.ninicoin.io', 'https://bsc-dataseed3.ninicoin.io', 'https://bsc-dataseed4.ninicoin.io', 'https://bsc-dataseed1.binance.org', 'https://bsc-dataseed2.binance.org', 'https://bsc-dataseed3.binance.org', 'https://bsc-dataseed4.binance.org', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed2.defibit.io', 'https://bsc-dataseed3.defibit.io', 'https://bsc-dataseed4.defibit.io', 'wss://bsc-ws-node.nariox.org'],
+        rpcUrls: ['https://bsc-dataseed.binance.org', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed1.binance.org', 'https://bsc-dataseed2.defibit.io', 'https://bsc-dataseed2.ninicoin.io'],
         nativeCurrency: {
           name: 'BNB Token',
           symbol: 'BNB',
@@ -71,7 +71,7 @@ const chains_mainnet = [
       {
         chainId: '0x89',
         chainName: 'Matic Mainnet',
-        rpcUrls: ['https://polygon-rpc.com', 'wss://ws-mainnet.matic.network'],
+        rpcUrls: ['https://polygon-rpc.com', 'https://matic-mainnet.chainstacklabs.com', 'https://rpc-mainnet.matic.network', 'https://rpc-mainnet.maticvigil.com', 'wss://ws-matic-mainnet.chainstacklabs.com', 'wss://rpc-mainnet.matic.network', 'wss://rpc-mainnet.maticvigil.com/ws'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
@@ -131,7 +131,7 @@ const chains_mainnet = [
       {
         chainId: '0xfa',
         chainName: 'Fantom Opera',
-        rpcUrls: ['https://rpc.ftm.tools', 'https://rpcapi.fantom.network'],
+        rpcUrls: ['https://rpc.ftm.tools', 'http://rpc.ankr.tools/ftm', 'https://rpcapi.fantom.network'],
         nativeCurrency: {
           name: 'Fantom',
           symbol: 'FTM',
@@ -161,7 +161,7 @@ const chains_mainnet = [
       {
         chainId: '0x64',
         chainName: 'Gnosis Chain',
-        rpcUrls: ['https://rpc.gnosischain.com', 'https://rpc.xdaichain.com', 'https://xdai.poanetwork.dev', 'wss://rpc.xdaichain.com/wss', 'wss://xdai.poanetwork.dev/wss', 'https://dai.poa.network', 'ws://xdai.poanetwork.dev:8546'],
+        rpcUrls: ['https://rpc.gnosischain.com', 'https://rpc.xdaichain.com', 'https://xdai-archive.blockscout.com'],
         nativeCurrency: {
           name: 'xDAI',
           symbol: 'xDAI',
@@ -558,7 +558,7 @@ const chains_testnet = [
       {
         chainId: '0x2a',
         chainName: 'Ethereum Testnet Kovan',
-        rpcUrls: ['https://kovan.poa.network', 'ws://kovan.poa.network:8546'],
+        rpcUrls: ['https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
         nativeCurrency: {
           name: 'Kovan Ether',
           symbol: 'KOV',
@@ -591,7 +591,7 @@ const chains_testnet = [
       {
         chainId: '0x61',
         chainName: 'BNB Chain Testnet',
-        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545', 'https://data-seed-prebsc-1-s2.binance.org:8545', 'https://data-seed-prebsc-1-s3.binance.org:8545', 'https://data-seed-prebsc-2-s2.binance.org:8545', 'https://data-seed-prebsc-2-s3.binance.org:8545'],
+        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545', 'https://data-seed-prebsc-2-s1.binance.org:8545', 'https://data-seed-prebsc-1-s2.binance.org:8545', 'https://data-seed-prebsc-2-s2.binance.org:8545', 'https://data-seed-prebsc-1-s3.binance.org:8545', 'https://data-seed-prebsc-2-s3.binance.org:8545'],
         nativeCurrency: {
           name: 'BNB Token',
           symbol: 'BNB',
@@ -621,7 +621,7 @@ const chains_testnet = [
       {
         chainId: '0x13881',
         chainName: 'Matic Testnet Mumbai',
-        rpcUrls: ['https://rpc-mumbai.matic.today', 'wss://ws-mumbai.matic.today'],
+        rpcUrls: ['https://matic-mumbai.chainstacklabs.com', 'https://rpc-mumbai.matic.today', 'https://rpc-mumbai.maticvigil.com', 'wss://ws-matic-mumbai.chainstacklabs.com', 'wss://rpc-mumbai.matic.today', 'wss://rpc-mumbai.maticvigil.com/ws'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
