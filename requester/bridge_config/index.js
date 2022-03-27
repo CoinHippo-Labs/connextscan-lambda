@@ -71,7 +71,7 @@ const chains_mainnet = [
       {
         chainId: '0x89',
         chainName: 'Matic Mainnet',
-        rpcUrls: ['https://polygon-rpc.com', 'https://matic-mainnet.chainstacklabs.com', 'https://rpc-mainnet.matic.network', 'https://rpc-mainnet.maticvigil.com', 'wss://ws-matic-mainnet.chainstacklabs.com', 'wss://rpc-mainnet.matic.network', 'wss://rpc-mainnet.maticvigil.com/ws'],
+        rpcUrls: ['https://polygon-rpc.com', 'https://matic-mainnet.chainstacklabs.com', 'https://rpc-mainnet.maticvigil.com', 'wss://ws-matic-mainnet.chainstacklabs.com', 'wss://rpc-mainnet.maticvigil.com/ws'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
@@ -131,7 +131,7 @@ const chains_mainnet = [
       {
         chainId: '0xfa',
         chainName: 'Fantom Opera',
-        rpcUrls: ['https://rpc.ftm.tools', 'http://rpc.ankr.tools/ftm', 'https://rpcapi.fantom.network'],
+        rpcUrls: ['https://rpc.ftm.tools', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
         nativeCurrency: {
           name: 'Fantom',
           symbol: 'FTM',
@@ -251,7 +251,7 @@ const chains_mainnet = [
       {
         chainId: '0x504',
         chainName: 'Moonbeam',
-        rpcUrls: ['https://rpc.api.moonbeam.network', 'https://moonbeam.api.onfinality.io/public'],
+        rpcUrls: ['https://rpc.api.moonbeam.network'],
         nativeCurrency: {
           name: 'Glimmer',
           symbol: 'GLMR',
@@ -711,7 +711,7 @@ const chains_testnet = [
       {
         chainId: '0x507',
         chainName: 'Moonbase Alpha',
-        rpcUrls: ['https://rpc.api.moonbase.moonbeam.network', 'https://moonbeam-alpha.api.onfinality.io/public'],
+        rpcUrls: ['https://rpc.api.moonbase.moonbeam.network'],
         nativeCurrency: {
           name: 'Dev',
           symbol: 'DEV',
