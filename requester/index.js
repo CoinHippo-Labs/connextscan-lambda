@@ -174,7 +174,7 @@ exports.handler = async (event, context, callback) => {
     },
     crosschain_config: {},
     bridge_config: {
-      git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-network-bridge',
+      git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-bridge',
       s3_url: process.env.BRIDGE_CONFIG_S3_URL || 'https://s3.us-west-1.amazonaws.com',
       s3_bucket: process.env.BRIDGE_CONFIG_S3_BUCKET || 'config.bridge.connext.network',
     },

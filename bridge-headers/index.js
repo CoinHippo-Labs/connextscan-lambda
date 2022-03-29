@@ -17,7 +17,7 @@
   const env = {
     network: process.env.NETWORK || 'mainnet',
     requester: {
-      api_host: process.env.REQUESTER_API_HOST || 'https://api.connextscan.io/',
+      api_host: process.env.REQUESTER_API_HOST || 'https://api.connextscan.io',
     },
     app_name: process.env.APP_NAME || 'Connext',
     site_url: process.env.SITE_URL || 'https://bridge.connext.network',
