@@ -345,7 +345,6 @@ const chains_mainnet = [
     title: 'Milkomeda Cardano (C1)',
     short_name: 'MMEDA',
     chain_id: 2001,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0x7d1',
