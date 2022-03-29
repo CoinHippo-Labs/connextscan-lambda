@@ -440,7 +440,6 @@ const chains_mainnet = [
     title: 'Gather Network',
     short_name: 'GTH',
     chain_id: 192837465,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0xb7e7759',
