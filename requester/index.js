@@ -32,17 +32,17 @@ exports.handler = async (event, context, callback) => {
       56: {
         api_host: process.env.SUBGRAPH_BSC_API_HOST || '{YOUR_SUBGRAPH_BSC_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_BSC_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_BSC_API_HOST_ANALYTIC}',
-        api_host_v0: process.env.SUBGRAPH_BSC_API_HOST_V0 || '{YOUR_SUBGRAPH_BSC_API_HOST_V0}',
+        api_host_v0: process.env.SUBGRAPH_BSC_API_HOST_V0 || (process.env.NETWORK === 'mainnet' ? 'https://api.thegraph.com/subgraphs/name/connext/nxtp-bsc-v0-analytics' : '{YOUR_SUBGRAPH_BSC_API_HOST_ANALYTIC_V0}'),
       },
       137: {
         api_host: process.env.SUBGRAPH_MATIC_API_HOST || '{YOUR_SUBGRAPH_MATIC_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_MATIC_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_MATIC_API_HOST_ANALYTIC}',
-        api_host_v0: process.env.SUBGRAPH_MATIC_API_HOST_V0 || '{YOUR_SUBGRAPH_MATIC_API_HOST_V0}',
+        api_host_v0: process.env.SUBGRAPH_MATIC_API_HOST_V0 || (process.env.NETWORK === 'mainnet' ? 'https://api.thegraph.com/subgraphs/name/connext/nxtp-matic-v0-analytics' : '{YOUR_SUBGRAPH_MATIC_API_HOST_ANALYTIC_V0}'),
       },
       42161: {
         api_host: process.env.SUBGRAPH_ARB_API_HOST || '{YOUR_SUBGRAPH_ARB_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_ARB_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ARB_API_HOST_ANALYTIC}',
-        api_host_v0: process.env.SUBGRAPH_ARB_API_HOST_V0 || '{YOUR_SUBGRAPH_ARB_API_HOST_V0}',
+        api_host_v0: process.env.SUBGRAPH_ARB_API_HOST_V0 || (process.env.NETWORK === 'mainnet' ? 'https://api.thegraph.com/subgraphs/name/connext/nxtp-arbitrum-one-v0-analytics' : '{YOUR_SUBGRAPH_ARB_API_HOST_ANALYTIC_V0}'),
       },
       10: {
         api_host: process.env.SUBGRAPH_OPT_API_HOST || '{YOUR_SUBGRAPH_OPT_API_HOST}',
@@ -55,12 +55,12 @@ exports.handler = async (event, context, callback) => {
       250: {
         api_host: process.env.SUBGRAPH_FTM_API_HOST || '{YOUR_SUBGRAPH_FTM_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_FTM_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_FTM_API_HOST_ANALYTIC}',
-        api_host_v0: process.env.SUBGRAPH_FTM_API_HOST_V0 || '{YOUR_SUBGRAPH_FTM_API_HOST_V0}',
+        api_host_v0: process.env.SUBGRAPH_FTM_API_HOST_V0 || (process.env.NETWORK === 'mainnet' ? 'https://api.thegraph.com/subgraphs/name/connext/nxtp-fantom-v0-analytics' : '{YOUR_SUBGRAPH_FTM_API_HOST_ANALYTIC_V0}'),
       },
       100: {
         api_host: process.env.SUBGRAPH_XDAI_API_HOST || '{YOUR_SUBGRAPH_XDAI_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_XDAI_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_XDAI_API_HOST_ANALYTIC}',
-        api_host_v0: process.env.SUBGRAPH_XDAI_API_HOST_V0 || '{YOUR_SUBGRAPH_XDAI_API_HOST_V0}',
+        api_host_v0: process.env.SUBGRAPH_XDAI_API_HOST_V0 || (process.env.NETWORK === 'mainnet' ? 'https://api.thegraph.com/subgraphs/name/connext/nxtp-xdai-v0-analytics' : '{YOUR_SUBGRAPH_XDAI_API_HOST_ANALYTIC_V0}'),
       },
       1284: {
         api_host: process.env.SUBGRAPH_MBEAM_API_HOST || '{YOUR_SUBGRAPH_MBEAM_API_HOST}',
@@ -177,6 +177,7 @@ exports.handler = async (event, context, callback) => {
       git_repo: process.env.BRIDGE_CONFIG_GIT_REPO || 'CoinHippo-Labs/connext-bridge',
       s3_url: process.env.BRIDGE_CONFIG_S3_URL || 'https://s3.us-west-1.amazonaws.com',
       s3_bucket: process.env.BRIDGE_CONFIG_S3_BUCKET || 'config.bridge.connext.network',
+      whitelists: process.env.BRIDGE_CONFIG_WHITELISTS?.split(',').map(w => w?.trim().toLowerCase()).filter(w => w) || [],
     },
   };
 
@@ -639,25 +640,26 @@ exports.handler = async (event, context, callback) => {
         if (path === '/set') {
           if (['announcement'].includes(params.collection)) {
             try {
-              const data = JSON.stringify({ data: params.data });
-
-              res = {
-                data: await new Promise(resolve =>
-                  s3.putObject({
-                    Bucket: env.bridge_config.s3_bucket,
-                    Key: `${params.collection}${params.network ? `_${params.network}` : ''}.json`,
-                    Body: data,
-                    ACL: 'private'
-                  }, (err, data) => resolve(data?.Body ? data.Body.toString() : null))
-                ),
-              };
+              const [username, password] = event.headers?.authorization ? Buffer.from(event.headers.authorization, 'base64').toString().split(':') : [];
+              if (env.bridge_config.whitelists.includes(password?.toLowerCase())) {
+                const data = JSON.stringify({ data: params.data });
+                res = {
+                  data: await new Promise(resolve =>
+                    s3.putObject({
+                      Bucket: env.bridge_config.s3_bucket,
+                      Key: `${params.collection}${params.network ? `_${params.network}` : ''}.json`,
+                      Body: data,
+                      ACL: 'private'
+                    }, (err, data) => resolve(data?.Body ? data.Body.toString() : null))
+                  ),
+                };
+              }
             } catch (error) {}
           }
         }
         else {
           if (['announcement'].includes(params.collection)) {
             const s3_url = `${env.bridge_config.s3_url}/${env.bridge_config.s3_bucket}/${params.collection}${params.network ? `_${params.network}` : ''}.json`;
-
             try {
               res = await axios.get(s3_url);
             } catch (error) {
@@ -666,7 +668,6 @@ exports.handler = async (event, context, callback) => {
           }
           else {
             const git_url = `https://raw.githubusercontent.com/${env.bridge_config.git_repo}/main/config/${params.collection}${['testnet'].includes(params.network) ? `_${params.network}` : ''}.json`;
-
             try {
               res = await axios.get(git_url);
             } catch (error) {
