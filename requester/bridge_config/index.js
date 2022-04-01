@@ -456,6 +456,36 @@ const chains_mainnet = [
     },
     image: '/logos/chains/mainnet/gather.png',
   },
+  {
+    id: 'cronos',
+    title: 'Cronos',
+    short_name: 'CRO',
+    chain_id: 25,
+    provider_params: [
+      {
+        chainId: '0x19',
+        chainName: 'Cronos',
+        rpcUrls: ['https://evm.cronos.org'],
+        nativeCurrency: {
+          name: 'Cronos',
+          symbol: 'CRO',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://cronoscan.com'],
+      },
+    ],
+    explorer: {
+      name: 'Cronoscan',
+      url: 'https://cronoscan.com',
+      icon: '/logos/explorers/cronoscan.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/token/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/cronos.png',
+  },
 ];
 
 const chains_testnet = [
@@ -846,6 +876,11 @@ const assets_mainnet = [
         chain_id: 1666600000,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0x66e428c3f67a68878562e79a0234c1f83c208770',
+        chain_id: 25,
+        contract_decimals: 6,
+      },
     ],
     nomad_support: [
       {
@@ -928,6 +963,11 @@ const assets_mainnet = [
       {
         contract_address: '0x985458e523db3d53125813ed68c274899e9dfab4',
         chain_id: 1666600000,
+        contract_decimals: 6,
+      },
+      {
+        contract_address: '0xc21223249ca28397b4b6541dffaecc539bff0c59',
+        chain_id: 25,
         contract_decimals: 6,
       },
     ],
@@ -1016,6 +1056,11 @@ const assets_mainnet = [
         chain_id: 1666600000,
         contract_decimals: 18,
       },
+      {
+        contract_address: '0xf2001b145b43032aaf5ee2884e456ccd805f677d',
+        chain_id: 25,
+        contract_decimals: 18,
+      },
     ],
     nomad_support: [
       {
@@ -1100,6 +1145,12 @@ const assets_mainnet = [
         chain_id: 288,
         contract_decimals: 18,
       },
+      {
+        contract_address: '0xe44fd7fcb2b1581822d0c862b68222998a0c299a',
+        chain_id: 25,
+        contract_decimals: 18,
+        symbol: 'WETH',
+      },
     ],
     nomad_support: [
       {
@@ -1180,6 +1231,11 @@ const assets_mainnet = [
       {
         contract_address: '0xdc0486f8bf31df57a952bcd3c1d3e166e3d9ec8b',
         chain_id: 288,
+        contract_decimals: 8,
+      },
+      {
+        contract_address: '0x062e66477faf219f25d27dced647bf57c3107d52',
+        chain_id: 25,
         contract_decimals: 8,
       },
     ],

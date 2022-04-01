@@ -90,6 +90,10 @@ exports.handler = async (event, context, callback) => {
         api_host: process.env.SUBGRAPH_GTH_API_HOST || '{YOUR_SUBGRAPH_GTH_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_GTH_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_GTH_API_HOST_ANALYTIC}',
       },
+      25: {
+        api_host: process.env.SUBGRAPH_CRO_API_HOST || '{YOUR_SUBGRAPH_CRO_API_HOST}',
+        api_host_analytic: process.env.SUBGRAPH_CRO_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_CRO_API_HOST_ANALYTIC}',
+      },
       3: {
         api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
         api_host_analytic: process.env.SUBGRAPH_ROP_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_ROP_API_HOST_ANALYTIC}',
