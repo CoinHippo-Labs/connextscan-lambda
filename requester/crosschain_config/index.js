@@ -883,7 +883,7 @@ const assets_mainnet = [
       {
         contract_address: '0xab58da63dfdd6b97eaab3c94165ef6f43d951fb2',
         chain_id: 2001,
-        contract_decimals: 6
+        contract_decimals: 6,
         symbol: 'madUSDT',
       },
       {
