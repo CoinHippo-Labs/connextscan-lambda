@@ -376,7 +376,6 @@ const chains_mainnet = [
     title: 'Boba L2',
     short_name: 'BOBA',
     chain_id: 288,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0x120',
