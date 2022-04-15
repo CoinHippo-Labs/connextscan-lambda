@@ -408,7 +408,6 @@ const chains_mainnet = [
     title: 'Harmony One',
     short_name: 'HONE',
     chain_id: 1666600000,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0x120',
