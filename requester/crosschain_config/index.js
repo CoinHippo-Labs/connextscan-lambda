@@ -101,7 +101,7 @@ const chains_mainnet = [
       {
         chainId: '0xa86a',
         chainName: 'Avalanche Mainnet C-Chain',
-        rpcUrls: ['https://api.avax.network/ext/bc/C/rpc', 'https://rpc.ankr.com/avalanche-c'],
+        rpcUrls: ['https://api.avax.network/ext/bc/C/rpc', 'https://rpc.ankr.com/avalanche'],
         nativeCurrency: {
           name: 'Avalanche',
           symbol: 'AVAX',
@@ -411,7 +411,7 @@ const chains_mainnet = [
       {
         chainId: '0x120',
         chainName: 'Harmony One',
-        rpcUrls: ['https://rpc.ankr.com/harmony'],
+        rpcUrls: ['https://api.harmony.one', 'https://rpc.ankr.com/harmony'],
         nativeCurrency: {
           name: 'One',
           symbol: 'ONE',
