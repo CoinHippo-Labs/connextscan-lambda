@@ -469,7 +469,6 @@ const chains_mainnet = [
     title: 'Cronos',
     short_name: 'CRO',
     chain_id: 25,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0x19',
