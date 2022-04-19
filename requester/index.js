@@ -290,7 +290,7 @@ exports.handler = async (event, context, callback) => {
           // set response data from error handled by exception
           .catch(error => { return { data: { error } }; });
 
-        if (params.query?.includes('transactions(')) {
+        /*if (params.query?.includes('transactions(')) {
           if (res?.data?.data?.transactions?.length > 0 || res?.data?.data?.user?.transactions?.length > 0) {
             const tokens = {}, index_name = `transactions${['testnet'].includes(env.network) ? `_${env.network}` : ''}`, transactions = res.data.data.transactions || res.data.data.user.transactions;
 
@@ -345,7 +345,7 @@ exports.handler = async (event, context, callback) => {
               }
             }
           }
-        }
+        }*/
         break;
       case 'tokens':
         // normalize path parameter
