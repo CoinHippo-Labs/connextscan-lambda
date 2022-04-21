@@ -161,7 +161,7 @@ const chains_mainnet = [
       {
         chainId: '0x64',
         chainName: 'Gnosis Chain',
-        rpcUrls: ['https://rpc.ankr.com/gnosis'],
+        rpcUrls: ['https://rpc.gnosischain.com', 'https://rpc.ankr.com/gnosis'],
         nativeCurrency: {
           name: 'xDAI',
           symbol: 'xDAI',
