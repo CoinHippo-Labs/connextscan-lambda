@@ -469,7 +469,6 @@ const chains_mainnet = [
     title: 'Cronos',
     short_name: 'CRO',
     chain_id: 25,
-    is_staging: true,
     provider_params: [
       {
         chainId: '0x19',
@@ -501,6 +500,7 @@ const chains_mainnet = [
     title: 'Evmos',
     short_name: 'EVMOS',
     chain_id: 9001,
+    is_staging: true,
     provider_params: [
       {
         chainId: '0x2329',
