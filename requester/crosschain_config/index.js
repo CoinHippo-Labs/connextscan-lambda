@@ -495,6 +495,37 @@ const chains_mainnet = [
     image: '/logos/chains/mainnet/cronos.png',
     color: '#012d74',
   },
+  {
+    id: 'evmos',
+    title: 'Evmos',
+    short_name: 'EVMOS',
+    chain_id: 9001,
+    provider_params: [
+      {
+        chainId: '0x2329',
+        chainName: 'Evmos',
+        rpcUrls: ['https://eth.bd.evmos.org:8545'],
+        nativeCurrency: {
+          name: 'Evmos',
+          symbol: 'EVMOS',
+          decimals: 18,
+        },
+        blockExplorerUrls: ['https://evm.evmos.org'],
+      },
+    ],
+    explorer: {
+      name: 'Evmos',
+      url: 'https://evm.evmos.org',
+      icon: '/logos/explorers/evmos.png',
+      block_path: '/block/{block}',
+      address_path: '/address/{address}',
+      contract_path: '/address/{address}',
+      contract_0_path: '/address/{address}',
+      transaction_path: '/tx/{tx}',
+    },
+    image: '/logos/chains/mainnet/evmos.png',
+    color: '#1f1577',
+  },
 ];
 
 const chains_testnet = [
