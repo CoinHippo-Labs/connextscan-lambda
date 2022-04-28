@@ -914,6 +914,12 @@ const assets_mainnet = [
         chain_id: 25,
         contract_decimals: 6,
       },
+      {
+        contract_address: '0x7ff4a56b32ee13d7d4d405887e0ea37d61ed919e',
+        chain_id: 9001,
+        contract_decimals: 6,
+        symbol: 'madUSDT',
+      },
     ],
     nomad_support: [
       {
@@ -1005,6 +1011,12 @@ const assets_mainnet = [
         contract_address: '0xc21223249ca28397b4b6541dffaecc539bff0c59',
         chain_id: 25,
         contract_decimals: 6,
+      },
+      {
+        contract_address: '0x51e44ffad5c2b122c8b635671fcc8139dc636e82',
+        chain_id: 9001,
+        contract_decimals: 6,
+        symbol: 'madUSDC',
       },
     ],
     nomad_support: [
@@ -1100,6 +1112,12 @@ const assets_mainnet = [
         chain_id: 25,
         contract_decimals: 18,
       },
+      {
+        contract_address: '0x63743acf2c7cfee65a5e356a4c4a005b586fc7aa',
+        chain_id: 9001,
+        contract_decimals: 18,
+        symbol: 'madDAI',
+      },
     ],
     nomad_support: [
       {
@@ -1191,6 +1209,12 @@ const assets_mainnet = [
         contract_decimals: 18,
         symbol: 'WETH',
       },
+      {
+        contract_address: '0x5842c5532b61acf3227679a8b1bd0242a41752f2',
+        chain_id: 9001,
+        contract_decimals: 18,
+        symbol: 'madWETH',
+      },
     ],
     nomad_support: [
       {
@@ -1280,6 +1304,12 @@ const assets_mainnet = [
         contract_address: '0x062e66477faf219f25d27dced647bf57c3107d52',
         chain_id: 25,
         contract_decimals: 8,
+      },
+      {
+        contract_address: '0xf80699dc594e00ae7ba200c7533a07c1604a106d',
+        chain_id: 9001,
+        contract_decimals: 8,
+        symbol: 'madWBTC',
       },
     ],
   },
