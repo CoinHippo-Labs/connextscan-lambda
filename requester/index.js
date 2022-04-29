@@ -95,8 +95,8 @@ exports.handler = async (event, context, callback) => {
         api_host_analytic: process.env.SUBGRAPH_CRO_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_CRO_API_HOST_ANALYTIC}',
       },
       9001: {
-        api_host: process.env.SUBGRAPH_EVMOS_API_HOST || '{YOUR_SUBGRAPH_EVMOS_API_HOST}',
-        api_host_analytic: process.env.SUBGRAPH_EVMOS_API_HOST_ANALYTIC || '{YOUR_SUBGRAPH_EVMOS_API_HOST_ANALYTIC}',
+        api_host: process.env.SUBGRAPH_EVMOS_API_HOST || 'https://connext.bwarelabs.com/subgraphs/name/connext/nxtp-evmos-v1-runtime',
+        api_host_analytic: process.env.SUBGRAPH_EVMOS_API_HOST_ANALYTIC || 'https://connext.bwarelabs.com/subgraphs/name/connext/nxtp-evmos-v1-analytics',
       },
       3: {
         api_host: process.env.SUBGRAPH_ROP_API_HOST || '{YOUR_SUBGRAPH_ROP_API_HOST}',
