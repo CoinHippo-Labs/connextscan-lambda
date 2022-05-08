@@ -693,7 +693,7 @@ const chains_testnet = [
       {
         chainId: '0x13881',
         chainName: 'Polygon Mumbai',
-        rpcUrls: ['https://rpc-mumbai.matic.today', 'https://matic-mumbai.chainstacklabs.com', 'https://rpc-mumbai.maticvigil.com'],
+        rpcUrls: ['https://rpc-mumbai.matic.today', 'https://matic-mumbai.chainstacklabs.com'],
         nativeCurrency: {
           name: 'Matic',
           symbol: 'MATIC',
