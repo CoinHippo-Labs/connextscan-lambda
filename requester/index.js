@@ -576,6 +576,10 @@ exports.handler = async (event, context, callback) => {
                     let price = t?.prices?.[0]?.price;
                     price = asset?.is_stable && Math.abs(price - 1) > env[_module].stable_threshold ? 1 : price;
 
+                    if (chainId === 9001 && symbol?.toLowerCase().includes('weth') && price > 1000000) {
+                      price = 2500
+                    }
+
                     return {
                       ...contract,
                       chain_id: chainId,
