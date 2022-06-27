@@ -1486,6 +1486,24 @@ const assets_mainnet = [
       },
     ],
   },
+  {
+    id: 'fraction',
+    symbol: 'FRACTION',
+    image: '/logos/assets/fraction.png',
+    is_staging: true,
+    contracts: [
+      {
+        contract_address: '0xbd80cfa9d93a87d1bb895f810ea348e496611cd4',
+        chain_id: 137,
+        contract_decimals: 18,
+      },
+      {
+        contract_address: '0x2bf2ba13735160624a0feae98f6ac8f70885ea61',
+        chain_id: 100,
+        contract_decimals: 18,
+      },
+    ],
+  },
 ];
 
 const assets_testnet = [
