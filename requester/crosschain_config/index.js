@@ -1491,6 +1491,7 @@ const assets_mainnet = [
   {
     id: 'fraction',
     symbol: 'FRACTION',
+    image: '/logos/assets/fraction.png',
     coingecko_id: 'fraction',
     contracts: [
       {
